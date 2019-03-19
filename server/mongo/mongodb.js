@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 /**
  * 连接
  */
-mongoose.connect(DB_URL);
+mongoose.connect(DB_URL, {useNewUrlParser:true});
 
 mongoose.connection.on("error", function (error) {
     console.log("数据库连接失败：" + error);

@@ -13,10 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-let clientPath = __dirname + '\\..\\client\\';
-console.log('the client static file is at ' + clientPath);
-// app.use(express.static(path.join(__dirname, 'build')));
-app.use(express.static(path.join(clientPath, 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
