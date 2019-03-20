@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch'
+import 'whatwg-fetch';
 
 class Index extends Component {
     constructor(props) {
