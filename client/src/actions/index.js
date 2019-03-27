@@ -13,3 +13,11 @@ export function addAsync() {
         }, 2000)
     }
 }
+
+export function login() {
+    return { type: 'LOGIN'}
+}
+
+export function logout() {
+    return { type: 'LOGOUT'}
+}
