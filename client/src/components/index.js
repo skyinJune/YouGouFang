@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Button} from 'antd-mobile';
+import Login from './login'
 import 'whatwg-fetch';
 
 class Index extends Component {
@@ -46,6 +47,7 @@ class Index extends Component {
     render() {
         return (
             <div>
+                <Login></Login>
                 <Button type='primary' onClick={this.saveTest}>test save</Button>
             </div>
         )
