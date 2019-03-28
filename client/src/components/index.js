@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {Button} from 'antd-mobile';
-import Login from './login'
+import Login from './login';
+import { add, remove, addAsync} from '../actions/index';
 import 'whatwg-fetch';
 
 class Index extends Component {
@@ -47,11 +49,20 @@ class Index extends Component {
     render() {
         return (
             <div>
+                <h2>the current number is{this.props.num}</h2>
+                <Button type='primary' onClick={this.props.add}>add</Button>
+                <Button type="warning" onClick={this.props.remove}>remove</Button>
+                <Button type="ghost" onClick={this.props.addAsync}>add in 2 seconds</Button>
                 <Login></Login>
-                <Button type='primary' onClick={this.saveTest}>test save</Button>
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {num: state.counter}
+  }
+  const actionCreater = { add, remove, addAsync};
+  Index = connect(mapStateToProps, actionCreater)(Index);
 
 export default Index;

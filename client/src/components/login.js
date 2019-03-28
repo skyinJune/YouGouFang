@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux';
+import {Button} from 'antd-mobile';
 import { login, logout} from '../actions/index'
 
 class Login extends Component {
@@ -14,8 +15,8 @@ class Login extends Component {
         return (
             <div>
                 {logGreeting}
-                <button onClick={this.props.login}>login</button>
-                <button onClick={this.props.logout}>logout</button>
+                <Button type="primary" onClick={this.props.login}>login</Button>
+                <Button type="warning" onClick={this.props.logout}>logout</Button>
             </div>
         )
     }
