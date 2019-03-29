@@ -1,7 +1,8 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux';
 import {Button} from 'antd-mobile';
-import { login, logout} from '../actions/index'
+import {Link, Redirect} from 'react-router-dom'
+import { login} from '../actions/index'
 
 class Login extends Component {
     constructor(props) {
@@ -10,13 +11,14 @@ class Login extends Component {
     }
 
     render() {
-        const logGreeting = this.props.logStatus.isLogin ? <h2>hello, {this.props.logStatus.user}</h2> 
+        const logGreeting = this.props.logStatus.isLogin
+        ? <h2>hello, {this.props.logStatus.user}, <Link to="/">go to home page</Link></h2> 
         : <h2>hello, click to login</h2>;
         return (
             <div>
+                {this.props.logStatus.isLogin? <Redirect to="/"/> : null}
                 {logGreeting}
                 <Button type="primary" onClick={this.props.login}>login</Button>
-                <Button type="warning" onClick={this.props.logout}>logout</Button>
             </div>
         )
     }
@@ -26,7 +28,7 @@ const mapStateToProps = (state) => {
     return {logStatus: state.login}
 }
 
-const actionCreater = { login, logout};
+const actionCreater = { login};
 Login = connect( mapStateToProps, actionCreater)(Login);
 
 export default Login;
