@@ -13,11 +13,8 @@
     line-height: .9rem;
 }
 
-.accountinputuserlogo {
-    background-image: url(https://zos.alipayobjects.com/rmsportal/DfkJHaJGgMghpXdqNaKF.png);
-    background-size: cover;
-    height: .22rem;
-    width: .22rem;
+.accountloginicon {
+    font-size: .24rem;
 }
 
 .accountloginbutton {

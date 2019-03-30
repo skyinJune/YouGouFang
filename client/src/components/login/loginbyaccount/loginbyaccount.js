@@ -21,10 +21,10 @@ class Login extends Component {
                 </div>
                 <div className="accountlogintitle">账号密码登录</div>
                 <InputItem placeholder="请输入账号" clear="true">
-                <Icon type="check-circle" />
+                    <i className="iconfont icon-yonghutouxiang accountloginicon"></i>
                 </InputItem>
-                <InputItem placeholder="请输入密码" clear="true">
-                <Icon type="lock" />
+                <InputItem placeholder="请输入密码" clear="true" type="password">
+                    <i className="iconfont icon-mima accountloginicon"></i>
                 </InputItem>
                 <Button className="accountloginbutton" type="primary" onClick={this.props.login}>登录</Button>
             </div>
