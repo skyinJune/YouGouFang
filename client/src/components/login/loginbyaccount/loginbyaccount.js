@@ -10,13 +10,26 @@ class Login extends Component {
         super(props);
         this.state = {
             account: '',
-            password: ''
+            password: '',
+            showPassword: false
         };
         this.inputOnchange = this.inputOnchange.bind(this);
+        this.onSubmitClick = this.onSubmitClick.bind(this);
+        this.togglePassword = this.togglePassword.bind(this);
     }
 
     inputOnchange(value, type) {
         this.setState({[type]: value});
+    }
+
+    onSubmitClick() {
+        this.props.login();
+        console.log(this.state);
+    }
+
+    togglePassword() {
+        this.state.showPassword ? this.setState({showPassword: false})
+            : this.setState({showPassword: true});
     }
 
     render() {
@@ -30,10 +43,11 @@ class Login extends Component {
                 <InputItem placeholder="请输入账号" clear="true" onChange={value=>this.inputOnchange(value, 'account')}>
                     <i className="iconfont icon-yonghutouxiang accountloginicon"></i>
                 </InputItem>
-                <InputItem placeholder="请输入密码" clear="true" type="password" onChange={value=>this.inputOnchange(value, 'password')}>
+                <InputItem placeholder="请输入密码" type="password" onChange={value=>this.inputOnchange(value, 'password')}>
                     <i className="iconfont icon-mima accountloginicon"></i>
+                    <i className="iconfont icon-yanjing_kai passwordeye" onClick={this.togglePassword}></i>
                 </InputItem>
-                <Button className="accountloginbutton" type="primary" onClick={this.props.login}>登录</Button>
+                <Button className="accountloginbutton" type="primary" onClick={this.onSubmitClick}>登录</Button>
             </div>
         )
     }
