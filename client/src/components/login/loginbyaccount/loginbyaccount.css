@@ -7,6 +7,12 @@
     line-height: .44rem;
 }
 
+.login_by_account_header_register {
+    float: right;
+    font-size: .15rem;
+    color: #108ee9;
+}
+
 .accountlogintitle {
     text-align: center;
     font-size: .27rem;

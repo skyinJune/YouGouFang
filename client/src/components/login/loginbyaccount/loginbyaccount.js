@@ -41,6 +41,7 @@ class Login extends Component {
                 {this.props.logStatus.isLogin? <Redirect to="/"/> : null}
                 <div className="acountloginheader">
                     <Icon type="left" size="lg"/>
+                    <i className="login_by_account_header_register iconfont icon-zhuce">注册新账号</i>
                 </div>
                 <div className="accountlogintitle">账号密码登录</div>
                 <InputItem placeholder="请输入账号" clear="true" onChange={value=>this.inputOnchange(value, 'account')}>

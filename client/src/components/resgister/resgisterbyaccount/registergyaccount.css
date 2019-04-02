@@ -1,0 +1,34 @@
+.register_by_account_wrapper {
+    padding: 0 .15rem;
+}
+
+.register_by_account_headIcon {
+    height: .44rem;
+    line-height: .44rem;
+}
+
+.register_by_account_phoneIcon {
+    float: right;
+    font-size: .15rem;
+    color: #108ee9;
+}
+
+.register_by_account_title {
+    text-align: center;
+    font-size: .27rem;
+    line-height: .9rem;
+}
+
+.register_by_account_inputicon {
+    font-size: .24rem;
+}
+
+.register_by_account_confirmOK {
+    font-size: .24rem;
+    color: #7FFF00;
+}
+
+.register_by_account_confirmErr {
+    font-size: .24rem;
+    color: #FFD700;
+}
