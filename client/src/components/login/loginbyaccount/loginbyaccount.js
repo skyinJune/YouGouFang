@@ -11,11 +11,13 @@ class Login extends Component {
         this.state = {
             account: '',
             password: '',
-            showPassword: false
+            showPassword: false,
+            redirectToRegister: false
         };
         this.inputOnchange = this.inputOnchange.bind(this);
         this.onSubmitClick = this.onSubmitClick.bind(this);
         this.toggleShowPassword = this.toggleShowPassword.bind(this);
+        this.onRedirectToRegister = this.onRedirectToRegister.bind(this);
     }
 
     inputOnchange(value, type) {
@@ -23,8 +25,7 @@ class Login extends Component {
     }
 
     onSubmitClick() {
-        this.props.login();
-        console.log(this.state);
+        this.props.login(this.state.account);
     }
 
     toggleShowPassword() {
@@ -32,16 +33,21 @@ class Login extends Component {
             : this.setState({showPassword: true});
     }
 
+    onRedirectToRegister() {
+        this.setState({redirectToRegister: true});
+    }
+
     render() {
         const passwordExtra = this.state.password
-                ? <i className={`iconfont passwordeye ${this.state.showPassword? 'icon-yanjing_kai' : 'icon-yanjing-bi'}`}/>
+                ? <i className={`iconfont passwordeye ${this.state.showPassword? 'icon-yanjing_xianshi_o' : 'icon-yanjing_yincang_o'}`}/>
                 : null;
         return (
             <div className="accountloginwrapper">
                 {this.props.logStatus.isLogin? <Redirect to="/"/> : null}
+                {this.state.redirectToRegister? <Redirect to="/register"/> : null}
                 <div className="acountloginheader">
                     <Icon type="left" size="lg"/>
-                    <i className="login_by_account_header_register iconfont icon-zhuce">注册新账号</i>
+                    <i className="login_by_account_header_register iconfont icon-zhuce" onClick={this.onRedirectToRegister}>注册新账号</i>
                 </div>
                 <div className="accountlogintitle">账号密码登录</div>
                 <InputItem placeholder="请输入账号" clear="true" onChange={value=>this.inputOnchange(value, 'account')}>

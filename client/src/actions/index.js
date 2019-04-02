@@ -14,8 +14,8 @@ export function addAsync() {
     }
 }
 
-export function login() {
-    return { type: 'LOGIN'}
+export function login(account) {
+    return { type: 'LOGIN', account}
 }
 
 export function logout() {
