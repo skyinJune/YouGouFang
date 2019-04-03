@@ -36,3 +36,11 @@
     font-size: .24rem;
     color: #FFD700;
 }
+
+.register_by_account_switchType {
+    margin-top: .10rem
+}
+
+.register_by_account_button {
+    margin-top: .22rem
+}
