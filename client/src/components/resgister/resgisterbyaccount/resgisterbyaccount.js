@@ -51,18 +51,18 @@ class ResgisterByAccount extends Component {
      */
     onSubmitClick() {
         // 判断密码和确认密码是否都存在，否则Toast提示
-        if(this.state.account && this.state.confirmPassword) {
+        if(this.state.account && this.state.account && this.state.confirmPassword) {
             // 判断密码和确认密码是否一致，否则Toast提示
             if(this.state.password === this.state.confirmPassword) {
                 // 注册
                 this.submitRegisterInfo();
             }
             else {
-                Toast.fail('密码输入不一致，请确认后再输入！', 2);
+                Toast.fail('密码输入不一致，请确认后再次输入~', 2);
             }
         }
         else {
-            Toast.fail('密码呢？密码呢？', 2);
+            Toast.fail('账号呢？密码呢？检查一下重新注册吧~', 2);
         }
     }
 
@@ -85,8 +85,8 @@ class ResgisterByAccount extends Component {
     confirmPasswordToast() {
         // 点击确认密码中的提示icon,如果密码和确认密码一致则提示可注册，否则提示密码不一致
         this.state.password === this.state.confirmPassword?
-            Toast.success('密码输入完成，快去点击注册吧！',2)
-            :Toast.fail('密码输入不一致，请确认后再输入！',2)
+            Toast.success('密码输入完成，快去点击注册吧~',2)
+            :Toast.fail('密码输入不一致，请确认后再输入~',2)
     }
 
     /**
@@ -107,18 +107,19 @@ class ResgisterByAccount extends Component {
     submitRegisterInfo() {
         // 按照数据库UserModel来定义,部分信息在注册时为默认值或空值,注册完成后可在个人中心更改
         const userJson = {
-            'account': this.state.account,
-            'passWord': this.state.password,
-            'userType': this.state.userType,
-            'phoneNumber': 0,
-            'avatar': '',
-            'email': '',
-            'introduction': '',
-            'starLevel': -1,
-            'followList': [],
-            'houseList': [],
-            'onSaleList': [],
-            'orderList': []
+            account: this.state.account,
+            passWord: this.state.password,
+            userType: this.state.userType,
+            phoneNumber: 0,
+            avatar: '',
+            email: '',
+            introduction: '',
+            tagList: [],
+            starLevel: -1,
+            followList: [],
+            houseList: [],
+            onSaleList: [],
+            orderList: {}
         };
         
         // 转换为Json字符串
@@ -140,7 +141,7 @@ class ResgisterByAccount extends Component {
             Toast.hide();
             this.props.login(this.state.account);
             // 注册成功后Toast提示，并且直接使用当前账户登录
-            Toast.success(`注册成功! 新同学 ${this.state.account} 你好，已自动登录!`, 2);
+            Toast.success(`注册成功! 新同学 ${this.state.account} 你好，已自动登录~`, 2);
           });
     }
 

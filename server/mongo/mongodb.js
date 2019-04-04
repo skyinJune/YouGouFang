@@ -45,6 +45,9 @@ var User = new mongoose.Schema({
     // 用户简介
     introduction: {type: String},
 
+    // 用户标签列表
+    tagList: {type: Array},
+
     // 用户星级
     starLevel: {type: Number},
 

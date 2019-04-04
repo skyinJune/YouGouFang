@@ -11,6 +11,7 @@
     "express": "~4.16.0",
     "mongoose": "^5.4.19",
     "morgan": "~1.9.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "utility": "^1.16.1"
   }
 }

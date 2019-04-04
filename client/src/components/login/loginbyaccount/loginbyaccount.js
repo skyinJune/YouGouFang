@@ -45,7 +45,12 @@ class LoginByAccount extends Component {
      * @memberof LoginByAccount
      */
     onSubmitClick() {
-        this.submitLogInfo();
+        if(this.state.account && this.state.password) {
+            this.submitLogInfo();
+        }
+        else {
+            Toast.fail('账号呢？密码呢？再检查一下重新登录吧~', 2);
+        }
     }
 
     /**
@@ -72,8 +77,8 @@ class LoginByAccount extends Component {
     submitLogInfo() {
         // 将用户输入的账号密码打包成对象
         const logInfo = {
-            'account': this.state.account,
-            'passWord': this.state.password
+            account: this.state.account,
+            passWord: this.state.password
         };
 
         // 转换为Json字符串
@@ -95,10 +100,10 @@ class LoginByAccount extends Component {
                 this.props.login(this.state.account);
             }
             else if(data.checkStatus === 'Fail') {
-                Toast.fail('密码或账号错误！请检查确认后重新输入', 2);
+                Toast.fail('密码或账号错误！请检查确认后重新登录~', 2);
             }
             else if(data.accountStatus === 'NotExist') {
-                Toast.fail(`账号 ${data.account} 还未注册,请移步右上角注册!`, 2);
+                Toast.fail(`账号 ${data.account} 还未注册,请移步右上角注册~`, 2);
             }
           });
     }

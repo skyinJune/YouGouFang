@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var api = require('../mongo/api');
+const YouGouFangMd5 = require('../utils/md5PassWord');
 
 // 通过账号注册
 router.post('/registerbyaccount', function(req, res, next) {
   const newUser = req.body;
-  api.createNewAccount(newUser).then(result =>{
+  api.createNewAccount({...newUser, passWord: YouGouFangMd5(newUser.passWord)}).then(result =>{
     res.json(result);
   })
 })
@@ -14,7 +15,7 @@ router.post('/registerbyaccount', function(req, res, next) {
 router.post('/loginbyaccount', function(req, res, next) {
   const UserInfo = req.body;
   const searchAccount = {'account': UserInfo.account};
-  const inputPassWord = UserInfo.passWord;
+  const inputPassWord = YouGouFangMd5(UserInfo.passWord);
   api.loginByAccount(searchAccount).then(result =>{
     if(result) {
       const passWord = result.passWord;
