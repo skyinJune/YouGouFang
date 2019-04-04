@@ -1,9 +1,10 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
-import {Button, Icon, InputItem} from 'antd-mobile';
+import {Button, Icon, InputItem, Toast} from 'antd-mobile';
 import './loginbyaccount.css'
 import { Redirect} from 'react-router-dom';
 import { login} from '../../../actions/index';
+import 'whatwg-fetch';
 
 /**
  *  通过账户密码登录的组件页
@@ -24,6 +25,7 @@ class LoginByAccount extends Component {
         this.onSubmitClick = this.onSubmitClick.bind(this);
         this.toggleShowPassword = this.toggleShowPassword.bind(this);
         this.onRedirectToRegister = this.onRedirectToRegister.bind(this);
+        this.submitLogInfo = this.submitLogInfo.bind(this);
     }
 
     /**
@@ -43,7 +45,7 @@ class LoginByAccount extends Component {
      * @memberof LoginByAccount
      */
     onSubmitClick() {
-        this.props.login(this.state.account);
+        this.submitLogInfo();
     }
 
     /**
@@ -65,6 +67,40 @@ class LoginByAccount extends Component {
     onRedirectToRegister() {
         // 让 Redirect 渲染出来，直接跳转到注册页
         this.setState({redirectToRegister: true});
+    }
+
+    submitLogInfo() {
+        // 将用户输入的账号密码打包成对象
+        const logInfo = {
+            'account': this.state.account,
+            'passWord': this.state.password
+        };
+
+        // 转换为Json字符串
+        const data = JSON.stringify(logInfo);
+
+        Toast.loading('正在登录...');
+
+        fetch('/loginbyaccount', {
+            method:'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body:data
+          }).then(response => response.json())
+          .then(data => {
+            Toast.hide();
+            if(data.checkStatus === 'OK') {
+                this.props.login(this.state.account);
+            }
+            else if(data.checkStatus === 'Fail') {
+                Toast.fail('密码或账号错误！请检查确认后重新输入', 2);
+            }
+            else if(data.accountStatus === 'NotExist') {
+                Toast.fail(`账号 ${data.account} 还未注册,请移步右上角注册!`, 2);
+            }
+          });
     }
 
     render() {

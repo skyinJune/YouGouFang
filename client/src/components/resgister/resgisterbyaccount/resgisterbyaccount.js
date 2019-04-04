@@ -29,6 +29,7 @@ class ResgisterByAccount extends Component {
         this.toggleShowPassword = this.toggleShowPassword.bind(this);
         this.confirmPasswordToast = this.confirmPasswordToast.bind(this);
         this.switchUserType = this.switchUserType.bind(this);
+        this.submitRegisterInfo = this.submitRegisterInfo.bind(this);
     };
 
 
@@ -53,9 +54,8 @@ class ResgisterByAccount extends Component {
         if(this.state.account && this.state.confirmPassword) {
             // 判断密码和确认密码是否一致，否则Toast提示
             if(this.state.password === this.state.confirmPassword) {
-                // 注册成功后Toast提示，并且直接使用当前账户登录
-                Toast.success(`注册成功! 新同学 ${this.state.account} 你好，已自动登录!`, 2);
-                this.props.login(this.state.account);
+                // 注册
+                this.submitRegisterInfo();
             }
             else {
                 Toast.fail('密码输入不一致，请确认后再输入！', 2);
@@ -89,8 +89,59 @@ class ResgisterByAccount extends Component {
             :Toast.fail('密码输入不一致，请确认后再输入！',2)
     }
 
+    /**
+     *  点击不同的类型时调用的方法
+     *
+     * @param {*} value 0是普通用户，1是中介
+     * @memberof ResgisterByAccount
+     */
     switchUserType(value) {
         this.setState({userType: value})
+    }
+
+    /**
+     *  生成新账户模型，发送registerbyaccount POST请求
+     *
+     * @memberof ResgisterByAccount
+     */
+    submitRegisterInfo() {
+        // 按照数据库UserModel来定义,部分信息在注册时为默认值或空值,注册完成后可在个人中心更改
+        const userJson = {
+            'account': this.state.account,
+            'passWord': this.state.password,
+            'userType': this.state.userType,
+            'phoneNumber': 0,
+            'avatar': '',
+            'email': '',
+            'introduction': '',
+            'starLevel': -1,
+            'followList': [],
+            'houseList': [],
+            'onSaleList': [],
+            'orderList': []
+        };
+        
+        // 转换为Json字符串
+        const data = JSON.stringify(userJson);
+        
+        Toast.loading('正在注册...');
+
+        // 发送 registerbyaccount POST请求，注册新账号
+        fetch('/registerbyaccount', {
+            method:'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body:data
+          }).then(response => response.json())
+          .then(data => {
+            console.log(data);
+            Toast.hide();
+            this.props.login(this.state.account);
+            // 注册成功后Toast提示，并且直接使用当前账户登录
+            Toast.success(`注册成功! 新同学 ${this.state.account} 你好，已自动登录!`, 2);
+          });
     }
 
     render() {

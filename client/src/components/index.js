@@ -16,7 +16,7 @@ class Index extends Component {
     }
 
     componentDidMount() {
-        this.showList();
+        // this.showList();
     }
 
     showList() {
