@@ -21,6 +21,7 @@ class ResgisterByAccount extends Component {
             account: '',
             password: '',
             confirmPassword: '',
+            agentCode: '',
             showPassword: false,
             userType: 0
         };
@@ -55,7 +56,13 @@ class ResgisterByAccount extends Component {
             // 判断密码和确认密码是否一致，否则Toast提示
             if(this.state.password === this.state.confirmPassword) {
                 // 注册
-                this.submitRegisterInfo();
+                if(this.state.userType) {
+                    this.state.agentCode ? this.submitRegisterInfo()
+                    : Toast.fail('注册中介用户必须输入中介认证编码,请输入后再次注册~')
+                }
+                else {
+                    this.submitRegisterInfo();
+                }
             }
             else {
                 Toast.fail('密码输入不一致，请确认后再次输入~', 2);
@@ -110,16 +117,8 @@ class ResgisterByAccount extends Component {
             account: this.state.account,
             passWord: this.state.password,
             userType: this.state.userType,
+            agentCode: this.state.agentCode,
             phoneNumber: 0,
-            avatar: '',
-            email: '',
-            introduction: '',
-            tagList: [],
-            starLevel: -1,
-            followList: [],
-            houseList: [],
-            onSaleList: [],
-            orderList: {}
         };
         
         // 转换为Json字符串
@@ -183,7 +182,7 @@ class ResgisterByAccount extends Component {
 
                 {/* 账号输入框 */}
                 <InputItem placeholder="请输入账号" clear="true" onChange={value=>this.inputOnchange(value, 'account')}>
-                    <i className="iconfont icon-yonghutouxiang register_by_account_inputicon"></i>
+                    <i className="iconfont icon-zhuce register_by_account_inputicon"></i>
                 </InputItem>
 
                 {/* 密码输入框 */}
@@ -205,7 +204,7 @@ class ResgisterByAccount extends Component {
                             extra={confirmPasswordExtra}
                             onExtraClick={this.confirmPasswordToast}
                             >
-                        <i className="iconfont icon-mima register_by_account_inputicon"></i>
+                        <i className="iconfont icon-querenmima register_by_account_inputicon"></i>
                     </InputItem>
                     :null
                 }
@@ -227,6 +226,16 @@ class ResgisterByAccount extends Component {
                         }
                     </List>
                 </div>
+
+                {
+                    this.state.userType ? 
+                        <InputItem placeholder="请输入中介认证编码"
+                        onChange={value=>this.inputOnchange(value, 'agentCode')}
+                        >
+                            <i className="iconfont icon-yuzhuceqiye register_by_account_inputicon"></i>
+                        </InputItem>
+                    : null
+                }
 
                 {/* 注册按钮 */}
                 <Button className="register_by_account_button" type="primary" onClick={this.onSubmitClick}>注册</Button>

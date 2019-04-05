@@ -33,35 +33,41 @@ var User = new mongoose.Schema({
     // 用户类别
     userType: {type: Number},
 
+    // 中介编号
+    agentCode: {type: String},
+
+    // 中介是否认证通过
+    isCertificationPassed: {type: Boolean, default: false},
+
     // 手机号
     phoneNumber: {type: Number},
 
     // 头像
-    avatar: {type: String},
+    avatar: {type: String, default: ''},
 
     // 邮箱
-    email: {type: String},
+    email: {type: String, default: ''},
 
     // 用户简介
-    introduction: {type: String},
+    introduction: {type: String, default: ''},
 
     // 用户标签列表
-    tagList: {type: Array},
+    tagList: {type: Array, default: []},
 
     // 用户星级
-    starLevel: {type: Number},
+    starLevel: {type: Number, default: -1},
 
     // 关注房源列表
-    followList: {type: Array},
+    followList: {type: Array, default: []},
 
     // 所有已发布房源列表(包括在售和已售)
-    houseList: {type: Array},
+    houseList: {type: Array, default: []},
 
     // 在售房源列表
-    onSaleList: {type: Array},
+    onSaleList: {type: Array, default: []},
 
     // 订单列表
-    orderList: {type: Object}
+    orderList: {type: Object, default: {}}
 })
 
 // 整个优购房模型
