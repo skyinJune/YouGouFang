@@ -2,3 +2,10 @@
     background-color: #fff;
     padding: .15rem .15rem;
 }
+
+.second_info_midThree {
+    width: 33.33%;
+    float: left;
+    text-align: center;
+    color: #888;
+}

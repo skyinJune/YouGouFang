@@ -12,7 +12,9 @@ class SecondInfo extends Component {
     render() {
         return (
             <div className="second_info_wrapper">
-                second_info_wrapper
+                <div className="second_info_midThree">星级</div>
+                <div className="second_info_midThree">关注数</div>
+                <div className="second_info_midThree">粉丝数</div>
             </div>
         )
     }

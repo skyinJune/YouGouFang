@@ -67,7 +67,7 @@ var User = new mongoose.Schema({
     onSaleList: {type: Array, default: []},
 
     // 订单列表
-    orderList: {type: Object, default: {}}
+    orderList: {type: Array, default: []}
 })
 
 // 整个优购房模型
