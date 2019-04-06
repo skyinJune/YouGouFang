@@ -1,0 +1,48 @@
+.basicinfo_wrapper {
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+    padding: .15rem .15rem;
+}
+
+.basic_left_wrapper {
+    float: left;
+}
+
+.basicinfo_account {
+    font-size: .22rem;
+    font-weight: bolder;
+}
+
+.basicinfo_introduction {
+    color: #888;
+    margin-top: .15rem
+}
+
+.basic_right_wrapper {
+    float: right;
+    position: relative;
+}
+
+.basicinfo_avatar {
+    float: right;
+    width: .5rem;
+    height: .5rem;
+    border-radius: .05rem;
+    background-color: aqua
+}
+
+.basic_right_icon_wrapper {
+    height: .5rem;
+    width: .22rem;
+    position: relative;
+    float: right;
+    margin-left: .15rem;
+}
+
+.basic_right_icon {
+    position: absolute;
+    font-size: .22rem;
+    top: 50%;
+    margin-top: -.11rem;
+}

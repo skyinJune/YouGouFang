@@ -43,13 +43,13 @@ var User = new mongoose.Schema({
     phoneNumber: {type: Number},
 
     // 头像
-    avatar: {type: String, default: ''},
+    avatar: {type: String, default: 'http://yougoufang.oss-cn-hongkong.aliyuncs.com/YouGouFangDefultAvator.png'},
 
     // 邮箱
     email: {type: String, default: ''},
 
     // 用户简介
-    introduction: {type: String, default: ''},
+    introduction: {type: String, default: '你可以在这里写一段你的简介~'},
 
     // 用户标签列表
     tagList: {type: Array, default: []},
