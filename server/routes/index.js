@@ -28,4 +28,10 @@ router.post('/loginbyaccount', function(req, res, next) {
   })
 })
 
+router.post('/getUserInfo', function(req, res, next) {
+  const UserInfo = req.body;
+  const searchAccount = {'account': UserInfo.account};
+  api.loginByAccount(searchAccount).then(result => res.json(result));
+})
+
 module.exports = router;

@@ -118,7 +118,7 @@ class LoginByAccount extends Component {
             <div className="accountloginwrapper">
 
                 {/* 如果已登录直接跳转到首页 */}
-                {this.props.logStatus.isLogin? <Redirect to="/"/> : null}
+                {this.props.logStatus.isLogin? <Redirect to="/usercenter"/> : null}
 
                 {/* 如果点击了右上角的注册(redirectToRegister为true)直接跳注册页 */}
                 {this.state.redirectToRegister? <Redirect to="/register"/> : null}

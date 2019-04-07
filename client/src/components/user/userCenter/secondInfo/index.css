@@ -1,11 +1,21 @@
 .second_info_wrapper {
     background-color: #fff;
     padding: .15rem .15rem;
+    overflow: hidden;
+    border-top: #F8F8FF solid .01rem;
 }
 
 .second_info_midThree {
     width: 33.33%;
     float: left;
     text-align: center;
+}
+
+.second_info_itemNumber {
+    font-weight: bolder;
+    margin-bottom: .05rem;
+}
+
+.second_info_label {
     color: #888;
 }

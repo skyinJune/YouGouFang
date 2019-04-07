@@ -10,18 +10,32 @@ class BasicInfo extends Component {
     }
 
     render() {
+        const UserType = this.props.basicInfo.userType? '中介' : '普通用户';
+        const IsCertificationPassed = this.props.basicInfo.IsCertificationPassed? '已认证' : '认证中';
+        const userStatusIcon = this.props.basicInfo.IsCertificationPassed? 
+                'iconfont icon-webicon301 basicinfo_userStatus_icon'
+                :'iconfont icon-renzhengshenhe basicinfo_userStatus_icon';
         return (
             <div className="basicinfo_wrapper">
                 <div className="basic_left_wrapper">
-                    <div className="basicinfo_account">account我的小阔爱陆玥</div>
-                    <div className="basicinfo_introduction">introduction</div>
+                    <div className="basicinfo_account">{this.props.basicInfo.account}</div>
+                    <div className="basicinfo_introduction">{this.props.basicInfo.introduction}</div>
+                    <div className="basicinfo_userType_wrapper">
+                        <div className="basicinfo_userType">
+                            <i className="iconfont icon-yonghutouxiang basicinfo_userType_icon"/>{UserType}
+                        </div>
+                        <div className="basicinfo_userStatus">
+                        <i className={userStatusIcon}/>
+                            {IsCertificationPassed}
+                        </div>
+                    </div>
                 </div>
                 <div className="basic_right_wrapper">
                     <div className="basic_right_icon_wrapper">
                         <i className="iconfont icon-icon-- basic_right_icon"/>
                     </div>
-                    <div className="basicinfo_avatar">
-                    </div>
+                    <img className="basicinfo_avatar" src={this.props.basicInfo.avatar} alt="头像">
+                </img>
                 </div>
             </div>
         )

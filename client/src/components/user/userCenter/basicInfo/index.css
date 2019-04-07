@@ -19,6 +19,28 @@
     margin-top: .15rem
 }
 
+.basicinfo_userType_wrapper {
+    color: #888;
+    margin-top: .15rem
+}
+
+.basicinfo_userType {
+    float: left;
+}
+
+.basicinfo_userType_icon {
+    margin-right: .05rem;
+}
+
+.basicinfo_userStatus {
+    float: left;
+    margin-left: .25rem;
+}
+
+.basicinfo_userStatus_icon {
+    margin-right: .05rem;
+}
+
 .basic_right_wrapper {
     float: right;
     position: relative;
@@ -29,7 +51,8 @@
     width: .5rem;
     height: .5rem;
     border-radius: .05rem;
-    background-color: aqua
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .basic_right_icon_wrapper {

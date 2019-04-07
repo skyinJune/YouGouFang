@@ -10,11 +10,30 @@ class SecondInfo extends Component {
     }
 
     render() {
+        const ItemsInfo = [
+            { value: 0, label: '星级', key: 'starLevel'},
+            { value: 1, label: '关注数', key: 'followList'},
+            { value: 2, label: '粉丝数', key: 'fansList'}
+        ];
+        const secondInfo = this.props.secondInfo;
         return (
             <div className="second_info_wrapper">
-                <div className="second_info_midThree">星级</div>
-                <div className="second_info_midThree">关注数</div>
-                <div className="second_info_midThree">粉丝数</div>
+                {
+                    ItemsInfo.map((item)=>
+                        <div className="second_info_midThree" key={item.key}>
+                            <div className="second_info_itemNumber">
+                                {
+                                    (typeof secondInfo[item.key]) === 'number' ? 
+                                    secondInfo[item.key]
+                                    :secondInfo[item.key].length
+                                }
+                            </div>
+                            <div className="second_info_label">
+                                {item.label}
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         )
     }

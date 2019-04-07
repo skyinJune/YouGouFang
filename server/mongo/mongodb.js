@@ -51,14 +51,20 @@ var User = new mongoose.Schema({
     // 用户简介
     introduction: {type: String, default: '你可以在这里写一段你的简介~'},
 
+    // 关注列表
+    followList: {type: Array, default: []},
+
+    // 粉丝列表
+    fansList: {type: Array, default: []},
+
     // 用户标签列表
     tagList: {type: Array, default: []},
 
     // 用户星级
     starLevel: {type: Number, default: -1},
 
-    // 关注房源列表
-    followList: {type: Array, default: []},
+    // 收藏房源列表
+    collectionList: {type: Array, default: []},
 
     // 所有已发布房源列表(包括在售和已售)
     houseList: {type: Array, default: []},
