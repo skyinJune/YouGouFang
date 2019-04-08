@@ -169,7 +169,7 @@ class ResgisterByAccount extends Component {
             <div className="register_by_account_wrapper">
 
                 {/* 如果已登录直接跳转到首页 */}
-                {this.props.logStatus.isLogin? <Redirect to="/usercenter"/> : null}
+                {this.props.logStatus.isLogin? <Redirect to="/"/> : null}
 
                 {/* Header部分 */}
                 <div className="register_by_account_headIcon">

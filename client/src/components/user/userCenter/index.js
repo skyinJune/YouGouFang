@@ -58,6 +58,7 @@ class UserCenterIndex extends Component {
                 {
                     this.props.logInfo.isLogin? null : <Redirect to="/login"/>
                 }
+                
                 <BasicInfo basicInfo={basicInfo}></BasicInfo>
                 <SecondInfo secondInfo={secondInfo}></SecondInfo>
                 <List listInfo={listInfo}></List>
