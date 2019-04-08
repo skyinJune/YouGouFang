@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import './index.css'
+import { Link} from 'react-router-dom';
 
 class BasicInfo extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class BasicInfo extends Component {
                 'iconfont icon-webicon301 basicinfo_userStatus_icon'
                 :'iconfont icon-renzhengshenhe basicinfo_userStatus_icon';
         return (
+            <Link to="/usercenter/userCard">
             <div className="basicinfo_wrapper">
                 <div className="basic_left_wrapper">
                     <div className="basicinfo_account">{this.props.basicInfo.account}</div>
@@ -34,10 +36,12 @@ class BasicInfo extends Component {
                     <div className="basic_right_icon_wrapper">
                         <i className="iconfont icon-icon-- basic_right_icon"/>
                     </div>
-                    <img className="basicinfo_avatar" src={this.props.basicInfo.avatar} alt="头像">
-                </img>
+                    <div className="basicinfo_avatar_wrapper">
+                        <img className="basicinfo_avatar" src={this.props.basicInfo.avatar} alt=""/>
+                    </div>
                 </div>
             </div>
+            </Link>
         )
     }
 }

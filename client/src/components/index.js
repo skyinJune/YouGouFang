@@ -47,23 +47,25 @@ class Index extends Component {
 
 
     render() {
-        const redirectToLogin = <Redirect to="/login"/>;
-        const homePage = <div>
-                            <h2>hello, {this.props.logInfo.user}</h2>
-                            <h2>the current number is{this.props.num}</h2>
-                            <Button type='primary' onClick={this.props.add}>add</Button>
-                            <Button type="warning" onClick={this.props.remove}>remove</Button>
-                            <Button type="ghost" onClick={this.props.addAsync}>add in 2 seconds</Button>
-                            <Button type="warning" onClick={this.props.logout}>logout</Button>
-                        </div>;
-        return this.props.logInfo.isLogin? homePage :redirectToLogin
+        
+        return (
+            <div>
+                {this.props.logInfo.isLogin? null :<Redirect to="/login"/>}
+                <h2>hello, {this.props.logInfo.user}</h2>
+                <h2>the current number is{this.props.num}</h2>
+                <Button type='primary' onClick={this.props.add}>add</Button>
+                <Button type="warning" onClick={this.props.remove}>remove</Button>
+                {/* <Button type="ghost" onClick={this.props.addAsync}>add in 2 seconds</Button> */}
+                <Button type="warning" onClick={this.props.logout}>logout</Button>
+            </div>
+        )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         num: state.counter,
-        logInfo: state.login    
+        logInfo: state.login   
     }
   }
   const actionCreater = { add, remove, addAsync, logout};
