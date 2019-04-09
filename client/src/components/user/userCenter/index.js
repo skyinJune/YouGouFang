@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import './index.css'
 import { connect } from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import BasicInfo from './basicInfo'
 import SecondInfo from './secondInfo'
 import List from './list'
@@ -55,10 +54,6 @@ class UserCenterIndex extends Component {
             listAssign(listInfo, this.state.userData);
         return (
             <div className="usercenter_index_wrapper">
-                {
-                    this.props.logInfo.isLogin? null : <Redirect to="/login"/>
-                }
-                
                 <BasicInfo basicInfo={basicInfo}></BasicInfo>
                 <SecondInfo secondInfo={secondInfo}></SecondInfo>
                 <List listInfo={listInfo}></List>
@@ -69,7 +64,7 @@ class UserCenterIndex extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        logInfo: state.login    
+        logInfo: state.login
     }
   }
   UserCenterIndex = connect(mapStateToProps)(UserCenterIndex);

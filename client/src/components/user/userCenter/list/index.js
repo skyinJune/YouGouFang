@@ -25,7 +25,7 @@ class InfoList extends Component {
                 <List>
                     {
                         ItemInfo.map((item)=>
-                            <Link to={'/usercenter/' + item.key}
+                            <Link to={'/userCenter/' + item.key}
                                   key={item.value}
                             >
                                 <Item

@@ -1,31 +1,54 @@
 import React, {Component} from 'react';
-import { Tabs, Badge } from 'antd-mobile';
+import { TabBar } from 'antd-mobile';
+import './index.css'
 
 const tabs = [
-    { title: <Badge>首页</Badge> },
-    { title: <Badge text={'今日(20)'}>发现</Badge> },
-    { title: <Badge >发布</Badge> },
-    { title: <Badge dot>消息</Badge> },
-    { title: <Badge dot>我的</Badge> },
-  ];
+    {title: '首页', icon: '', selectedIcon: '', to: '/' },
+    {title: '发现', icon: '', selectedIcon: '', to: '/explorePage' },
+    {title: '发布', icon: '', selectedIcon: '', to: '/publishPage' },
+    {title: '消息', icon: '', selectedIcon: '', to: '/messagePage' },
+    {title: '我的', icon: '', selectedIcon: '', to: '/userCenter' },
+];
 
 class BottomNavi extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            selected: '/'
         }
     }
 
     render() {
         return (
-            <div>
-                <Tabs tabs={tabs}
-                    initialPage={1}
-                    onChange={(tab, index) => { console.log('onChange', index, tab); }}
-                    onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
-                    >
-                </Tabs>
+            <div className="bottomNavi_wrapper">
+                <TabBar>
+                    {
+                        tabs.map((item)=> 
+                            <TabBar.Item
+                                title={item.title}
+                                selectedIcon={item.selectedIcon}
+                                key={item.to}
+                                onPress={()=>{
+                                    this.setState({selected: item.to});
+                                    this.props.history.push(item.to);
+                                }}
+                                selected={this.state.selected === item.to}
+                                icon={<div style={{
+                                    width: '22px',
+                                    height: '22px',
+                                    background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat' }}
+                                  />}
+                                  // eslint-disable-next-line
+                                selectedIcon={<div style={{
+                                    width: '22px',
+                                    height: '22px',
+                                    background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat' }}
+                                  />}
+
+                            />
+                        )
+                    }
+                </TabBar>
             </div>
         )
     }
