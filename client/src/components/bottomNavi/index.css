@@ -3,3 +3,41 @@
     bottom: 0;
     width: 100%;
 }
+
+.bottomNavi_tabIcon {
+    font-size: .22rem;
+}
+
+.icon_selected {
+    color: #108ee9
+}
+
+.center_publish_wrapper {
+    position: fixed;
+    left: 50%;
+    margin-left: -.305rem;
+    bottom: .1rem;
+    z-index: 10;
+}
+
+.center_publish_word {
+    color: #888;
+    font-size: .12rem;
+    text-align: center;
+
+}
+
+.center_publish_icon_wrapper {
+    padding: .1rem;
+    background-color: #fff;
+    border-radius: .25rem;
+}
+
+.center_publish_icon {
+    font-size: .35rem;
+    color: #888;
+}
+
+.center_publish_icon_jiahao {
+    color: #108ee9;
+}
