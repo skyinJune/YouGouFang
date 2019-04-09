@@ -8,6 +8,12 @@ import {Toast} from 'antd-mobile'
 import 'whatwg-fetch'
 import {listAssign} from '../../../utils'
 
+/**
+ *  用户中心页
+ *
+ * @class UserCenterIndex
+ * @extends {Component}
+ */
 class UserCenterIndex extends Component {
     constructor(props) {
         super(props);
@@ -16,12 +22,24 @@ class UserCenterIndex extends Component {
         }
         this.fetchUserInfo = this.fetchUserInfo.bind(this);
     }
+
+    /**
+     *  页面挂载而未渲染时发送请求
+     *
+     * @memberof UserCenterIndex
+     */
     componentDidMount() {
         this.fetchUserInfo();
     }
 
+    /**
+     *  发送请求的函数
+     *
+     * @memberof UserCenterIndex
+     */
     fetchUserInfo() {
 
+        // 发送请求时的加载态
         Toast.loading('加载用户数据...');
 
         const logInfo = {
@@ -40,33 +58,47 @@ class UserCenterIndex extends Component {
             body:data
         }).then(response => response.json())
         .then(data=>{
+            // 将取到的数据存入state
             this.setState({userData: data});
+
+            // 取到数据之后隐藏加载态
             Toast.hide();
         })
     }
 
     render() {
+
+        // 将请求到的数据分发给每个组件
         let basicInfo = {account: '', avatar: '', introduction: '', userType: 0, isCertificationPassed: false},
             secondInfo = {starLevel: -1, followList: [], fansList:[]},
             listInfo = {collectionList: [], houseList: [], orderList: []};
             listAssign(basicInfo, this.state.userData);
             listAssign(secondInfo, this.state.userData);
             listAssign(listInfo, this.state.userData);
+
         return (
             <div className="usercenter_index_wrapper">
+                {/* 用户基本信息组件 */}
                 <BasicInfo basicInfo={basicInfo}></BasicInfo>
+
+                {/* 用户第二信息 */}
                 <SecondInfo secondInfo={secondInfo}></SecondInfo>
+
+                {/* 用户的列表信息 */}
                 <List listInfo={listInfo}></List>
             </div>
         )
     }
 }
 
+// 从redux中取出登录信息
 const mapStateToProps = (state) => {
     return {
         logInfo: state.login
     }
   }
-  UserCenterIndex = connect(mapStateToProps)(UserCenterIndex);
+
+//   将登录信息以props的形式传入
+UserCenterIndex = connect(mapStateToProps)(UserCenterIndex);
 
 export default UserCenterIndex;

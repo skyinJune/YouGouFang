@@ -2,6 +2,12 @@ import React, {Component} from 'react'
 import './index.css'
 import { Link} from 'react-router-dom';
 
+/**
+ *  用户基本信息组件
+ *
+ * @class BasicInfo
+ * @extends {Component}
+ */
 class BasicInfo extends Component {
     constructor(props) {
         super(props);

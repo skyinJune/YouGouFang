@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import './index.css'
 
+/**
+ *  用户第二信息组件
+ *
+ * @class SecondInfo
+ * @extends {Component}
+ */
 class SecondInfo extends Component {
     constructor(props) {
         super(props);
@@ -10,6 +16,7 @@ class SecondInfo extends Component {
     }
 
     render() {
+        // 第二信息
         const ItemsInfo = [
             { value: 0, label: '星级', key: 'starLevel'},
             { value: 1, label: '关注数', key: 'followList'},

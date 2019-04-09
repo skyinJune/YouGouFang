@@ -14,13 +14,24 @@ class App extends Component {
       <div>
         <div>
             <Switch>
+                {/* 主页面的子页面首页的路由 */}
                 <Route path='/' exact component={HomePage}/>
+
+                {/* 主页面的子页面发现页的路由 */}
                 <Route path='/explorePage' component={ExplorePage}/>
+
+                {/* 主页面的子页面发布页的路由 */}
                 <Route path='/publishPage' component={PublishPage}/>
+
+                {/* 主页面的子页面消息页的路由 */}
                 <Route path='/messagePage' component={MessagePage}/>
+
+                {/* 主页面的子页面用户页的路由 */}
                 <Route path='/userCenter' component={UserCenter}/>
             </Switch>
         </div>
+
+        {/* 底部tab组件 需要把history传进去才能用history的方法 */}
         <BottomNavi history={this.props.history}></BottomNavi>
       </div>
     );

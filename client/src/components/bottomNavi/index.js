@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { TabBar } from 'antd-mobile';
 import './index.css'
 
+// Tab信息
 const tabs = [
     {title: '首页', icon: '', selectedIcon: '', to: '/' },
     {title: '发现', icon: '', selectedIcon: '', to: '/explorePage' },
@@ -10,6 +11,12 @@ const tabs = [
     {title: '我的', icon: '', selectedIcon: '', to: '/userCenter' },
 ];
 
+/**
+ *  底部Tab导航组件
+ *
+ * @class BottomNavi
+ * @extends {Component}
+ */
 class BottomNavi extends Component {
     constructor(props) {
         super(props);
@@ -24,6 +31,7 @@ class BottomNavi extends Component {
                 <TabBar>
                     {
                         tabs.map((item)=> 
+                            // 每一个Tab的信息
                             <TabBar.Item
                                 title={item.title}
                                 selectedIcon={item.selectedIcon}

@@ -4,6 +4,12 @@ import {List} from 'antd-mobile'
 import { Link} from 'react-router-dom';
 const Item = List.Item;
 
+/**
+ *  用户列表信息组件
+ *
+ * @class InfoList
+ * @extends {Component}
+ */
 class InfoList extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +18,7 @@ class InfoList extends Component {
     }
 
     render() {
+        // 列表信息
         const ItemInfo = [
             { value: 0, label: '我收藏的', key: 'collectionList', thumb: 'iconfont icon-shoucang'},
             { value: 1, label: '我发布的', key: 'houseList', thumb: 'iconfont icon-icon'},
@@ -23,7 +30,8 @@ class InfoList extends Component {
         return (
             <div className="list_wrapper">
                 <List>
-                    {
+                    {   
+                        // 每个列表信息，都由一个<Link>包裹
                         ItemInfo.map((item)=>
                             <Link to={'/userCenter/' + item.key}
                                   key={item.value}
