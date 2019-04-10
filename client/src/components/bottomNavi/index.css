@@ -41,3 +41,12 @@
 .center_publish_icon_jiahao {
     color: #108ee9;
 }
+
+.model_item {
+    text-align: center;
+    margin-left: -.2rem;
+}
+
+.modal_icon {
+    margin-right: .1rem;
+}

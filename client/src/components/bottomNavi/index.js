@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { TabBar, Popover } from 'antd-mobile';
+import { TabBar, Modal, List } from 'antd-mobile';
 import './index.css'
 
 // Tab信息
@@ -10,6 +10,11 @@ const tabs = [
     {title: '消息', icon: 'icon-iconfontzhizuobiaozhun023110', to: '/messagePage' },
     {title: '我的', icon: 'icon-wode', to: '/userCenter' },
 ];
+
+const publishItemInfo = [
+    {title: '发布售房', icon: 'icon-renminbi', to: '/publishPage/sellPage'},
+    {title: '发布租房', icon: 'icon-fangwuzhuangtai-zu', to: '/publishPage/rentPage'},
+]
 
 /**
  *  底部Tab导航组件
@@ -27,7 +32,6 @@ class BottomNavi extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <div className="bottomNavi_wrapper">
@@ -49,34 +53,46 @@ class BottomNavi extends Component {
                                     }}
                                     selected={this.state.selected === item.to}
                                     icon={<i className={item.icon + ' iconfont bottomNavi_tabIcon'}/>}
-                                    selectedIcon={<i className={item.icon + ' iconfont bottomNavi_tabIcon icon_selected'}/>}
+                                    selectedIcon={
+                                    <i className={item.icon + ' iconfont bottomNavi_tabIcon icon_selected'}/>}
 
                                 />
                             )
                         }
                     </TabBar>
                 </div>
-                <Popover mask={true}
-                    align={{
-                        overflow: { adjustY: true, adjustX: true },
-                        offset: [-10, 10],
-                      }}
-                    overlay={[
-                        (<Popover.Item>发布售房</Popover.Item>),
-                        (<Popover.Item>发布租房</Popover.Item>)
-                    ]}
-                    onVisibleChange={()=> {
-                        this.setState({publishClicked: !this.state.publishClicked});
-                        }}
-                >
-                    <div className="center_publish_wrapper" 
-                        >
-                        <div className="center_publish_icon_wrapper">
-                            <i className={(this.state.publishClicked? 'icon-cuo' : 'icon-jiahao2fill center_publish_icon_jiahao') + ' iconfont center_publish_icon'}/>
-                        </div>
-                        <div className="center_publish_word">发布</div>
+                <div className="center_publish_wrapper" 
+                    onClick={()=>this.setState({publishClicked: !this.state.publishClicked})}>
+                    <div className="center_publish_icon_wrapper">
+                        <i className={(this.state.publishClicked? 'icon-cuo' 
+                        : 'icon-jiahao2fill center_publish_icon_jiahao') + ' iconfont center_publish_icon'}/>
                     </div>
-                </Popover>
+                    <div className="center_publish_word">发布</div>
+                </div>
+                <Modal
+                    transparent
+                    visible={this.state.publishClicked}
+                    onClose={()=>this.setState({publishClicked: !this.state.publishClicked})}
+                    animationType="slide"
+                >
+                    <List renderHeader={
+                        () => <div><i className="iconfont icon-fangzi01-copy modal_icon"/>选择发布类型</div>}
+                    >
+                        {
+                            publishItemInfo.map((item)=>(
+                                <List.Item key={item.to}>
+                                    <div className="model_item" onClick={()=>{
+                                                this.props.history.push(item.to);
+                                                this.setState({publishClicked: !this.state.publishClicked});
+                                            }}>
+                                        <i className={'iconfont modal_icon ' + item.icon}/>
+                                        {item.title}
+                                    </div>
+                                </List.Item>
+                            ))
+                        }
+                    </List>
+                </Modal>
             </div>
         )
     }

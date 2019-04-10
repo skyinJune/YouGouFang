@@ -4,7 +4,6 @@ import {Route, Switch} from 'react-router-dom';
 import BottomNavi from './components/bottomNavi';
 import HomePage from './components/homePage';
 import ExplorePage from './components/explorePage';
-import PublishPage from './components/publishPage';
 import MessagePage from './components/messagePage';
 import UserCenter from './components/user';
 
@@ -19,9 +18,6 @@ class App extends Component {
 
                 {/* 主页面的子页面发现页的路由 */}
                 <Route path='/explorePage' component={ExplorePage}/>
-
-                {/* 主页面的子页面发布页的路由 */}
-                <Route path='/publishPage' component={PublishPage}/>
 
                 {/* 主页面的子页面消息页的路由 */}
                 <Route path='/messagePage' component={MessagePage}/>
