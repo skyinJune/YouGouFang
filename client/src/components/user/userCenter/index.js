@@ -29,7 +29,13 @@ class UserCenterIndex extends Component {
      * @memberof UserCenterIndex
      */
     componentDidMount() {
-        this.fetchUserInfo();
+        if(this.props.logInfo.isLogin) {
+            this.fetchUserInfo();
+        }
+        else {
+            this.props.history.push('/login')
+        }
+        
     }
 
     /**

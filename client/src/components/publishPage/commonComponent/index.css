@@ -1,0 +1,10 @@
+.common_navbar_wrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 101;
+}
+
+.children_wrapper {
+    margin-top: .45rem;
+}
