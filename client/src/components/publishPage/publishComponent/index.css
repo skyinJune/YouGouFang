@@ -1,0 +1,48 @@
+.common_navbar_wrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 101;
+}
+
+.main_wrapper {
+    margin-top: .45rem;
+}
+
+.common_imagePicker_wrapper {
+    background-color: #fff;
+}
+
+.common_imagePicker_title {
+    color: #CDC9C9;
+    font-size: .12rem;
+}
+
+.common_pickerList_rentType_swiper {
+    background-color: #fff;
+}
+
+.swiper-wrapper {
+    width: auto;
+    padding: .1rem;
+    background-color: #fff;
+}
+
+.swiper-slide {
+    height: .35rem;
+    width: .7rem;
+    text-align: center;
+    line-height: .35rem;
+    border-radius: .05rem;
+    margin-right: .1rem;
+}
+
+.swiper-slide-selected {
+    background-color: #108ee9;
+    color: #fff;
+}
+
+.swiper-slide-Unselected {
+    background-color: #D9D9D9;
+    color: #888;
+}

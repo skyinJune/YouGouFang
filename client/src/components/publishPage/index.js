@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import RentPage from './rentPage';
-import SellPage from './sellPage';
+import PublishComponent from './publishComponent'
 
 /**
  *  发布页的组件
@@ -21,8 +20,8 @@ class PublishPage extends Component {
         return (
             <div>
                 <Switch>
-                    <Route path='/publishPage/sellPage' component={SellPage}/>
-                    <Route path='/publishPage/rentPage' component={RentPage}/>
+                    <Route path='/publishPage/sellPage' component={PublishComponent}/>
+                    <Route path='/publishPage/rentPage' component={PublishComponent}/>
                 </Switch>
             </div>
         )
