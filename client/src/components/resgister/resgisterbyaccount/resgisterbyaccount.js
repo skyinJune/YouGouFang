@@ -173,7 +173,7 @@ class ResgisterByAccount extends Component {
 
                 {/* Header部分 */}
                 <div className="register_by_account_headIcon">
-                    <Icon type="left" size="lg"/>
+                    <Icon type="left" size="lg" onClick={()=>this.props.history.goBack()}/>
                     <i className="iconfont icon-shouji register_by_account_phoneIcon">手机号注册</i>
                 </div>
 

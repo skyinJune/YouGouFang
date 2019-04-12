@@ -19,12 +19,10 @@ class LoginByAccount extends Component {
             account: '',
             password: '',
             showPassword: false,
-            redirectToRegister: false
         };
         this.inputOnchange = this.inputOnchange.bind(this);
         this.onSubmitClick = this.onSubmitClick.bind(this);
         this.toggleShowPassword = this.toggleShowPassword.bind(this);
-        this.onRedirectToRegister = this.onRedirectToRegister.bind(this);
         this.submitLogInfo = this.submitLogInfo.bind(this);
     }
 
@@ -62,16 +60,6 @@ class LoginByAccount extends Component {
         // 点击眼睛时切换密码的明文和非明文显示方式
         this.state.showPassword ? this.setState({showPassword: false})
             : this.setState({showPassword: true});
-    }
-
-    /**
-     *  点击右上角注册时调用的方法
-     *
-     * @memberof LoginByAccount
-     */
-    onRedirectToRegister() {
-        // 让 Redirect 渲染出来，直接跳转到注册页
-        this.setState({redirectToRegister: true});
     }
 
     submitLogInfo() {
@@ -120,13 +108,10 @@ class LoginByAccount extends Component {
                 {/* 如果已登录直接跳转到首页 */}
                 {this.props.logStatus.isLogin? <Redirect to="/"/> : null}
 
-                {/* 如果点击了右上角的注册(redirectToRegister为true)直接跳注册页 */}
-                {this.state.redirectToRegister? <Redirect to="/register"/> : null}
-
                 {/* Header部分 */}
                 <div className="acountloginheader">
-                    <Icon type="left" size="lg"/>
-                    <i className="login_by_account_header_register iconfont icon-zhuce" onClick={this.onRedirectToRegister}>注册新账号</i>
+                    <Icon type="left" size="lg" onClick={()=> this.props.history.push('/')}/>
+                    <i className="login_by_account_header_register iconfont icon-zhuce" onClick={()=> this.props.history.push('/register')}>注册新账号</i>
                 </div>
 
                 {/* Title部分 */}

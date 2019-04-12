@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import PublishComponent from './publishComponent'
+import CommunitySelect from './communitySelect'
 
 /**
  *  发布页的组件
@@ -22,6 +23,7 @@ class PublishPage extends Component {
                 <Switch>
                     <Route path='/publishPage/sellPage' component={PublishComponent}/>
                     <Route path='/publishPage/rentPage' component={PublishComponent}/>
+                    <Route path='/publishPage/communitySelect' component={CommunitySelect}/>
                 </Switch>
             </div>
         )

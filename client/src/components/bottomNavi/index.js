@@ -26,7 +26,7 @@ class BottomNavi extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: '/',
+            selected: this.props.history.location.pathname,
             publishClicked: false
         }
     }

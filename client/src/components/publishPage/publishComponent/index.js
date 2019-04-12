@@ -109,7 +109,11 @@ class PublishComponent extends Component {
                             </div>
                         }
                         <List>
-                            <List.Item extra={<div>请输入小区名称</div>} arrow="horizontal">位置</List.Item>
+                            <List.Item 
+                                extra={<div>请输入小区名称</div>} 
+                                arrow="horizontal"
+                                onClick={()=>this.props.history.push('/publishPage/communitySelect')}
+                            >位置</List.Item>
                             <Picker
                                 onOk={e => console.log('ok', e)}
                                 onDismiss={e => console.log('dismiss', e)}
