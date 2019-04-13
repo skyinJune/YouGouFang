@@ -7,15 +7,16 @@ class CommunitySelect extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentCity : ''
+            currentCity: '',
+            searchResult: []
         }
+        this.onLocalSearch = this.onLocalSearch.bind(this);
     }
     
     componentDidMount() {
+        var _this = this;
         // 创建地图实例
         var map = new BMap.Map("allmap");
-        var point = new BMap.Point(116.331398,39.897445);
-        map.centerAndZoom(point,12);
 
         // 获得所在城市
         let getCity = (result)=>{
@@ -27,13 +28,29 @@ class CommunitySelect extends Component {
 
         // 获得当前精确地理位置
         var geolocation = new BMap.Geolocation();
-        let getPosition = ()=> geolocation.getCurrentPosition((r)=>{
-            console.log('您的位置：'+r.point.lng+','+r.point.lat);
+        geolocation.getCurrentPosition((r)=>{
+            var point = new BMap.Point(r.point.lng, r.point.lat);
+            map.centerAndZoom(point,12);
         });
-        getPosition();
+
+        var options = {
+            onSearchComplete: (results)=>_this.onLocalSearch(results)
+        };
+        var local = new BMap.LocalSearch(map, options);
+        local.search("公园");
+    }
+
+    onLocalSearch(results) {
+        var s = [];
+        for (var i = 0; i < results.getCurrentNumPois(); i ++){
+            // s.push(results.getPoi(i).title + ", " + results.getPoi(i).address);
+            s.push({title: results.getPoi(i).title, address: results.getPoi(i).address})
+        }
+        this.setState({searchResult: s});
     }
 
     render() {
+        console.log(this.state)
         return (
             <div className="communitySelect_wrapper">
                 <div className="communitySelect_header_wrapper">
