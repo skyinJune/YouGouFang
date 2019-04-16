@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import Swiper from 'swiper/dist/js/swiper.js'
 import 'swiper/dist/css/swiper.min.css'
 import {NavBar, Icon, List, InputItem, TextareaItem,
-    ImagePicker, WingBlank, WhiteSpace, Picker} from 'antd-mobile';
+    ImagePicker, WingBlank, WhiteSpace, Picker} from 'antd-mobile'
 import './index.css'
+import {connect } from 'react-redux'
 
 const rentTypeInfo = [
     {title: '整租', type: 'entireRent'},
@@ -110,7 +111,10 @@ class PublishComponent extends Component {
                         }
                         <List>
                             <List.Item 
-                                extra={<div>请输入小区名称</div>} 
+                                extra={<div>
+                                        {Object.keys(this.props.selectedCommunity).length === 0 
+                                            ? '请输入小区名称' : this.props.selectedCommunity.state.title}
+                                        </div>}
                                 arrow="horizontal"
                                 onClick={()=>this.props.history.push('/publishPage/communitySelect')}
                             >位置</List.Item>
@@ -127,5 +131,13 @@ class PublishComponent extends Component {
         )
     }
 }
+
+// 引入store中的state
+const mapStateToProps = (state) => {
+    return {selectedCommunity: state.communitySelect}
+}
+
+// 把action和store一起通过props绑定到这个组件上
+PublishComponent = connect(mapStateToProps)(PublishComponent);
 
 export default PublishComponent;

@@ -1,8 +1,10 @@
 import { combineReducers} from 'redux'
-import counter from './counter'
 import login from './login'
+import citySelect from './citySelect'
+import communitySelect from './communitySelect'
  
-export default combineReducers({ 
-    counter, 
-    login
+export default combineReducers({
+    login,
+    citySelect,
+    communitySelect
 })

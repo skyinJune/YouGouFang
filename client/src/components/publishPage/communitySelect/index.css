@@ -2,6 +2,11 @@
     background-color: #fff;
     overflow: hidden;
     padding-bottom: .1rem;
+    position: fixed;
+    top:0;
+    z-index: 1001;
+    width: 100%;
+    border-bottom: #F8F8FF solid .01rem;
 }
 
 .communitySelect_header_main {
@@ -11,13 +16,14 @@
 }
 
 .communitySelect_header_city {
-    height: .5rem;
-    line-height: .5rem;
+    float: left;
+    height: .3rem;
+    line-height: .3rem;
+    margin-top: .05rem;
     background-color: #efeff4;
     width: .7rem;
-    margin-left: .1rem;
+    margin-left: .05rem;
     font-weight: bolder;
-    float: left;
 }
 
 .communitySelect_header_search {
@@ -27,5 +33,9 @@
 .communitySelect_header_city_icon {
     font-size: .12rem;
     color: #888;
-    margin-left: .1rem;
+    margin-left: .05rem;
+}
+
+.communitySelect_result_wrapper {
+    margin-top: .67rem;
 }
