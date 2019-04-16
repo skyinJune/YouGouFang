@@ -82,7 +82,7 @@ class CommunitySelect extends Component {
                     <WhiteSpace/>
                     <WingBlank>
                         <div className="communitySelect_header_main">
-                            <div className="communitySelect_header_city" onClick={()=>console.log('city select clicked')}>
+                            <div className="communitySelect_header_city" onClick={()=>this.props.history.push('/citySelect')}>
                                 {this.state.currentCity}
                                 <i className="iconfont icon-tubiaozhizuo- communitySelect_header_city_icon"/>
                             </div>

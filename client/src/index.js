@@ -5,6 +5,7 @@ import App from './App';
 import Login from './components/login/loginbyaccount/loginbyaccount';
 import Register from './components/resgister/resgisterbyaccount/resgisterbyaccount';
 import PublishPage from './components/publishPage';
+import CitySelect from './components/citySelect';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -26,6 +27,8 @@ ReactDOM.render(
                 <Route path='/register' component={Register}/>
 
                 <Route path='/publishPage' component={PublishPage}/>
+
+                <Route path='/citySelect' component={CitySelect}/>
 
                 {/* 主页路由 */}
                 <Route path='/' component={App}/>
