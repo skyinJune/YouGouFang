@@ -17,17 +17,12 @@
 
 .communitySelect_header_city {
     float: left;
-    height: .3rem;
-    line-height: .3rem;
-    margin-top: .05rem;
+    height: .44rem;
+    line-height: .44rem;
     background-color: #efeff4;
     width: .7rem;
     margin-left: .05rem;
     font-weight: bolder;
-}
-
-.communitySelect_header_search {
-    float: left;
 }
 
 .communitySelect_header_city_icon {
