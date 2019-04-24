@@ -109,11 +109,13 @@ class PublishComponent extends Component {
     onImageChange(files, type, index) {
         this.setState({images: files});
         if(type === 'add') {
-            const upLoadPath = files[0].file.lastModified + '-' + files[0].file.name;
-            this.upLoadToOSS(upLoadPath, files[0].file);
+            const newImage =  this.state.images[this.state.images.length-1].file;
+            const upLoadPath = newImage.lastModified + '-' + newImage.name;
+            this.upLoadToOSS(upLoadPath, newImage);
         }
         else {
-            const deleteImagePath = this.state.images[index].file.lastModified + '-' + this.state.images[index].file.name;
+            const deleteImage = this.state.images[index].file;
+            const deleteImagePath = deleteImage.lastModified + '-' + deleteImage.name;
             client.delete(deleteImagePath).then(res=>{
                 if(res.res.status === 204) {
                     let tempURLs = this.state.imageURLs;
@@ -125,10 +127,15 @@ class PublishComponent extends Component {
     }
 
     upLoadToOSS(upLoadPath, file) {
-        client.put(upLoadPath, file).then(res=>{
+        client.multipartUpload(upLoadPath, file, {
+            progress: function(p){
+                console.log(p)
+                this.progress = p*100
+            }
+        }).then(res=>{
             if(res.res.status === 200) {
                 let tempURLs = this.state.imageURLs;
-                tempURLs.push(res.url);
+                tempURLs.push(res.res.requestUrls[0]);
                 this.setState({imageURLs: tempURLs});
             }
         });
