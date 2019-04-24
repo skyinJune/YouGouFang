@@ -3,32 +3,33 @@ import {List, WingBlank, WhiteSpace, SearchBar} from 'antd-mobile'
 import './index.css'
 import BMap from 'BMap'
 import {connect } from 'react-redux'
-import {communitySelect } from '../../../actions'
+import {communitySelect, citySelect} from '../../../actions'
 
 class CommunitySelect extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentCity: '',
-            searchResult: []
+            searchResult: [],
+            isLocalCity: true
         }
         this.onLocalSearch = this.onLocalSearch.bind(this);
         this.getCurrentCity = this.getCurrentCity.bind(this);
         this.initLocalSearch = this.initLocalSearch.bind(this);
+        this.searchInSelectedCity = this.searchInSelectedCity.bind(this);
     }
     
     componentDidMount() {
-
         this.getCurrentCity();
-
-        this.initLocalSearch();
-   
+        if(!this.props.citySelected.state) {
+            this.initLocalSearch();
+        }
     }
 
     getCurrentCity() {
         // 获得所在城市
         let getCity = (result)=>{
-            var cityName = result.name;
+            var cityName = result.name.substring(0,result.name.length-1);
             this.setState({currentCity: cityName});
         }
         var myCity = new BMap.LocalCity();
@@ -62,6 +63,15 @@ class CommunitySelect extends Component {
 
     }
 
+    searchInSelectedCity(val) {
+        var _this = this;
+        var options = {
+            onSearchComplete: (results)=>_this.onLocalSearch(results)
+        };
+        var local = new BMap.LocalSearch(this.props.citySelected.state, options);
+        local.search(val);
+    }
+
     onLocalSearch(results) {
         var s = [];
         for (var i = 0; i < results.getCurrentNumPois(); i ++){
@@ -83,12 +93,19 @@ class CommunitySelect extends Component {
                     <WingBlank>
                         <div className="communitySelect_header_main">
                             <div className="communitySelect_header_city" onClick={()=>this.props.history.push('/citySelect')}>
-                                {this.state.currentCity}
+                                {this.props.citySelected.state||this.state.currentCity}
                                 <i className="iconfont icon-tubiaozhizuo- communitySelect_header_city_icon"/>
                             </div>
                             <SearchBar placeholder="请输入小区名称" 
                             onCancel={()=>this.props.history.goBack()}
-                            onChange={(val)=>this.initLocalSearch(val)}
+                            onChange={(val)=>{
+                                if(this.props.citySelected.state) {
+                                    this.searchInSelectedCity(val)
+                                }
+                                else {
+                                    this.initLocalSearch(val)
+                                }
+                            }}
                             showCancelButton={true}
                             />
                         </div>
@@ -120,11 +137,11 @@ class CommunitySelect extends Component {
 
 // 引入store中的state
 const mapStateToProps = (state) => {
-    return {logStatus: state.login}
+    return {citySelected: state.citySelect}
 }
 
 // 引入需要的action
-const actionCreater = { communitySelect};
+const actionCreater = {communitySelect, citySelect};
 
 // 把action和store一起通过props绑定到这个组件上
 CommunitySelect = connect(mapStateToProps,actionCreater)(CommunitySelect);

@@ -1,8 +1,14 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Icon} from 'antd-mobile'
-import { SearchBar, WhiteSpace, WingBlank, Flex, List } from 'antd-mobile'
+import { SearchBar, WhiteSpace, WingBlank, Flex, List, Toast } from 'antd-mobile'
 import './index.css'
+import {throttle} from '../../utils'
+import BMap from 'BMap'
+import {connect } from 'react-redux'
+import {citySelect} from '../../actions'
+
+
 const cityList = require('../../static/cityList.json').data;
 const CityListForSearch = [];
 Object.keys(cityList.cities).forEach((item)=>{CityListForSearch.push(...cityList.cities[item])});
@@ -15,13 +21,35 @@ class CitySelect extends Component {
             searchResult: [],
             navOffsetX: 0,
             currentLetter: '',
-            isMoving: false
+            isMoving: false,
+            currentCity: ''
         }
+        this.getCurrentCity = this.getCurrentCity.bind(this);
         this.onSearchWordChange = this.onSearchWordChange.bind(this);
         this.searchCity = this.searchCity.bind(this);
         this.onTouchStart = this.onTouchStart.bind(this);
         this.getCurrentLetter = this.getCurrentLetter.bind(this);
         this.scrollToCities = this.scrollToCities.bind(this);
+        this.onCitySelected = this.onCitySelected.bind(this);
+    }
+
+    componentDidMount() {
+        this.getCurrentCity();
+    }
+
+    getCurrentCity() {
+        let getCity = (result)=>{
+            var cityName = result.name;
+            this.setState({currentCity: cityName});
+            Toast.info('已定位到' + cityName, 1);
+        }
+        var myCity = new BMap.LocalCity();
+        myCity.get(getCity);
+    }
+
+    onCitySelected(city) {
+        this.props.citySelect(city);
+        this.props.history.goBack();
     }
 
     onSearchWordChange(val) {
@@ -50,7 +78,7 @@ class CitySelect extends Component {
         this.setState({navOffsetX}, ()=>{
             this.getCurrentLetter(y);
             this.setState({isMoving: true});
-            window.addEventListener('touchmove', this.onTouchMove, { passive: false });
+            window.addEventListener('touchmove', throttle(this.onTouchMove, 300), { passive: false });
             window.addEventListener('touchend', this.onTouchEnd);
         })
     }
@@ -102,7 +130,9 @@ class CitySelect extends Component {
                         {
                             this.state.searchResult.length !== 0?
                             this.state.searchResult.map((item)=>(
-                                <List.Item key={item.id}>
+                                <List.Item key={item.id}
+                                    onClick={()=>this.onCitySelected(item.name)}
+                                >
                                     {item.name}
                                 </List.Item>
                             ))
@@ -125,7 +155,16 @@ class CitySelect extends Component {
                                 direction="row"
                                 wrap="wrap"
                             >
-                                <div className="cityselect_cityCard">西安</div>
+                                <div className="cityselect_CurrentCityCard"
+                                    onClick={()=>this.onCitySelected(this.state.currentCity.substring(0,this.state.currentCity.length-1))}
+                                >
+                                    <i className="iconfont icon-dingwei"/>
+                                    {this.state.currentCity.substring(0,this.state.currentCity.length-1)}
+                                </div>
+                                <i className="iconfont icon-shuaxin cityselect_CurrentCity_refresh"
+                                    onClick={()=>this.getCurrentCity()}
+                                />
+                                
                             </Flex>
                         </WingBlank>
                         <WhiteSpace size="lg"/>
@@ -142,7 +181,12 @@ class CitySelect extends Component {
                             >
                                 {
                                     cityList.hotCities.map((item)=>(
-                                        <div key={item.id} className="cityselect_cityCard">{item.name}</div>
+                                        <div key={item.id} 
+                                            className="cityselect_cityCard"
+                                            onClick={()=>this.onCitySelected(item.name)}
+                                        >
+                                            {item.name}
+                                        </div>
                                     ))
                                 }
                             </Flex>
@@ -160,7 +204,9 @@ class CitySelect extends Component {
                                     </List.Item>
                                     {
                                         cityList.cities[item].map((item)=>(
-                                            <List.Item key={item.id}>
+                                            <List.Item key={item.id}
+                                                onClick={()=>this.onCitySelected(item.name)}
+                                            >
                                                 {item.name}
                                             </List.Item>
                                         ))
@@ -193,5 +239,16 @@ class CitySelect extends Component {
         )
     }
 }
+
+// 引入store中的state
+const mapStateToProps = (state) => {
+    return {citySelected: state.citySelect}
+}
+
+// 引入需要的action
+const actionCreater = {citySelect};
+
+// 把action和store一起通过props绑定到这个组件上
+CitySelect = connect(mapStateToProps,actionCreater)(CitySelect);
 
 export default CitySelect;

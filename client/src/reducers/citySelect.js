@@ -1,4 +1,4 @@
-function citySelect( state = '西安', action) {
+function citySelect( state = '', action) {
     switch (action.type) {
         case 'SELECTCITY' :
             return {state: action.selectedCity}

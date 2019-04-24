@@ -6,7 +6,7 @@
 }
 
 .main_wrapper {
-    margin-top: .45rem;
+    margin: .45rem 0;
 }
 
 .common_imagePicker_wrapper {
@@ -45,4 +45,20 @@
 .swiper-slide-Unselected {
     background-color: #D9D9D9;
     color: #888;
+}
+
+.pubish_tags_title {
+    color: #CDC9C9;
+    font-size: .12rem;
+}
+
+.pubish_tags_item {
+    margin: .05rem .05rem
+}
+
+.publish_button_wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 101;
 }

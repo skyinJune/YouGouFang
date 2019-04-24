@@ -23,6 +23,16 @@
     font-weight: bolder;
 }
 
+.cityselect_CurrentCityCard {
+    font-size: .16rem;
+    width: .55rem;
+    text-align: center;
+    padding: .05rem .1rem;
+    border-radius: .05rem;
+    border: #888 solid .01rem;
+    margin: .1rem .1rem
+}
+
 .cityselect_cityCard {
     font-size: .16rem;
     width: .45rem;
@@ -31,6 +41,11 @@
     border-radius: .05rem;
     border: #888 solid .01rem;
     margin: .1rem .1rem
+}
+
+.cityselect_CurrentCity_refresh {
+    font-size: .18rem;
+    color: #108ee9;
 }
 
 .cityselect_hotcity {
@@ -67,13 +82,13 @@
     position: fixed;
     top: .4rem;
     right: 0;
-    width: .35rem;
+    width: .25rem;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f5f5f9;
-    z-index: 101;
+    z-index: 109;
 }
 
 .cityselect_lable_wrapper {
