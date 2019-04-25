@@ -16,10 +16,19 @@ mongoose.connection.on("open", function () {
 // 房源模型
 var House = new mongoose.Schema({
     title: {type: String},
-    pictures: {type: Array},
-    type: {type: Array},
-    infomations: {type: Array},
-    description: {type: String}
+    description: {type: String},
+    imageURLs: {type: Array},
+    rentType: {type: String},
+    position: {type: Object},
+    price: {type: Number},
+    houseLayout: {type: String},
+    decorationDegree: {type: String},
+    houseArea: {type: Number},
+    checkInTime: {type: Date},
+    tagsList: {type: Array},
+    ownerAccount: {type: String},
+    isEntrust: {type: Boolean},
+    angentCode: {type: String}
 });
 
 // 用户模型

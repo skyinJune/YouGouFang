@@ -34,4 +34,11 @@ router.post('/getUserInfo', function(req, res, next) {
   api.loginByAccount(searchAccount).then(result => res.json(result));
 })
 
+router.post('/publishhouse', function(req, res, next) {
+  const newHouse = req.body;
+  api.createNewHouse(newHouse).then(result =>{
+    res.json(result);
+  })
+})
+
 module.exports = router;
