@@ -81,7 +81,7 @@ class PublishComponent extends Component {
             imageURLs: [],
             price: 0,
             rentType: 'entireRent',
-            houseLayoutValue: '',
+            houseLayoutValue: [],
             decorationDegreeValue: '',
             houseArea: 0,
             checkInTime: now,
@@ -229,6 +229,8 @@ class PublishComponent extends Component {
     }
 
     submitPublishInfo() {
+        let publishTime = new Date(Date.now());
+        publishTime = publishTime.toLocaleString();
         const publishInfo = {
             title: this.state.title,
             description: this.state.description,
@@ -237,13 +239,15 @@ class PublishComponent extends Component {
             position: this.props.allState.communitySelect.state,
             price: this.state.price,
             houseLayout: this.state.houseLayoutValue,
-            decorationDegree: this.state.decorationDegreeValue,
+            decorationDegree: this.state.decorationDegreeValue[0],
             houseArea: this.state.houseArea,
             checkInTime: this.state.checkInTime,
             tagsList: this.state.tagsList,
             ownerAccount: this.props.allState.login.user,
+            city: this.props.allState.citySelect.state,
             isEntrust: this.state.isEntrust,
-            angentCode: this.state.angentCode
+            angentCode: this.state.angentCode,
+            publishTime: publishTime
         };
         const data = JSON.stringify(publishInfo);
 
@@ -272,6 +276,7 @@ class PublishComponent extends Component {
     }
 
     render() {
+        console.log(this.props.allState);
         const isSellPage = this.props.history.location.pathname.indexOf('sellPage') >0;
         return (
             <div>

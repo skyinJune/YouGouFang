@@ -21,14 +21,16 @@ var House = new mongoose.Schema({
     rentType: {type: String},
     position: {type: Object},
     price: {type: Number},
-    houseLayout: {type: String},
+    houseLayout: {type: Array},
     decorationDegree: {type: String},
     houseArea: {type: Number},
     checkInTime: {type: Date},
     tagsList: {type: Array},
     ownerAccount: {type: String},
+    city: {type: String},
     isEntrust: {type: Boolean},
-    angentCode: {type: String}
+    angentCode: {type: String},
+    publishTime: {type: String}
 });
 
 // 用户模型
