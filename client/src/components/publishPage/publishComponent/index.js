@@ -3,7 +3,7 @@ import Swiper from 'swiper/dist/js/swiper.js'
 import 'swiper/dist/css/swiper.min.css'
 import {NavBar, Icon, List, InputItem, TextareaItem,
     ImagePicker, WingBlank, WhiteSpace, Picker, 
-    DatePicker, Tag, Flex, Button} from 'antd-mobile'
+    DatePicker, Tag, Flex, Button, Toast} from 'antd-mobile'
 import './index.css'
 import {connect } from 'react-redux'
 import OSS from 'ali-oss'
@@ -78,20 +78,27 @@ class PublishComponent extends Component {
             description: '',
             images: [],
             imageURLs: [],
+            price: 0,
             rentType: 'entireRent',
             houseLayoutValue: '',
             decorationDegreeValue: '',
             checkInTime: now,
-            tagsList: []
+            tagsList: [],
+            isSubmit: false
         }
         this.onInputChange = this.onInputChange.bind(this);
         this.onImageChange = this.onImageChange.bind(this);
         this.onTagsChange = this.onTagsChange.bind(this);
         this.onPublishClicked = this.onPublishClicked.bind(this);
         this.upLoadToOSS = this.upLoadToOSS.bind(this);
+        this.checkBeforePublish = this.checkBeforePublish.bind(this);
     }
 
     componentDidMount() {
+        if(!this.props.allState.login.isLogin) {
+            this.props.history.push('/login');
+            Toast.fail('登录后才可使用发布功能哦',2);
+        }
         new Swiper ('.swiper-container', {
             loop: false,  //循环
             autoplay: false,
@@ -100,6 +107,15 @@ class PublishComponent extends Component {
             freeModeMomentumBounce : false,
             slidesPerView :'auto'
         })
+    }
+
+    componentWillUnmount() {
+        if(!this.state.isSubmit) {
+            this.state.images.forEach(item=>{
+                const deleteItemPath = item.file.lastModified + '-' + item.file.name;
+                client.delete(deleteItemPath);
+            })
+        }
     }
 
     onInputChange(val, type) {
@@ -128,10 +144,10 @@ class PublishComponent extends Component {
 
     upLoadToOSS(upLoadPath, file) {
         client.multipartUpload(upLoadPath, file, {
-            progress: function(p){
-                console.log(p)
-                this.progress = p*100
-            }
+            progress: function(percentage) {
+                let fileloadingNum = Math.ceil(percentage * 100) + '%'
+                console.log(fileloadingNum) // 上传文件进度
+              }
         }).then(res=>{
             if(res.res.status === 200) {
                 let tempURLs = this.state.imageURLs;
@@ -153,12 +169,44 @@ class PublishComponent extends Component {
         this.setState({tagsList: temList});
     }
 
+    checkBeforePublish() {
+        let titleCheck, descriptionCheck,
+        imageURLsCheck, positionCheck,
+        priceCheck, houseLayoutValueCheck,
+        decorationDegreeValueCheck;
+        if(!this.state.title) {
+            Toast.fail('没有输入标题哦，输入后再提交~',2);
+        }
+        else {
+            titleCheck = true;
+        }
+        if(!this.state.description) {
+            Toast.fail('没有输入描述哦，输入后再提交~',2);
+        }
+        else {
+            descriptionCheck = true;
+        }
+        if(!this.state.imageURLs) {
+            Toast.fail('没有上传图片或上传失败哦，重试再提交~',2);
+        }
+        else {
+            imageURLsCheck = true;
+        }
+        if(Object.keys(this.props.allState.communitySelect).length === 0) {
+            Toast.fail('没有选择小区哦，选择后再提交~',2);
+        }
+        else {
+            positionCheck = true;
+        }
+    }
+
     onPublishClicked() {
+        this.setState({isSubmit: true});
         console.log('publish clicked')
     }
 
     render() {
-        console.log(this.state.imageURLs);
+        console.log(this.props.allState);
         const isSellPage = this.props.history.location.pathname.indexOf('sellPage') >0;
         return (
             <div>
@@ -229,8 +277,8 @@ class PublishComponent extends Component {
                         <List>
                             <List.Item 
                                 extra={<div>
-                                        {Object.keys(this.props.selectedCommunity).length === 0 
-                                            ? '请输入小区名称' : this.props.selectedCommunity.state.title}
+                                        {Object.keys(this.props.allState.communitySelect).length === 0 
+                                            ? '请输入小区名称' : this.props.allState.communitySelect.state.title}
                                         </div>}
                                 arrow="horizontal"
                                 onClick={()=>this.props.history.push('/publishPage/communitySelect')}
@@ -240,6 +288,7 @@ class PublishComponent extends Component {
                                 extra={<InputItem
                                         placeholder="输入金额"
                                         type="number"
+                                        onChange={(val)=>this.setState({price: val})}
                                         extra={<div>
                                                     {
                                                         isSellPage? '万元':
@@ -324,7 +373,9 @@ class PublishComponent extends Component {
 
 // 引入store中的state
 const mapStateToProps = (state) => {
-    return {selectedCommunity: state.communitySelect}
+    return {
+        allState: state
+    }
 }
 
 // 把action和store一起通过props绑定到这个组件上

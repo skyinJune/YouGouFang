@@ -17,6 +17,7 @@ class CommunitySelect extends Component {
         this.getCurrentCity = this.getCurrentCity.bind(this);
         this.initLocalSearch = this.initLocalSearch.bind(this);
         this.searchInSelectedCity = this.searchInSelectedCity.bind(this);
+        this.onCommunitySelected = this.onCommunitySelected.bind(this);
     }
     
     componentDidMount() {
@@ -85,6 +86,14 @@ class CommunitySelect extends Component {
         this.setState({searchResult: s});
     }
 
+    onCommunitySelected(item) {
+        this.props.communitySelect(item);
+        if(!this.props.citySelected) {
+            this.props.citySelect(this.state.currentCity);
+        }
+        this.props.history.goBack();
+    }
+
     render() {
         return (
             <div className="communitySelect_wrapper">
@@ -116,12 +125,9 @@ class CommunitySelect extends Component {
                         <div id="allmap"></div>
                         {
                             this.state.searchResult.map((item,index)=> (
-                                <List.Item 
+                                <List.Item
                                     key={item.address+index}
-                                    onClick={()=>{
-                                        this.props.communitySelect(this.state.searchResult[index]);
-                                        this.props.history.goBack();
-                                    }}
+                                    onClick={()=>this.onCommunitySelected(item)}
                                 >
                                     {item.title}
                                     <List.Item.Brief>{item.address}</List.Item.Brief>
