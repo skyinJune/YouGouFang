@@ -1,0 +1,29 @@
+.publishSuccess_wrapper {
+    background-color: #fff;
+    padding: .5rem 0;
+}
+
+.publishSuccess_icon{
+    position: relative;
+    left: 50%;
+    margin-left: -.5rem;
+    color: #108ee9;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.publishSuccess_title {
+    margin-top: .15rem;
+    text-align: center;
+    font-size: .21rem;
+}
+
+.publishSuccess_jumpWrapper {
+    margin-top: .30rem;
+    text-align: center;
+}
+
+.publishSuccess_jumptoHouseList {
+    color: #108ee9;
+    margin-left: .1rem;
+}

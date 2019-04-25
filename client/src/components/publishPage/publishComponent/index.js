@@ -339,9 +339,9 @@ class PublishComponent extends Component {
             body:data
           }).then(response => response.json())
           .then(data => {
+            Toast.hide();
             console.log('发布成功！',data);
-            Toast.success(`发布成功！！`, 2);
-            this.props.history.push('/userCenter');
+            this.props.history.push('/publishPage/publishSuccess');
           });
     }
 
