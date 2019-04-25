@@ -30,7 +30,7 @@ var House = new mongoose.Schema({
     city: {type: String},
     isEntrust: {type: Boolean},
     angentCode: {type: String},
-    publishTime: {type: String}
+    publishTime: {type: Date}
 });
 
 // 用户模型

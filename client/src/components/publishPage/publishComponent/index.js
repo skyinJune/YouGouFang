@@ -230,7 +230,6 @@ class PublishComponent extends Component {
 
     submitPublishInfo() {
         let publishTime = new Date(Date.now());
-        publishTime = publishTime.toLocaleString();
         const publishInfo = {
             title: this.state.title,
             description: this.state.description,
