@@ -7,6 +7,7 @@ import {NavBar, Icon, List, InputItem, TextareaItem,
 import './index.css'
 import {connect } from 'react-redux'
 import OSS from 'ali-oss'
+import 'whatwg-fetch'
 
 const client = new OSS({
     region: 'oss-cn-hongkong',
@@ -82,8 +83,11 @@ class PublishComponent extends Component {
             rentType: 'entireRent',
             houseLayoutValue: '',
             decorationDegreeValue: '',
+            houseArea: 0,
             checkInTime: now,
             tagsList: [],
+            isEntrust: false,
+            angentCode: '',
             isSubmit: false
         }
         this.onInputChange = this.onInputChange.bind(this);
@@ -92,6 +96,7 @@ class PublishComponent extends Component {
         this.onPublishClicked = this.onPublishClicked.bind(this);
         this.upLoadToOSS = this.upLoadToOSS.bind(this);
         this.checkBeforePublish = this.checkBeforePublish.bind(this);
+        this.submitPublishInfo = this.submitPublishInfo.bind(this);
     }
 
     componentDidMount() {
@@ -143,15 +148,10 @@ class PublishComponent extends Component {
     }
 
     upLoadToOSS(upLoadPath, file) {
-        client.multipartUpload(upLoadPath, file, {
-            progress: function(percentage) {
-                let fileloadingNum = Math.ceil(percentage * 100) + '%'
-                console.log(fileloadingNum) // 上传文件进度
-              }
-        }).then(res=>{
+        client.put(upLoadPath, file).then(res=>{
             if(res.res.status === 200) {
                 let tempURLs = this.state.imageURLs;
-                tempURLs.push(res.res.requestUrls[0]);
+                tempURLs.push(res.url);
                 this.setState({imageURLs: tempURLs});
             }
         });
@@ -173,7 +173,8 @@ class PublishComponent extends Component {
         let titleCheck, descriptionCheck,
         imageURLsCheck, positionCheck,
         priceCheck, houseLayoutValueCheck,
-        decorationDegreeValueCheck;
+        decorationDegreeValueCheck,
+        houseAreaCheck;
         if(!this.state.title) {
             Toast.fail('没有输入标题哦，输入后再提交~',2);
         }
@@ -186,7 +187,7 @@ class PublishComponent extends Component {
         else {
             descriptionCheck = true;
         }
-        if(!this.state.imageURLs) {
+        if(!this.state.imageURLs.length) {
             Toast.fail('没有上传图片或上传失败哦，重试再提交~',2);
         }
         else {
@@ -198,15 +199,79 @@ class PublishComponent extends Component {
         else {
             positionCheck = true;
         }
+        if(!this.state.price) {
+            Toast.fail('没有输入金额哦，输入后再提交~',2);
+        }
+        else {
+            priceCheck = true;
+        }
+        if(!this.state.houseLayoutValue) {
+            Toast.fail('没有选择房型哦，选择后再提交~',2);
+        }
+        else {
+            houseLayoutValueCheck = true;
+        }
+        if(!this.state.decorationDegreeValue) {
+            Toast.fail('没有选择装修程度哦，选择后再提交~',2);
+        }
+        else {
+            decorationDegreeValueCheck = true;
+        }
+        if(!this.state.houseArea) {
+            Toast.fail('没有输入房屋面积哦，输入后再提交~',2);
+        }
+        else {
+            houseAreaCheck = true;
+        }
+        return titleCheck && descriptionCheck && imageURLsCheck
+        && positionCheck && priceCheck && houseLayoutValueCheck
+        && decorationDegreeValueCheck && houseAreaCheck
+    }
+
+    submitPublishInfo() {
+        const publishInfo = {
+            title: this.state.title,
+            description: this.state.description,
+            imageURLs: this.state.imageURLs,
+            rentType: this.state.rentType,
+            position: this.props.allState.communitySelect.state,
+            price: this.state.price,
+            houseLayout: this.state.houseLayoutValue,
+            decorationDegree: this.state.decorationDegreeValue,
+            houseArea: this.state.houseArea,
+            checkInTime: this.state.checkInTime,
+            tagsList: this.state.tagsList,
+            ownerAccount: this.props.allState.login.user,
+            isEntrust: this.state.isEntrust,
+            angentCode: this.state.angentCode
+        };
+        const data = JSON.stringify(publishInfo);
+
+        Toast.loading('正在发布...');
+
+        fetch('/publishhouse', {
+            method:'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body:data
+          }).then(response => response.json())
+          .then(data => {
+            console.log('发布成功！',data);
+            Toast.success(`发布成功！！`, 2);
+            this.props.history.push('/userCenter');
+          });
     }
 
     onPublishClicked() {
-        this.setState({isSubmit: true});
-        console.log('publish clicked')
+        if(this.checkBeforePublish()) {
+            this.setState({isSubmit: true});
+            this.submitPublishInfo();
+        }
     }
 
     render() {
-        console.log(this.props.allState);
         const isSellPage = this.props.history.location.pathname.indexOf('sellPage') >0;
         return (
             <div>
@@ -327,6 +392,7 @@ class PublishComponent extends Component {
                                         placeholder="输入面积"
                                         type="number"
                                         extra={<div>平米</div>}
+                                        onChange={val=>this.setState({houseArea: val})}
                                         />}
                             >房屋面积
                             </List.Item>
