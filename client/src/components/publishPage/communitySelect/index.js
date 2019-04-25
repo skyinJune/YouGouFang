@@ -5,6 +5,12 @@ import BMap from 'BMap'
 import {connect } from 'react-redux'
 import {communitySelect, citySelect} from '../../../actions'
 
+/**
+ *  小区选择组件
+ *
+ * @class CommunitySelect
+ * @extends {Component}
+ */
 class CommunitySelect extends Component {
     constructor(props) {
         super(props);
@@ -21,15 +27,22 @@ class CommunitySelect extends Component {
     }
     
     componentDidMount() {
+        // 定位到当前城市
         this.getCurrentCity();
         if(!this.props.citySelected.state) {
             this.initLocalSearch();
         }
     }
 
+    /**
+     *  获取当前城市的函数
+     *
+     * @memberof CommunitySelect
+     */
     getCurrentCity() {
         // 获得所在城市
         let getCity = (result)=>{
+            // 把后面的'市'去掉
             var cityName = result.name.substring(0,result.name.length-1);
             this.setState({currentCity: cityName});
         }
@@ -37,6 +50,12 @@ class CommunitySelect extends Component {
         myCity.get(getCity);
     }
 
+    /**
+     *  定位后初始化搜索(以定位结果的周围1000米搜索附近的小区)
+     *
+     * @param {*} val 当搜索框的值
+     * @memberof CommunitySelect
+     */
     initLocalSearch(val) {
         var _this = this;
 
@@ -53,7 +72,11 @@ class CommunitySelect extends Component {
                 onSearchComplete: (results)=>_this.onLocalSearch(results)
             };
             var local = new BMap.LocalSearch(map, options);
+
+            // 设置每次搜索的结果返回的上限为100
             local.setPageCapacity(100);
+
+            // 当搜索框的值变化后(不为空),全城搜索
             if(val) {
                 local.search(val);
             }
@@ -64,6 +87,12 @@ class CommunitySelect extends Component {
 
     }
 
+    /**
+     *  选择城市后，全城搜索输入的关键词
+     *
+     * @param {*} val
+     * @memberof CommunitySelect
+     */
     searchInSelectedCity(val) {
         var _this = this;
         var options = {
@@ -73,6 +102,12 @@ class CommunitySelect extends Component {
         local.search(val);
     }
 
+    /**
+     *  处理搜索结果
+     *
+     * @param {*} results 百度地图api返回的搜索结果
+     * @memberof CommunitySelect
+     */
     onLocalSearch(results) {
         var s = [];
         for (var i = 0; i < results.getCurrentNumPois(); i ++){
@@ -86,11 +121,23 @@ class CommunitySelect extends Component {
         this.setState({searchResult: s});
     }
 
+    /**
+     *  当小区(搜索结果)被选中时的处理函数
+     *
+     * @param {*} item 被选中的item的信息
+     * @memberof CommunitySelect
+     */
     onCommunitySelected(item) {
+        // 使用redux的communitySelect action来处理
         this.props.communitySelect(item);
+
+        // 判断是是否选择过城市
         if(!this.props.citySelected) {
+            // 如果没选过就将定位的城市设置为选择的城市
             this.props.citySelect(this.state.currentCity);
         }
+
+        // 返回
         this.props.history.goBack();
     }
 

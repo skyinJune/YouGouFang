@@ -9,6 +9,7 @@ import {connect } from 'react-redux'
 import OSS from 'ali-oss'
 import 'whatwg-fetch'
 
+// 阿里云oss对象初始化，先在前端做吧，后续如果有时间改到服务端去做签名再上传，安全一些
 const client = new OSS({
     region: 'oss-cn-hongkong',
     accessKeyId: 'LTAIUI9gAqcczNoG',
@@ -16,6 +17,7 @@ const client = new OSS({
     bucket: 'yougoufang'
 })
 
+// 出租类别数组
 const rentTypeInfo = [
     {title: '整租', type: 'entireRent'},
     {title: '合租', type: 'sharedRent'},
@@ -25,6 +27,7 @@ const rentTypeInfo = [
     {title: '其他', type: 'otherRent'},
 ];
 
+// 房型数组
 const houseLayout = [
     [
         {label: '0室', value: '0室'},
@@ -48,6 +51,7 @@ const houseLayout = [
     ]
 ];
 
+// 装修程度数组
 const decorationDegree = [
     [
         {label: '豪华装修', value: '豪华装修'},
@@ -57,8 +61,10 @@ const decorationDegree = [
     ]
 ]
 
+// 取得现在的时间
 const now = new Date(Date.now())
 
+// 标签数组
 const Tags = [
     {name: 'WIFI'},{name: '冰箱'},{name: '洗衣机'},
     {name: '热水器'},{name: '燃气灶'},{name: '电视机'},
@@ -100,10 +106,13 @@ class PublishComponent extends Component {
     }
 
     componentDidMount() {
+        // 首先判断一下是否登录了，没登陆就跳到登录页面
         if(!this.props.allState.login.isLogin) {
             this.props.history.push('/login');
             Toast.fail('登录后才可使用发布功能哦',2);
         }
+
+        // 初始化swiper
         new Swiper ('.swiper-container', {
             loop: false,  //循环
             autoplay: false,
@@ -115,6 +124,7 @@ class PublishComponent extends Component {
     }
 
     componentWillUnmount() {
+        // 当组件卸载(任何离开本页面的情况下)都判断一下是否是已发布，没发布就把上传的图片删除
         if(!this.state.isSubmit) {
             this.state.images.forEach(item=>{
                 const deleteItemPath = item.file.lastModified + '-' + item.file.name;
@@ -123,33 +133,76 @@ class PublishComponent extends Component {
         }
     }
 
+    /**
+     *  各种输入框输入变化处理函数
+     *
+     * @param {*} val 输入框中的值
+     * @param {*} type 要set的state
+     * @memberof PublishComponent
+     */
     onInputChange(val, type) {
         this.setState({[type]: val})
     }
 
+    /**
+     *  图片选择器变化后(添加或删除图片)后的处理函数
+     *
+     * @param {*} files 这是所有已添加的图片的对象的数组(没错它是数组)
+     * @param {*} type 是添加操作(add)还是删除操作(remove)
+     * @param {*} index 当删除时返回被删除的图片的index(原files中的索引值)
+     * @memberof PublishComponent
+     */
     onImageChange(files, type, index) {
+        // 一旦发生变化,直接setState
         this.setState({images: files});
+
+        // 如果是add操作
         if(type === 'add') {
+            // 取得新添加的图片的对象(添加总是添加到files数组的最后一个)
             const newImage =  this.state.images[this.state.images.length-1].file;
+
+            // 拼接上传文件的名称(确保唯一性)
             const upLoadPath = newImage.lastModified + '-' + newImage.name;
+
+            // 上传到oss
             this.upLoadToOSS(upLoadPath, newImage);
         }
+        // 如果是remove操作
         else {
+            // 取得被删除的图片的对象(这里files数组已经取不到被删除的元素了，只能去state中取了，setState是异步的所以没有立即被删除,所以还可以去到被删除的对象)
             const deleteImage = this.state.images[index].file;
+
+            // 按照上传时命名的方式重新拼接一遍
             const deleteImagePath = deleteImage.lastModified + '-' + deleteImage.name;
+
+            // 从oss中删除
             client.delete(deleteImagePath).then(res=>{
                 if(res.res.status === 204) {
+                    // 取得imageURLs数组
                     let tempURLs = this.state.imageURLs;
-                    tempURLs.splice(index,1);
+
+                    // 把删除掉的图片的url移除
+                    tempURLs.splice(index, 1);
+
+                    // 重新setState
                     this.setState({imageURLs: tempURLs});
                 }
             });
         }
     }
 
+    /**
+     *  上传到oss的函数
+     *
+     * @param {*} upLoadPath 上传的图片的名称(拼接好再传进来)
+     * @param {*} file 上传的图片的file对象
+     * @memberof PublishComponent
+     */
     upLoadToOSS(upLoadPath, file) {
+        // 这里用了简单上传put方法，没有用分片上传的multipartUpload(这个不返回上传之后的url，得自己拼接，自己拼的有的时候打不开。。。),
         client.put(upLoadPath, file).then(res=>{
             if(res.res.status === 200) {
+                // 把返回的url存进imageURLs数组
                 let tempURLs = this.state.imageURLs;
                 tempURLs.push(res.url);
                 this.setState({imageURLs: tempURLs});
@@ -157,18 +210,38 @@ class PublishComponent extends Component {
         });
     }
 
+    /**
+     *  底部taglist中每个item变化(被选中或取消)的处理函数
+     *
+     * @param {*} selected
+     * @param {*} name
+     * @memberof PublishComponent
+     */
     onTagsChange(selected, name) {
+        // 获取已选中的tagsList
         let temList = this.state.tagsList;
+
+        // 如果是选中操作
         if(selected) {
+            // 存入
             temList.push(name);
         }
+        // 如果是取消操作
         else {
+            // 找到这个item在tagsList中的位置并移除
             let pos = temList.indexOf(name);
             temList.splice(pos, 1);
         }
+        // 最后重新setState一下
         this.setState({tagsList: temList});
     }
 
+    /**
+     *  发布前检查一下所需的数据是否都已填,没填就提示用户(出现多个没填的信息时只提醒一个,没有顺序)
+     *
+     * @returns
+     * @memberof PublishComponent
+     */
     checkBeforePublish() {
         let titleCheck, descriptionCheck,
         imageURLsCheck, positionCheck,
@@ -228,6 +301,11 @@ class PublishComponent extends Component {
         && decorationDegreeValueCheck && houseAreaCheck
     }
 
+    /**
+     *  存入数据库
+     *
+     * @memberof PublishComponent
+     */
     submitPublishInfo() {
         let publishTime = new Date(Date.now());
         const publishInfo = {
@@ -267,6 +345,11 @@ class PublishComponent extends Component {
           });
     }
 
+    /**
+     *  底部button点击后的处理函数
+     *
+     * @memberof PublishComponent
+     */
     onPublishClicked() {
         if(this.checkBeforePublish()) {
             this.setState({isSubmit: true});
@@ -275,7 +358,6 @@ class PublishComponent extends Component {
     }
 
     render() {
-        console.log(this.props.allState);
         const isSellPage = this.props.history.location.pathname.indexOf('sellPage') >0;
         return (
             <div>

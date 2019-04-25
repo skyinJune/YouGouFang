@@ -15,21 +15,52 @@ mongoose.connection.on("open", function () {
 
 // 房源模型
 var House = new mongoose.Schema({
+    // 标题
     title: {type: String},
+
+    // 描述
     description: {type: String},
+
+    // 上传图片的url数组
     imageURLs: {type: Array},
+
+    // 发布的租房类型
     rentType: {type: String},
+
+    // 位置
     position: {type: Object},
+
+    // 租金/售价
     price: {type: Number},
+
+    // 房型
     houseLayout: {type: Array},
+
+    // 装修程度
     decorationDegree: {type: String},
+
+    // 房屋面积
     houseArea: {type: Number},
+
+    // 入住时间
     checkInTime: {type: Date},
+
+    // 标签列表
     tagsList: {type: Array},
+
+    // 发布者的账号
     ownerAccount: {type: String},
+
+    // 城市
     city: {type: String},
+
+    // 是否委托中介
     isEntrust: {type: Boolean},
+
+    // 委托的中介code
     angentCode: {type: String},
+
+    // 发布时间
     publishTime: {type: Date}
 });
 
