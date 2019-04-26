@@ -322,6 +322,7 @@ class PublishComponent extends Component {
             tagsList: this.state.tagsList,
             ownerAccount: this.props.allState.login.user,
             city: this.props.allState.citySelect.state,
+            status: 'onsale',
             isEntrust: this.state.isEntrust,
             angentCode: this.state.angentCode,
             publishTime: publishTime

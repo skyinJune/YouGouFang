@@ -54,6 +54,9 @@ var House = new mongoose.Schema({
     // 城市
     city: {type: String},
 
+    // 状态
+    status: {type: String},
+
     // 是否委托中介
     isEntrust: {type: Boolean},
 
