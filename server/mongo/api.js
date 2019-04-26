@@ -22,6 +22,12 @@ module.exports = {
         })
     },
 
+    /**
+     *  账号密码登录
+     *
+     * @param {*} data
+     * @returns
+     */
     loginByAccount(data) {
         return new Promise((resolve, reject) => {
             UserModel.findOne(data, (error, doc) => {
@@ -34,6 +40,12 @@ module.exports = {
         })
     },
 
+    /**
+     *  发布新房源
+     *
+     * @param {*} data
+     * @returns
+     */
     createNewHouse(data) {
         return new Promise((resolve, reject) => {
             HouseModel.create(data, (err, doc) => {
@@ -45,5 +57,29 @@ module.exports = {
                 }
             })
         })
-    }
+    },
+
+    userUpdate(conditions, update) {
+        return new Promise((resolve, reject) => {
+            UserModel.updateOne(conditions, update, (error, doc) => {
+                if(error){
+                    reject(error)
+                }else{
+                    resolve(doc)
+                }
+            })
+        })
+    },
+
+    findUser(data) {
+        return new Promise((resolve, reject) => {
+            UserModel.findOne(data, (error, doc) => {
+                if(error){
+                    reject(error)
+                }else{
+                    resolve(doc)
+                }
+            })
+        })
+    },
 }

@@ -28,15 +28,28 @@ router.post('/loginbyaccount', function(req, res, next) {
   })
 })
 
+// 获取用户信息
 router.post('/getUserInfo', function(req, res, next) {
   const UserInfo = req.body;
   const searchAccount = {'account': UserInfo.account};
   api.loginByAccount(searchAccount).then(result => res.json(result));
 })
 
+// 发布房源
 router.post('/publishhouse', function(req, res, next) {
   const newHouse = req.body;
   api.createNewHouse(newHouse).then(result =>{
+    // 发布成功之后把房源_id添加到用户的houseList里面
+    var condition = {'account': result.ownerAccount};
+    var houseList = [];
+    api.findUser(condition).then(result=>{
+      houseList = result.houseList;
+    })
+    houseList.push(result._id);
+    var update = {
+      $set: { 'houseList': houseList}
+    };
+    api.userUpdate(condition, update).then(result=>console.log(result));
     res.json(result);
   })
 })
