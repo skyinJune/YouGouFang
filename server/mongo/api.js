@@ -23,14 +23,33 @@ module.exports = {
     },
 
     /**
-     *  账号密码登录
+     *  获取账号信息
      *
      * @param {*} data
      * @returns
      */
-    loginByAccount(data) {
+    getUserInfo(data) {
         return new Promise((resolve, reject) => {
             UserModel.findOne(data, (error, doc) => {
+                if(error){
+                    reject(error)
+                }else{
+                    resolve(doc)
+                }
+            })
+        })
+    },
+
+    /**
+     *  更新用户信息
+     *
+     * @param {*} conditions
+     * @param {*} update
+     * @returns
+     */
+    userUpdate(conditions, update) {
+        return new Promise((resolve, reject) => {
+            UserModel.updateOne(conditions, update, (error, doc) => {
                 if(error){
                     reject(error)
                 }else{
@@ -60,51 +79,14 @@ module.exports = {
     },
 
     /**
-     *  更新用户信息
-     *
-     * @param {*} conditions
-     * @param {*} update
-     * @returns
-     */
-    userUpdate(conditions, update) {
-        return new Promise((resolve, reject) => {
-            UserModel.updateOne(conditions, update, (error, doc) => {
-                if(error){
-                    reject(error)
-                }else{
-                    resolve(doc)
-                }
-            })
-        })
-    },
-
-    /**
-     *  查找用户
-     *
-     * @param {*} data
-     * @returns
-     */
-    findUser(data) {
-        return new Promise((resolve, reject) => {
-            UserModel.findOne(data, (error, doc) => {
-                if(error){
-                    reject(error)
-                }else{
-                    resolve(doc)
-                }
-            })
-        })
-    },
-
-    /**
      *  查找房源
      *
      * @param {*} data
      * @returns
      */
-    findHouse(data) {
+    getHouseInfo(data) {
         return new Promise((resolve, reject) => {
-            UserModel.findOne(data, (error, doc) => {
+            HouseModel.findOne(data, (error, doc) => {
                 if(error){
                     reject(error)
                 }else{

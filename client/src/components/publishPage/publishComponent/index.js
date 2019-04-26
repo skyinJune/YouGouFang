@@ -309,10 +309,12 @@ class PublishComponent extends Component {
      */
     submitPublishInfo() {
         let publishTime = new Date(Date.now());
+        let saleType = (this.props.history.location.pathname.indexOf('sellPage') >0)? 'sale':'rent';
         const publishInfo = {
             title: this.state.title,
             description: this.state.description,
             imageURLs: this.state.imageURLs,
+            saleType: saleType,
             rentType: this.state.rentType,
             position: this.props.allState.communitySelect.state,
             price: this.state.price,

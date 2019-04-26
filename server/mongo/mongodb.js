@@ -24,6 +24,9 @@ var House = new mongoose.Schema({
     // 上传图片的url数组
     imageURLs: {type: Array},
 
+    // 出售类型
+    saleType: {type: String},
+
     // 发布的租房类型
     rentType: {type: String},
 
@@ -64,7 +67,13 @@ var House = new mongoose.Schema({
     angentCode: {type: String},
 
     // 发布时间
-    publishTime: {type: Date}
+    publishTime: {type: Date},
+
+    // 被收藏数
+    collectedCount: {type: Number, default: 0},
+
+    // 被浏览数
+    browsedCount: {type: Number, default: 0}
 });
 
 // 用户模型

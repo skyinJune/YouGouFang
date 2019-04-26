@@ -48,3 +48,42 @@
     padding-bottom: 10%;
     background-color: #fff;
 }
+
+.houselist_item_mainImg_wrapper {
+    float: left;
+    width: .75rem;
+    height: .75rem;
+    border-radius: .05rem;
+    background-color: #888;
+}
+
+.houselist_item_mainImg {
+    width: .75rem !important;
+    height: .75rem !important;
+    border-radius: .05rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.houselist_item_info_wrapper {
+    float: left;
+    width: .8rem;
+    height: .75rem;
+    margin-left: .15rem;
+}
+
+.houselist_item_info_title {
+    font-size: .18rem;
+    font-weight: bolder;
+}
+
+.houselist_item_info_price {
+    margin-top: .05rem;
+    color: red;
+}
+
+.houselist_item_info_count {
+    margin-top: .05rem;
+    color: #888;
+    font-size: .12rem;
+}

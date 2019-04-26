@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var api = require('../mongo/api');
 const YouGouFangMd5 = require('../utils/md5PassWord');
+var mongoose = require('mongoose'); 
 
 // 通过账号注册
 router.post('/registerbyaccount', function(req, res, next) {
@@ -16,7 +17,7 @@ router.post('/loginbyaccount', function(req, res, next) {
   const UserInfo = req.body;
   const searchAccount = {'account': UserInfo.account};
   const inputPassWord = YouGouFangMd5(UserInfo.passWord);
-  api.loginByAccount(searchAccount).then(result =>{
+  api.getUserInfo(searchAccount).then(result =>{
     if(result) {
       const passWord = result.passWord;
       passWord === inputPassWord ? res.json({...searchAccount, 'checkStatus': 'OK'})
@@ -32,7 +33,7 @@ router.post('/loginbyaccount', function(req, res, next) {
 router.post('/getUserInfo', function(req, res, next) {
   const UserInfo = req.body;
   const searchAccount = {'account': UserInfo.account};
-  api.loginByAccount(searchAccount).then(result => res.json(result));
+  api.getUserInfo(searchAccount).then(result => res.json(result));
 })
 
 // 发布房源
@@ -42,7 +43,7 @@ router.post('/publishhouse', function(req, res, next) {
     // 发布成功之后把房源_id添加到用户的houseList里面
     var condition = {'account': result.ownerAccount};
     var houseList = [];
-    api.findUser(condition).then(result=>{
+    api.getUserInfo(condition).then(result=>{
       houseList = result.houseList;
     }).then(()=>{
       houseList.push(result._id);
@@ -53,6 +54,15 @@ router.post('/publishhouse', function(req, res, next) {
       res.json(result);
     })
   })
+})
+
+// 获取房屋信息
+router.post('/getHouseInfo', function(req, res, next) {
+  const HouseInfo = req.body;
+  const _id = new mongoose.Types.ObjectId(HouseInfo._id);
+  const searchHouse = {_id: _id};
+  api.getHouseInfo(searchHouse).then(result => 
+    res.json(result))
 })
 
 module.exports = router;
