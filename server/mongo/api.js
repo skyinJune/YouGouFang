@@ -59,6 +59,13 @@ module.exports = {
         })
     },
 
+    /**
+     *  更新用户信息
+     *
+     * @param {*} conditions
+     * @param {*} update
+     * @returns
+     */
     userUpdate(conditions, update) {
         return new Promise((resolve, reject) => {
             UserModel.updateOne(conditions, update, (error, doc) => {
@@ -71,7 +78,31 @@ module.exports = {
         })
     },
 
+    /**
+     *  查找用户
+     *
+     * @param {*} data
+     * @returns
+     */
     findUser(data) {
+        return new Promise((resolve, reject) => {
+            UserModel.findOne(data, (error, doc) => {
+                if(error){
+                    reject(error)
+                }else{
+                    resolve(doc)
+                }
+            })
+        })
+    },
+
+    /**
+     *  查找房源
+     *
+     * @param {*} data
+     * @returns
+     */
+    findHouse(data) {
         return new Promise((resolve, reject) => {
             UserModel.findOne(data, (error, doc) => {
                 if(error){

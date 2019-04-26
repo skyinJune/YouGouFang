@@ -1,0 +1,50 @@
+.houselist_header_wrapper {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.houselist_header_icon_wrapper {
+    margin-left: .05rem;
+    position: absolute;
+}
+
+.houselist_header_icon {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: .25rem;
+}
+
+.houselist_header_title {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: .18rem;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.houselist_header_unshelf {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: .16rem;
+    color: #108ee9;
+    position: absolute;
+    right: 0;
+    margin-right: .05rem;
+}
+
+.houselist_list_wrapper {
+    margin-top: .35rem;
+}
+
+.houselist_item_content {
+    padding-bottom: 25%;
+    background-color: #fff;
+    border-bottom: #D9D9D9 .01rem solid;
+}
+
+.houselist_item_footer {
+    padding-bottom: 10%;
+    background-color: #fff;
+}

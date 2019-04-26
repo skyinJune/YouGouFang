@@ -30,10 +30,10 @@ class InfoList extends Component {
         return (
             <div className="list_wrapper">
                 <List>
-                    {   
+                    {
                         // 每个列表信息，都由一个<Link>包裹
                         ItemInfo.map((item)=>
-                            <Link to={'/userCenter/' + item.key}
+                            <Link to={'/' + item.key}
                                   key={item.value}
                             >
                                 <Item

@@ -44,13 +44,14 @@ router.post('/publishhouse', function(req, res, next) {
     var houseList = [];
     api.findUser(condition).then(result=>{
       houseList = result.houseList;
+    }).then(()=>{
+      houseList.push(result._id);
+      var update = {
+        $set: { 'houseList': houseList}
+      };
+      api.userUpdate(condition, update).then(result=>console.log(result));
+      res.json(result);
     })
-    houseList.push(result._id);
-    var update = {
-      $set: { 'houseList': houseList}
-    };
-    api.userUpdate(condition, update).then(result=>console.log(result));
-    res.json(result);
   })
 })
 
