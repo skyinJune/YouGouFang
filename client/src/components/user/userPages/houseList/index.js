@@ -56,11 +56,18 @@ class HouseList extends Component {
         }).then(response => response.json())
         .then(data=>{
             let houseList = data.houseList;
-            this.fetchHouseList(houseList);
+            if(houseList.length) {
+                this.fetchHouseList(houseList);
+            }
+            else {
+                Toast.hide();
+            }
+            
         })
     }
 
     fetchHouseList(houseList) {
+        let tempList = [];
         houseList.forEach(item=>{
             const houseInfo = {
                 _id: item
@@ -75,15 +82,43 @@ class HouseList extends Component {
                 body:data
             }).then(response => response.json())
             .then(data=>{
-                let tempList = this.state.houseList;
                 tempList.push(data);
-                this.setState({houseList: tempList},()=>{
-                    if(this.state.houseList.length === houseList.length) {
+                if(tempList.length === houseList.length) {
+                    tempList.sort((a, b)=>(
+                        new Date(b.publishTime).getTime() - new Date(a.publishTime).getTime()
+                        ));
+                    this.setState({houseList: tempList}, ()=>{
                         Toast.hide();
-                    }
-                });
+                    });
+                }
             })
         })
+    }
+
+    getPublishTime(publishTime) {
+        const now = new Date(Date.now());
+        publishTime = new Date(publishTime);
+        const secondDiff = (now.getTime() - publishTime.getTime())/1000;
+        let returnStr = '';
+        if(secondDiff >= 31536000) {
+            returnStr = Math.floor(secondDiff/31536000) + '年前'
+        }
+        if(secondDiff >= 2592000 && secondDiff < 31536000) {
+            returnStr = Math.floor(secondDiff/2592000) + '月前'
+        }
+        if(secondDiff >= 86400 && secondDiff < 2592000) {
+            returnStr = Math.floor(secondDiff/86400) + '天前'
+        }
+        if(secondDiff >= 3600 && secondDiff < 86400) {
+            returnStr = Math.floor(secondDiff/3600) + '小时前'
+        }
+        if(secondDiff >= 60 && secondDiff < 3600) {
+            returnStr = Math.floor(secondDiff/60) + '分钟前'
+        }
+        if(secondDiff < 60) {
+            returnStr = '刚刚'
+        }
+        return returnStr;
     }
 
     render() {
@@ -106,33 +141,46 @@ class HouseList extends Component {
                 </div>
                 <div className="houselist_list_wrapper">
                     {
-                        this.state.houseList.map(item=>(
-                            <div key={item._id}>
-                            <List>
-                                <List.Item>
-                                    <div className="houselist_item_content">
-                                        <div className="houselist_item_mainImg_wrapper">
-                                            <img className="houselist_item_mainImg" src={item.imageURLs[0]} alt=""/>
-                                        </div>
-                                        <div className="houselist_item_info_wrapper">
-                                            <div className="houselist_item_info_title">{item.title}</div>
-                                            <div className="houselist_item_info_price">
-                                                <i className="iconfont icon-RMB"/>
-                                                {item.price}{item.saleType === "sale"? '万元':(item.rentType === 'shortRent'? '/日':'/月')}
-                                            </div>
-                                            <div className="houselist_item_info_count">
-                                                <span style={{marginRight: '.1rem'}}>浏览{item.browsedCount}</span>
-                                                <span>收藏{item.collectedCount}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="houselist_item_footer">
-                                    </div>
-                                </List.Item>
-                            </List>
-                            <WhiteSpace/>
+                        this.state.houseList.length === 0? 
+                            <div className="houselist_empty_wrapper">
+                                <div className="houselist_empty_icon_wrapper"><i className="iconfont icon-emizhifeiji houselist_empty_icon"/></div>
+                                <div className="houselist_empty_words">你还没有发布房源哦，快去发布吧~</div>
                             </div>
+                        :this.state.houseList.map(item=>(
+                                <div key={item._id}>
+                                <List>
+                                    <List.Item>
+                                        <div className="houselist_item_content"
+                                        onClick={()=>console.log('item content clicked')}
+                                        >
+                                            <div className="houselist_item_mainImg_wrapper">
+                                                <img className="houselist_item_mainImg" src={item.imageURLs[0]} alt=""/>
+                                            </div>
+                                            <div className="houselist_item_info_wrapper">
+                                                <div className="houselist_item_info_title">{item.title}</div>
+                                                <div className="houselist_item_info_price">
+                                                    <i className="iconfont icon-RMB"/>
+                                                    {item.price}{item.saleType === "sale"? '万元':(item.rentType === 'shortRent'? '/日':'/月')}
+                                                </div>
+                                                <div className="houselist_item_info_count">
+                                                    <span style={{marginRight: '.1rem'}}>浏览{item.browsedCount}</span>
+                                                    <span>收藏{item.collectedCount}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="houselist_item_footer">
+                                            <div className="houselist_item_footer_publishTime">{this.getPublishTime(item.publishTime)}发布</div>
+                                            <div className="houselist_item_footer_operationWrapper">
+                                                <div className="houselist_item_footer_operation" onClick={()=>console.log('item footer 降价 clicked')}>降价</div>
+                                                <div className="houselist_item_footer_operation" onClick={()=>console.log('item footer ellipsis clicked')}><i className="iconfont icon-ellipsis"/></div>
+                                            </div>
+                                        </div>
+                                    </List.Item>
+                                </List>
+                                <WhiteSpace/>
+                                </div>
                         ))
+                        
                     }
                 </div>
             </div>

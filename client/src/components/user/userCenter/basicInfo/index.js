@@ -23,7 +23,7 @@ class BasicInfo extends Component {
                 'iconfont icon-webicon301 basicinfo_userStatus_icon'
                 :'iconfont icon-renzhengshenhe basicinfo_userStatus_icon';
         return (
-            <Link to="/usercenter/userCard">
+            <Link to="/userCard">
             <div className="basicinfo_wrapper">
                 <div className="basic_left_wrapper">
                     <div className="basicinfo_account">{this.props.basicInfo.account}</div>

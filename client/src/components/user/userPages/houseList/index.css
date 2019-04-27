@@ -3,6 +3,7 @@
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 101;
 }
 
 .houselist_header_icon_wrapper {
@@ -39,13 +40,13 @@
 }
 
 .houselist_item_content {
-    padding-bottom: 25%;
+    padding-bottom: 23%;
     background-color: #fff;
-    border-bottom: #D9D9D9 .01rem solid;
+    border-bottom: #f5f5f9 .01rem solid;
 }
 
 .houselist_item_footer {
-    padding-bottom: 10%;
+    padding-bottom: 3%;
     background-color: #fff;
 }
 
@@ -86,4 +87,48 @@
     margin-top: .05rem;
     color: #888;
     font-size: .12rem;
+}
+
+.houselist_item_footer_publishTime {
+    margin-top: .05rem;
+    float: left;
+    font-size: .14rem;
+    color: #888;
+}
+
+.houselist_item_footer_operationWrapper {
+    margin-top: .05rem;
+    float: right;
+    margin-right: .15rem;
+}
+
+.houselist_item_footer_operation {
+    float: left;
+    margin-left: .15rem;
+    font-size: .15rem;
+    width: .5rem;
+    border: #f5f5f9 .01rem solid;
+    border-radius: .05rem;
+    color: #888;
+    text-align: center;
+}
+
+.houselist_empty_wrapper {
+    background-color: #fff;
+    padding-bottom: 60%;
+    padding-top: 30%;
+}
+
+.houselist_empty_icon_wrapper {
+    text-align: center;
+    margin-bottom: .15rem;
+}
+
+.houselist_empty_icon {
+    font-size: .5rem;
+}
+
+.houselist_empty_words {
+    font-size: .2rem;
+    text-align: center;
 }
