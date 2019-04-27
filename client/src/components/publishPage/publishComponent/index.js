@@ -413,10 +413,10 @@ class PublishComponent extends Component {
                         {isSellPage? null
                             :<div className="common_pickerList_rentType_swiper">
                                 <div className="swiper-container">
-                                        <div className="swiper-wrapper">
+                                        <div className="swiper-wrapper publish_swiper_wrapper">
                                             {
                                                 rentTypeInfo.map((item)=>(
-                                                    <div className={"swiper-slide " + 
+                                                    <div className={"swiper-slide publish_swiper_slide " + 
                                                         (this.state.rentType === item.type? "swiper-slide-selected"
                                                         : "swiper-slide-Unselected")}
                                                         key={item.type}

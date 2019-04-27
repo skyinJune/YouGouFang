@@ -22,13 +22,13 @@
     background-color: #fff;
 }
 
-.swiper-wrapper {
+.publish_swiper_wrapper {
     width: auto;
     padding: .1rem;
     background-color: #fff;
 }
 
-.swiper-slide {
+.publish_swiper_slide {
     height: .35rem;
     width: .7rem;
     text-align: center;

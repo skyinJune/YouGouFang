@@ -55,7 +55,7 @@ class PublishSuccess extends Component {
                 <div className="publishSuccess_jumpWrapper">
                     {this.state.countDown}秒后返回主页
                     <span className="publishSuccess_jumptoHouseList"
-                        onClick={()=>this.props.history.push('/userCenter/houseList')}
+                        onClick={()=>this.props.history.push('/houseList')}
                     >
                         去看我刚发布的
                         <i className="iconfont icon-icon--"/>
