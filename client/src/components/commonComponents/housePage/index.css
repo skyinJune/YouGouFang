@@ -1,0 +1,50 @@
+.houseInfo_header_wrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 101;
+    overflow: hidden;
+    background-color: #fff;
+    padding: .1rem 0;
+}
+
+.houseInfo_header_leftIcon_wrapper {
+    margin-left: .05rem;
+    float: left;
+}
+
+.houseInfo_header_leftIcon {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: .25rem;
+}
+
+.houseInfo_header_share_wrapper {
+    float: right;
+    height: .35rem;
+    line-height: .35rem;
+    margin-right: .15rem;
+}
+
+.houseInfo_header_shareIcon {
+    font-size: .25rem;
+}
+
+.houseInfo_header_collect_wrapper {
+    height: .35rem;
+    line-height: .35rem;
+    float: right;
+    margin-right: .15rem;
+}
+
+.houseInfo_header_collectIcon {
+    font-size: .25rem;
+}
+
+
+
+.houseInfo_swiper_wrapper {
+    width: 100%;
+    padding-bottom: 60%;
+    background-color: #888;
+}

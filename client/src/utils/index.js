@@ -24,7 +24,24 @@ function throttle(fn, interval) {
     };
 }
 
+/**
+ *  获取url search中的参数
+ *
+ * @returns
+ */
+function getUrlParams() {
+    let searchStr = window.location.search;
+    let paramObj = {};
+    searchStr = searchStr.substring(searchStr.indexOf('?')+1);
+    let searchStrArr = searchStr.split('&');
+    searchStrArr.forEach(item=>(
+        paramObj[item.split('=')[0]] = item.split('=')[1]
+    ));
+    return paramObj
+}
+
 export {
     listAssign,
-    throttle
+    throttle,
+    getUrlParams
 }

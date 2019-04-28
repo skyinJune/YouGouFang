@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './index.css'
-import CityCard from '../../commonComponents/cityCard'
+import HouseCard from '../../commonComponents/houseCard'
 import { List } from 'antd-mobile'
 import {connect} from 'react-redux'
 import 'whatwg-fetch'
@@ -35,6 +35,7 @@ class Recommend extends Component {
     }
 
     fetchHouseList(value, city) {
+        this.setState({isLoading: true});
         let fetchCondition = {};
         if(value === 1) {
             fetchCondition = {
@@ -86,7 +87,6 @@ class Recommend extends Component {
     }
 
     render() {
-        console.log(this.props.history);
         return(
             <div className="recommend_wrapper">
                 <List>
@@ -121,9 +121,9 @@ class Recommend extends Component {
                                 this.state.houseList.length?
                                 this.state.houseList.map(item=>(
                                     <List.Item key={item._id}
-                                        onClick={()=>console.log(item._id)}
+                                        onClick={()=>this.props.history.push('/housePage?_id=' + item._id)}
                                     >
-                                        <CityCard houseInfo={item}/>
+                                        <HouseCard houseInfo={item}/>
                                     </List.Item>
                                 ))
                                 :<div className="recommend_empty_wrapper">

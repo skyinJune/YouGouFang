@@ -72,4 +72,25 @@ router.post('/searchHouse', function(req, res, next) {
     res.json(result))
 })
 
+// 收藏(取消收藏)房源
+router.post('/collectHouse', function(req, res, next) {
+  const collectInfo = req.body;
+  const _id = new mongoose.Types.ObjectId(collectInfo._id);
+  var condition = {'account': collectInfo.account};
+  let collectionList = [];
+  api.getUserInfo(condition).then(result=>{
+    if(collectInfo.isCollected) {
+      collectionList.push(_id)
+    }
+    else {
+      collectionList = result.collectionList.splice(result.collectionList.indexOf(_id), 1)
+    }
+  }).then(()=>{
+    var update = {
+      $set: { 'collectionList': collectionList}
+    };
+    api.userUpdate(condition, update).then(result=>console.log(result));
+  })
+})
+
 module.exports = router;
