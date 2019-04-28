@@ -1,0 +1,65 @@
+.city_card_wrapper {
+    overflow: hidden;
+    padding: .15rem 0;
+}
+
+.city_card_mainImg_wrapper {
+    margin-left: .1rem;
+    float: left;
+    width: 1.2rem;
+    height: .9rem;
+    border-radius: .02rem;
+    background-color: #888;
+}
+
+.city_card_mainImg {
+    width: 1.2rem !important;
+    height: .9rem !important;
+    border-radius: .02rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.city_card_info_wrapper {
+    float: left;
+    margin-left: .2rem;
+}
+
+.city_card_info_title {
+    font-size: .18rem;
+    font-weight: bolder;
+    text-overflow: ellipsis;
+}
+
+.city_card_info_layoutArea {
+    margin-top: .05rem;
+    font-size: .14rem;
+    color: #888;
+}
+
+.city_card_info_layoutArea_sup {
+    font-size: .1rem;
+}
+
+.city_card_info_price_wrapper {
+    margin-top: .05rem;
+    overflow: hidden;
+}
+
+.city_card_info_price {
+    color: red;
+    float: left;
+}
+
+
+.city_card_info_price_avergePrice {
+    height: .14rem;
+    line-height: .14rem;
+    position: relative;
+    top: 50%;
+    margin-top: .07rem;
+    float: left;
+    font-size: .14rem;
+    color: #888;
+    margin-left: .15rem;
+}

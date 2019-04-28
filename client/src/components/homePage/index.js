@@ -24,7 +24,7 @@ class HomePage extends Component {
                 <Header history={this.props.history}/>
                 <Swiper/>
                 <Channel/>
-                <Recommend/>
+                <Recommend history={this.props.history}/>
             </div>
         )
     }

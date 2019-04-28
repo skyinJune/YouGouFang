@@ -68,14 +68,13 @@
 
 .houselist_item_info_wrapper {
     float: left;
-    width: .8rem;
-    height: .75rem;
     margin-left: .15rem;
 }
 
 .houselist_item_info_title {
     font-size: .18rem;
     font-weight: bolder;
+    text-overflow: ellipsis;
 }
 
 .houselist_item_info_price {

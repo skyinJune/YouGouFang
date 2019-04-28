@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import './index.css'
+import CityCard from '../../commonComponents/cityCard'
 import { List } from 'antd-mobile'
 import {connect} from 'react-redux'
 import 'whatwg-fetch'
@@ -16,6 +17,7 @@ class Recommend extends Component {
         super(props);
         this.state = {
             selectedTab: 1,
+            isLoading: true,
             houseList: []
         }
         this.onTabChange = this.onTabChange.bind(this);
@@ -33,8 +35,6 @@ class Recommend extends Component {
     }
 
     fetchHouseList(value, city) {
-        
-        console.log(value,' ', city);
         let fetchCondition = {};
         if(value === 1) {
             fetchCondition = {
@@ -50,26 +50,23 @@ class Recommend extends Component {
         }
         if(value === 3) {
             fetchCondition = {
-                decorationDegree: '',
+                decorationDegree: {$ne: '毛坯'},
+                saleType: 'sale',
                 city: city
             };
         }
         const data = JSON.stringify(fetchCondition);
-
-        console.log(data);
-        // fetch('/publishhouse', {
-        //     method:'POST',
-        //     headers: {
-        //       'Accept': 'application/json',
-        //       'Content-Type': 'application/json'
-        //     },
-        //     body:data
-        //   }).then(response => response.json())
-        //   .then(data => {
-        //     Toast.hide();
-        //     console.log('发布成功！',data);
-        //     this.props.history.push('/publishPage/publishSuccess');
-        //   });
+        fetch('/searchHouse', {
+            method:'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body:data
+          }).then(response => response.json())
+          .then(data => {
+            this.setState({houseList: data, isLoading: false});
+          });
     }
 
     onTabChange(value) {
@@ -89,6 +86,7 @@ class Recommend extends Component {
     }
 
     render() {
+        console.log(this.props.history);
         return(
             <div className="recommend_wrapper">
                 <List>
@@ -109,7 +107,31 @@ class Recommend extends Component {
                             ))
                         }
                     </List.Item>
-                    
+                    {
+                            this.state.isLoading? 
+                            <div className="recommend_loading_wrapper">
+                                <div className="recommend_loading_img_wrapper">
+                                    <img className="recommend_loading_img" 
+                                        src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/homePage_recommend_loading/loading.gif"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            :(
+                                this.state.houseList.length?
+                                this.state.houseList.map(item=>(
+                                    <List.Item key={item._id}
+                                        onClick={()=>console.log(item._id)}
+                                    >
+                                        <CityCard houseInfo={item}/>
+                                    </List.Item>
+                                ))
+                                :<div className="recommend_empty_wrapper">
+                                    <div className="recommend_empty_icon_wrapper"><i className="iconfont icon-emizhifeiji recommend_empty_icon"/></div>
+                                    <div className="recommend_empty_words">555没有找到你想要的房源哦，去看看其他房源吧~</div>
+                                </div>
+                            )
+                    }
                 </List>
             </div>
         )
