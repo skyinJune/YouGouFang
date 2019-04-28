@@ -65,4 +65,11 @@ router.post('/getHouseInfo', function(req, res, next) {
     res.json(result))
 })
 
+// 获取房屋信息
+router.post('/searchHouse', function(req, res, next) {
+  const HouseInfo = req.body;
+  api.searchHouse(searchHouse).then(result => 
+    res.json(result))
+})
+
 module.exports = router;

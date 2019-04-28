@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import './index.css'
 import {connect} from 'react-redux'
+import {citySelect} from '../../../actions'
 import BMap from 'BMap'
 
 /**
@@ -13,13 +14,15 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentCity: ''
+            
         }
         this.getCurrentCity = this.getCurrentCity.bind(this);
     }
 
     componentDidMount() {
-        this.getCurrentCity();
+        if(!this.props.citySelected.state) {
+            this.getCurrentCity();
+        }
     }
 
     getCurrentCity() {
@@ -27,7 +30,7 @@ class Header extends Component {
         let getCity = (result)=>{
             // 把后面的'市'去掉
             var cityName = result.name.substring(0,result.name.length-1);
-            this.setState({currentCity: cityName});
+            this.props.citySelect(cityName);
         }
         var myCity = new BMap.LocalCity();
         myCity.get(getCity);
@@ -47,7 +50,7 @@ class Header extends Component {
                 <div className="home_header_city_wrapper"
                     onClick={()=>this.props.history.push('/citySelect')}
                 >
-                    {this.props.citySelected.state || this.state.currentCity}<i className="iconfont icon-xia home_header_city_icon"/>
+                    {this.props.citySelected.state}<i className="iconfont icon-xia home_header_city_icon"/>
                 </div>
             </div>
         )
@@ -59,7 +62,10 @@ const mapStateToProps = (state) => {
     return {citySelected: state.citySelect}
 }
 
+// 引入需要的action
+const actionCreater = {citySelect};
+
 // 把action和store一起通过props绑定到这个组件上
-Header = connect(mapStateToProps)(Header);
+Header = connect(mapStateToProps, actionCreater)(Header);
 
 export default Header;

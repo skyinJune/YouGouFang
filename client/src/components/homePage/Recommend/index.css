@@ -1,0 +1,35 @@
+.recommend_wrapper {
+    position: relative;
+    margin-top: .15rem;
+}
+
+.recommend_header_wrapper {
+    overflow: hidden;
+    position: sticky;
+    top: .44rem;
+    z-index: 100;
+}
+
+.recommend_header_leftTitle {
+    float: left;
+    font-weight: bolder;
+    height: .25rem;
+    line-height: .25rem;
+}
+
+.recommend_header_rightTitle {
+    float: right;
+    height: .25rem;
+    line-height: .25rem;
+    margin-left: .15rem;
+}
+
+.recommend_header_selectedTitle {
+    color: #108ee9;
+    font-size: .16rem;
+}
+
+.recommend_header_unselectedTitle {
+    color: #888;
+    font-size: .14rem;
+}

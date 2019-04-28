@@ -79,7 +79,7 @@ module.exports = {
     },
 
     /**
-     *  查找房源
+     *  查找单个特定房源
      *
      * @param {*} data
      * @returns
@@ -95,4 +95,22 @@ module.exports = {
             })
         })
     },
+
+    /**
+     *  搜索符合条件的房源
+     *
+     * @param {*} data
+     * @returns
+     */
+    searchHouse(data) {
+        return new Promise((resolve, reject) => {
+            HouseModel.find(data, (error, doc) => {
+                if(error){
+                    reject(error)
+                }else{
+                    resolve(doc)
+                }
+            })
+        })
+    }
 }

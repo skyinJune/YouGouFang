@@ -4,6 +4,7 @@
     height: .44rem;
     background-color: #fff;
     overflow: hidden;
+    z-index: 101;
 }
 
 .home_header_logo_wrapper {

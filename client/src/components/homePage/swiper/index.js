@@ -31,6 +31,9 @@ class SwiperComponent extends Component {
         new Swiper ('.swiper-container', {
             loop: false,  //循环
             autoplay: true,
+            pagination: {
+                el: '.swiper-pagination',
+              },
         })
     }
 
@@ -48,8 +51,8 @@ class SwiperComponent extends Component {
                             </div>
                         ))
                     }
-                        
                     </div>
+                    <div className="swiper-pagination"></div>
                 </div>
             </div>
         )
