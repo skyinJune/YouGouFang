@@ -61,8 +61,17 @@ router.post('/getHouseInfo', function(req, res, next) {
   const HouseInfo = req.body;
   const _id = new mongoose.Types.ObjectId(HouseInfo._id);
   const searchHouse = {_id: _id};
-  api.getHouseInfo(searchHouse).then(result => 
-    res.json(result))
+  api.getHouseInfo(searchHouse).then(result => {
+    res.json(result);
+    if(HouseInfo.browsed) {
+      let browsedCount = result.browsedCount +1;
+      let update = {
+        $set: { 'browsedCount': browsedCount}
+      };
+      api.houseUpdate(searchHouse, update).then(result=>console.log(result));
+    }
+  })
+    
 })
 
 // 搜索房源
@@ -79,18 +88,33 @@ router.post('/collectHouse', function(req, res, next) {
   var condition = {'account': collectInfo.account};
   let collectionList = [];
   api.getUserInfo(condition).then(result=>{
+    collectionList = result.collectionList;
     if(collectInfo.isCollected) {
       collectionList.push(_id)
     }
     else {
-      collectionList = result.collectionList.splice(result.collectionList.indexOf(_id), 1)
+      collectionList.splice(collectionList.indexOf(collectInfo._id), 1);
     }
   }).then(()=>{
-    var update = {
+    let update = {
       $set: { 'collectionList': collectionList}
     };
     api.userUpdate(condition, update).then(result=>console.log(result));
-  })
+  }).then(()=>(
+    api.getHouseInfo({_id: _id}).then(result=>{
+      let collectedCount = result.collectedCount;
+      if(collectInfo.isCollected) {
+        collectedCount ++;
+      }
+      else {
+        collectedCount --;
+      }
+      let update = {
+        $set: { 'collectedCount': collectedCount}
+      }
+      api.houseUpdate({_id: _id}, update).then(result=>console.log(result));
+    })
+  ))
 })
 
 module.exports = router;

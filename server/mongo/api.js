@@ -112,5 +112,24 @@ module.exports = {
                 }
             })
         })
-    }
+    },
+
+    /**
+     *  更新房源信息
+     *
+     * @param {*} conditions
+     * @param {*} update
+     * @returns
+     */
+    houseUpdate(conditions, update) {
+        return new Promise((resolve, reject) => {
+            HouseModel.updateOne(conditions, update, (error, doc) => {
+                if(error){
+                    reject(error)
+                }else{
+                    resolve(doc)
+                }
+            })
+        })
+    },
 }

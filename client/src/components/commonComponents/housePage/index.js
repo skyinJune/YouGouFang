@@ -6,17 +6,20 @@ import 'whatwg-fetch'
 import { connect } from 'react-redux'
 
 const _id = getUrlParams()._id;
+const clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
 
 class HousePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             houseInfo: {},
-            isCollected: false
+            isCollected: false,
+            headerStyle: {}
         }
         this.fetchHouseInfo = this.fetchHouseInfo.bind(this);
         this.onCollectClicked = this.onCollectClicked.bind(this);
         this.checkCollected = this.checkCollected.bind(this);
+        this.onScroll = this.onScroll.bind(this);
     }
 
     componentDidMount() {
@@ -24,10 +27,14 @@ class HousePage extends Component {
         if(this.props.logInfo.isLogin) {
             this.checkCollected();
         }
+        window.addEventListener('scroll', ()=>this.onScroll());
     }
 
     fetchHouseInfo() {
-        let search = {_id: _id};
+        let search = {
+            _id: _id,
+            browsed: true
+        };
 
         let data = JSON.stringify(search);
 
@@ -70,6 +77,11 @@ class HousePage extends Component {
         })
     }
 
+    /**
+     *  收藏按钮被点击之后
+     *
+     * @memberof HousePage
+     */
     onCollectClicked() {
         if(!this.props.logInfo.isLogin) {
             Toast.info('登录后收藏房源哦~', 2);
@@ -92,15 +104,35 @@ class HousePage extends Component {
                     body:data
                 }).then(response => response.json())
             });
-
         }
     }
 
+    onScroll() {
+        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        let headerStyle = {};
+        if(scrollTop <= (clientWidth*0.6 - 50)) {
+            // let colorValue = Math.round(255-255/50*i)
+            headerStyle = {
+                'backgroundColor': `rgb(255, 255, 255, ${scrollTop/(clientWidth*0.6 - 50)})`,
+                'color': '#fff'
+            }
+            this.setState({headerStyle: headerStyle});
+        }
+        else {
+            headerStyle = {
+                'backgroundColor': '#fff',
+                'color': '#000'
+            }
+            this.setState({headerStyle: headerStyle});
+        }
+        
+    }
+
     render() {
-        let houseInfo = this.state.houseInfo;
+        // let houseInfo = this.state.houseInfo;
         return (
             <div>
-                <div className="houseInfo_header_wrapper">
+                <div className="houseInfo_header_wrapper" style={this.state.headerStyle}>
                     {/* 点击返回 */}
                     <div className="houseInfo_header_leftIcon_wrapper"
                         onClick={()=>this.props.history.goBack()}
@@ -117,6 +149,16 @@ class HousePage extends Component {
                     >
                         <i className="iconfont icon-buoumaotubiao45 houseInfo_header_collectIcon"/>
                     </div>
+                </div>
+                <div className="houseInfo_swiper_wrapper">
+                </div>
+                <div className="houseInfo_swiper_wrapper">
+                </div>
+                <div className="houseInfo_swiper_wrapper">
+                </div>
+                <div className="houseInfo_swiper_wrapper">
+                </div>
+                <div className="houseInfo_swiper_wrapper">
                 </div>
                 <div className="houseInfo_swiper_wrapper">
                 </div>
