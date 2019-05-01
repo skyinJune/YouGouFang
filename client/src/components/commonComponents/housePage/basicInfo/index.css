@@ -1,0 +1,54 @@
+.housePage_basicInfo_title {
+    font-size: .18rem;
+    font-weight: bolder;
+    text-overflow: ellipsis;
+}
+
+.housePage_basicInfo_addressTitle {
+    font-size: .14rem;
+    color: #888;
+    text-overflow: ellipsis;
+}
+
+.housePage_basicInfo_midPart {
+    overflow: hidden;
+}
+
+.housePage_basicInfo_midPart_item {
+    width: 33%;
+    float: left;
+    border-right: .001rem solid #f5f5f9;
+}
+
+.housePage_basicInfo_midPart_item_red {
+    font-size: .18rem;
+    color: red;
+    font-weight: bolder;
+}
+
+.housePage_basicInfo_midPart_item_gray {
+    color: #888;
+    font-size: .15rem;
+}
+
+.housePage_basicInfo_bottomPart {
+    overflow: hidden;
+}
+
+.housePage_basicInfo_bottomPart_item {
+    width: 49.5%;
+    float: left;
+    overflow: hidden;
+}
+
+.housePage_basicInfo_bottomPart_item_gray {
+    color: #888;
+    font-size: .15rem;
+    float: left;
+    margin-right: .1rem;
+}
+
+.housePage_basicInfo_bottomPart_item_content {
+    float: left;
+    font-size: .15rem;
+}

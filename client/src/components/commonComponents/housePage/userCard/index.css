@@ -1,0 +1,50 @@
+.housePage_usercard {
+    margin-top: .15rem;
+}
+
+.housePage_usercard_wrapper {
+    overflow: hidden;
+    padding: .1rem;
+}
+
+.housePage_usercard_leftInfo_wrapper {
+    float: left;
+    overflow: hidden;
+}
+
+.housePage_usercard_title_wrapper {
+    overflow: hidden;
+}
+
+.housePage_usercard_account {
+    font-size: .18rem;
+    font-weight: bolder;
+    float: left;
+}
+
+.housePage_usercard_userType {
+    float: left;
+    margin-left: .15rem;
+    background-color: rgb(0,0,0,0.7);
+    font-size: .14rem;
+    color: #fff;
+    padding: .02rem .05rem;
+    border-radius: .1rem;
+}
+
+.housePage_usercard_introduction {
+    font-size: .15rem;
+    margin-top: .05rem;
+}
+
+.housePage_usercard_avatar_wrapper {
+    float: right;
+}
+
+.housePage_usercard_avatar {
+    width: .5rem !important;
+    height: .5rem !important;
+    border-radius: .05rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

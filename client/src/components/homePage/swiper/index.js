@@ -18,7 +18,7 @@ const swiperImgUrls = [
  * @class SwiperComponent
  * @extends {Component}
  */
-class SwiperComponent extends Component {
+class HomePageSwiper extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,13 +28,19 @@ class SwiperComponent extends Component {
 
     componentDidMount() {
         // 初始化swiper
-        new Swiper ('.swiper-container', {
+        this.HomePage_Swiper = new Swiper ('.swiper-container', {
             loop: false,  //循环
             autoplay: true,
             pagination: {
                 el: '.swiper-pagination',
               },
         })
+    }
+
+    componentWillUnmount() {
+        if(this.HomePage_Swiper) {
+            this.HomePage_Swiper.destroy();
+        }
     }
 
     render() {
@@ -59,4 +65,4 @@ class SwiperComponent extends Component {
     }
 }
 
-export default SwiperComponent;
+export default HomePageSwiper;

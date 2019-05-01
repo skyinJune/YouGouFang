@@ -68,8 +68,8 @@ const now = new Date(Date.now())
 const Tags = [
     {name: 'WIFI'},{name: '冰箱'},{name: '洗衣机'},
     {name: '热水器'},{name: '燃气灶'},{name: '电视机'},
-    {name: '空调'},{name: '大阳台'},{name: '电梯房'},
-    {name: '暖气'}
+    {name: '空调'},{name: '阳台'},{name: '暖气'},
+    {name: '微波炉'},{name: '衣柜'}
 ]
 
 /**

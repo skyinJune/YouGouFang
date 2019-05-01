@@ -27,7 +27,7 @@ class BasicInfo extends Component {
             <div className="basicinfo_wrapper">
                 <div className="basic_left_wrapper">
                     <div className="basicinfo_account">{this.props.basicInfo.account}</div>
-                    <div className="basicinfo_introduction">{this.props.basicInfo.introduction}</div>
+                    <div className="basicinfo_introduction">{this.props.basicInfo.introduction?this.props.basicInfo.introduction:'你可以在这里写一段你的简介~'}</div>
                     <div className="basicinfo_userType_wrapper">
                         <div className="basicinfo_userType">
                             <i className="iconfont icon-yonghutouxiang basicinfo_userType_icon"/>{UserType}

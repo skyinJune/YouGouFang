@@ -103,7 +103,7 @@ var User = new mongoose.Schema({
     email: {type: String, default: ''},
 
     // 用户简介
-    introduction: {type: String, default: '你可以在这里写一段你的简介~'},
+    introduction: {type: String, default: ''},
 
     // 关注列表
     followList: {type: Array, default: []},

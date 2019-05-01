@@ -1,0 +1,59 @@
+.housePage_description_wrapper {
+    margin-top: .1rem;
+}
+
+.housePage_description_title_wrapper {
+    overflow: hidden;
+}
+
+.housePage_description_title {
+    float: left;
+    font-size: .18rem;
+    font-weight: bolder;
+}
+
+.housePage_description_titleExtra {
+    font-size: .14rem;
+    color: #888;
+    float: right;
+    margin-right: .1rem;
+}
+
+.housePage_description_content {
+    font-size: .14rem;
+    line-height: .27rem;
+    white-space:normal;
+    word-break:break-all;
+    word-wrap:break-word; 
+}
+
+.housePage_description_tagList_wrapper {
+    overflow: hidden;
+}
+
+.housePage_description_tagItem_wrapper {
+    float: left;
+    width: 16.5%;
+    padding: .1rem 0;
+}
+
+.housePage_description_tagItem_wrapper {
+    text-align: center
+}
+
+.housePage_description_tagItem_Icon {
+    font-size: .2rem;
+}
+
+.housePage_description_tagItem_include {
+    color: #000;
+}
+
+.housePage_description_tagItem_exclude {
+    opacity: 0.3;
+}
+
+.housePage_description_tagItem_name {
+    text-align: center;
+    font-size: .14rem;
+}

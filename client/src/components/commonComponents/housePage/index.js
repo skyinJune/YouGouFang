@@ -1,38 +1,46 @@
 import React, {Component} from 'react'
-import './index.css'
+import Header from './header'
+import Swiper from './swiper'
+import BasicInfo from './basicInfo'
+import Description from './description'
+import UserCard from './userCard'
 import {Toast} from 'antd-mobile'
 import {getUrlParams} from '../../../utils'
 import 'whatwg-fetch'
 import { connect } from 'react-redux'
 
-const _id = getUrlParams()._id;
-const clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
-
 class HousePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            _id: getUrlParams()._id,
             houseInfo: {},
             isCollected: false,
-            headerStyle: {}
         }
         this.fetchHouseInfo = this.fetchHouseInfo.bind(this);
         this.onCollectClicked = this.onCollectClicked.bind(this);
         this.checkCollected = this.checkCollected.bind(this);
-        this.onScroll = this.onScroll.bind(this);
     }
 
     componentDidMount() {
         this.fetchHouseInfo();
+
+        // 如果没登陆就不检查是否被当前登录的用户收藏
         if(this.props.logInfo.isLogin) {
             this.checkCollected();
         }
-        window.addEventListener('scroll', ()=>this.onScroll());
     }
 
+    /**
+     *  拉取房源信息
+     *
+     * @memberof HousePage
+     */
     fetchHouseInfo() {
         let search = {
-            _id: _id,
+            _id: this.state._id,
+
+            // 这里区别其他getHouseInfo的请求，只要housePage展示一次就加一次浏览量,具体逻辑在服务端中写好了
             browsed: true
         };
 
@@ -54,6 +62,11 @@ class HousePage extends Component {
           });
     }
 
+    /**
+     *  检查用户是否收藏了这个房源
+     *
+     * @memberof HousePage
+     */
     checkCollected() {
         const userInfo = {
             account: this.props.logInfo.user
@@ -71,7 +84,7 @@ class HousePage extends Component {
             body:data
         }).then(response => response.json())
         .then(data=>{
-            if(data.collectionList.indexOf(_id)>=0) {
+            if(data.collectionList.indexOf(this.state._id)>=0) {
                 this.setState({isCollected: true});
             }
         })
@@ -83,14 +96,16 @@ class HousePage extends Component {
      * @memberof HousePage
      */
     onCollectClicked() {
+        // 如果没登陆就直接跳转登录
         if(!this.props.logInfo.isLogin) {
             Toast.info('登录后收藏房源哦~', 2);
             this.props.history.push('/login');
         }
         else {
+            // 直接对state状态中的isCollected取反，然后再发送collectHouse的请求，收藏和取消收藏的逻辑在服务端写好了
             this.setState({isCollected: !this.state.isCollected},()=>{
                 let collectInfo = {
-                    _id: _id,
+                    _id: this.state._id,
                     account: this.props.logInfo.user,
                     isCollected: this.state.isCollected
                 }
@@ -107,61 +122,14 @@ class HousePage extends Component {
         }
     }
 
-    onScroll() {
-        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        let headerStyle = {};
-        if(scrollTop <= (clientWidth*0.6 - 50)) {
-            // let colorValue = Math.round(255-255/50*i)
-            headerStyle = {
-                'backgroundColor': `rgb(255, 255, 255, ${scrollTop/(clientWidth*0.6 - 50)})`,
-                'color': '#fff'
-            }
-            this.setState({headerStyle: headerStyle});
-        }
-        else {
-            headerStyle = {
-                'backgroundColor': '#fff',
-                'color': '#000'
-            }
-            this.setState({headerStyle: headerStyle});
-        }
-        
-    }
-
     render() {
-        // let houseInfo = this.state.houseInfo;
         return (
             <div>
-                <div className="houseInfo_header_wrapper" style={this.state.headerStyle}>
-                    {/* 点击返回 */}
-                    <div className="houseInfo_header_leftIcon_wrapper"
-                        onClick={()=>this.props.history.goBack()}
-                    >
-                        <i className="iconfont icon-zuo houseInfo_header_leftIcon"/>
-                    </div>
-                    <div className="houseInfo_header_share_wrapper"
-                        onClick={()=>console.log('share')}
-                    >
-                        <i className="iconfont icon-fenxiang houseInfo_header_shareIcon"/>
-                    </div>
-                    <div className="houseInfo_header_collect_wrapper"
-                        onClick={()=>this.onCollectClicked()}
-                    >
-                        <i className="iconfont icon-buoumaotubiao45 houseInfo_header_collectIcon"/>
-                    </div>
-                </div>
-                <div className="houseInfo_swiper_wrapper">
-                </div>
-                <div className="houseInfo_swiper_wrapper">
-                </div>
-                <div className="houseInfo_swiper_wrapper">
-                </div>
-                <div className="houseInfo_swiper_wrapper">
-                </div>
-                <div className="houseInfo_swiper_wrapper">
-                </div>
-                <div className="houseInfo_swiper_wrapper">
-                </div>
+                <Header onCollectClicked={()=>this.onCollectClicked()} goBack={()=>this.props.history.goBack()} isCollected={this.state.isCollected}/>
+                <Swiper imageURLs={this.state.houseInfo.imageURLs}/>
+                <BasicInfo houseInfo={this.state.houseInfo}/>
+                <Description houseInfo={this.state.houseInfo}/>
+                <UserCard ownerAccount={this.state.houseInfo.ownerAccount}/>
             </div>
         )
     }

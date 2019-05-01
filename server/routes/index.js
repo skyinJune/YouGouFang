@@ -63,6 +63,7 @@ router.post('/getHouseInfo', function(req, res, next) {
   const searchHouse = {_id: _id};
   api.getHouseInfo(searchHouse).then(result => {
     res.json(result);
+    console.log(HouseInfo.browsed);
     if(HouseInfo.browsed) {
       let browsedCount = result.browsedCount +1;
       let update = {
@@ -112,7 +113,7 @@ router.post('/collectHouse', function(req, res, next) {
       let update = {
         $set: { 'collectedCount': collectedCount}
       }
-      api.houseUpdate({_id: _id}, update).then(result=>console.log(result));
+      api.houseUpdate({_id: _id}, update).then(result=>res.json(result));
     })
   ))
 })
