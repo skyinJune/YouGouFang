@@ -33,7 +33,6 @@ class UserCard extends Component {
     }
 
     render() {
-        console.log(this.state.ownerInfo)
         return (
             <div className="housePage_usercard">
                 <List>

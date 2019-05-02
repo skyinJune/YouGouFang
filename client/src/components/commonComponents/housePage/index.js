@@ -3,6 +3,7 @@ import Header from './header'
 import Swiper from './swiper'
 import BasicInfo from './basicInfo'
 import Description from './description'
+import MapCard from './mapCard'
 import UserCard from './userCard'
 import {Toast} from 'antd-mobile'
 import {getUrlParams} from '../../../utils'
@@ -129,6 +130,7 @@ class HousePage extends Component {
                 <Swiper imageURLs={this.state.houseInfo.imageURLs}/>
                 <BasicInfo houseInfo={this.state.houseInfo}/>
                 <Description houseInfo={this.state.houseInfo}/>
+                <MapCard position={this.state.houseInfo.position}/>
                 <UserCard ownerAccount={this.state.houseInfo.ownerAccount}/>
             </div>
         )
