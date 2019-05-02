@@ -13,6 +13,7 @@ import UserCard from './components/user/userPages/userCard'
 import UserSafety from './components/user/userPages/userSafety'
 import UserSetting from './components/user/userPages/userSetting'
 import HousePage from './components/commonComponents/housePage'
+import BookingPage from './components/bookingPage'
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -59,6 +60,9 @@ ReactDOM.render(
 
                 {/* 房源详情页面的路由 */}
                 <Route path='/housePage' component={HousePage}/>
+
+                {/* 预约看房页面的路由 */}
+                <Route path='/bookingPage' component={BookingPage}/>
 
                 {/* 主页路由 */}
                 <Route path='/' component={App}/>

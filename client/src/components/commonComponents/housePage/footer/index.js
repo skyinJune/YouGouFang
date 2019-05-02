@@ -12,7 +12,7 @@ class Footer extends Component {
     render() {
         return (
             <div className="housePage_footer_wrapper">
-                <div className="housePage_footer_leftButton" onClick={()=>this.props.onOrderClicked()}>预定房源</div>
+                <div className="housePage_footer_leftButton" onClick={()=>this.props.onBookingClicked()}>预约看房</div>
                 <div className="housePage_footer_rightButton" onClick={()=>this.props.onChatClicked()}>聊一聊</div>
             </div>
         )

@@ -22,7 +22,7 @@ class HousePage extends Component {
         this.fetchHouseInfo = this.fetchHouseInfo.bind(this);
         this.onCollectClicked = this.onCollectClicked.bind(this);
         this.checkCollected = this.checkCollected.bind(this);
-        this.onOrderClicked = this.onOrderClicked.bind(this);
+        this.onBookingClicked = this.onBookingClicked.bind(this);
         this.onChatClicked = this.onChatClicked.bind(this);
     }
 
@@ -126,12 +126,26 @@ class HousePage extends Component {
         }
     }
 
-    onOrderClicked() {
-        console.log('order clicked');
+    onBookingClicked() {
+        if(!this.props.logInfo.isLogin) {
+            Toast.info('登录后才可以预约看房哦~', 2);
+            this.props.history.push('/login');
+        }
+        else {
+            let pushPath = '/bookingPage?ownerAccount=' + 
+                this.state.houseInfo.ownerAccount + '&buyerAccount=' + this.props.logInfo.user;
+            this.props.history.push(pushPath);
+        }
     }
 
     onChatClicked() {
-        console.log('chat clicked');
+        if(!this.props.logInfo.isLogin) {
+            Toast.info('登录后才可以聊天哦~', 2);
+            this.props.history.push('/login');
+        }
+        else {
+            console.log('chat clicked')
+        }
     }
 
     render() {
@@ -145,7 +159,7 @@ class HousePage extends Component {
                 <UserCard ownerAccount={this.state.houseInfo.ownerAccount}/>
                 {
                     this.props.logInfo.user === this.state.houseInfo.ownerAccount?null
-                    :<Footer onOrderClicked={()=>this.onOrderClicked()} onChatClicked={()=>this.onChatClicked()}/>
+                    :<Footer onBookingClicked={()=>this.onBookingClicked()} onChatClicked={()=>this.onChatClicked()}/>
                 }
             </div>
         )
