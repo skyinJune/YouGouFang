@@ -5,6 +5,7 @@ import BasicInfo from './basicInfo'
 import Description from './description'
 import MapCard from './mapCard'
 import UserCard from './userCard'
+import Footer from './footer'
 import {Toast} from 'antd-mobile'
 import {getUrlParams} from '../../../utils'
 import 'whatwg-fetch'
@@ -21,6 +22,8 @@ class HousePage extends Component {
         this.fetchHouseInfo = this.fetchHouseInfo.bind(this);
         this.onCollectClicked = this.onCollectClicked.bind(this);
         this.checkCollected = this.checkCollected.bind(this);
+        this.onOrderClicked = this.onOrderClicked.bind(this);
+        this.onChatClicked = this.onChatClicked.bind(this);
     }
 
     componentDidMount() {
@@ -123,6 +126,14 @@ class HousePage extends Component {
         }
     }
 
+    onOrderClicked() {
+        console.log('order clicked');
+    }
+
+    onChatClicked() {
+        console.log('chat clicked');
+    }
+
     render() {
         return (
             <div>
@@ -132,6 +143,10 @@ class HousePage extends Component {
                 <Description houseInfo={this.state.houseInfo}/>
                 <MapCard position={this.state.houseInfo.position}/>
                 <UserCard ownerAccount={this.state.houseInfo.ownerAccount}/>
+                {
+                    this.props.logInfo.user === this.state.houseInfo.ownerAccount?null
+                    :<Footer onOrderClicked={()=>this.onOrderClicked()} onChatClicked={()=>this.onChatClicked()}/>
+                }
             </div>
         )
     }

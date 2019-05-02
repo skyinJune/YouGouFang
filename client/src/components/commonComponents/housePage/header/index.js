@@ -25,10 +25,10 @@ class Header extends Component {
     onScroll() {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         let headerStyle = {};
-        if(scrollTop <= (clientWidth*0.6 - 50)) {
-            let colorValue = Math.round(scrollTop/(clientWidth*0.6 - 50)*255);
+        if(scrollTop <= (clientWidth*0.3 - 50)) {
+            let colorValue = Math.round(scrollTop/(clientWidth*0.3 - 50)*255);
             headerStyle = {
-                'backgroundColor': `rgb(255, 255, 255, ${scrollTop/(clientWidth*0.6 - 50)})`,
+                'backgroundColor': `rgb(255, 255, 255, ${scrollTop/(clientWidth*0.3 - 50)})`,
                 'color': `rgb(${255-colorValue}, ${255-colorValue}, ${255-colorValue})`
             }
             this.setState({headerStyle: headerStyle});
