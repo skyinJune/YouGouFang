@@ -14,6 +14,7 @@ import UserSafety from './components/user/userPages/userSafety'
 import UserSetting from './components/user/userPages/userSetting'
 import HousePage from './components/commonComponents/housePage'
 import BookingPage from './components/bookingPage'
+import SuccessPage from './components/commonComponents/successPage'
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -63,6 +64,9 @@ ReactDOM.render(
 
                 {/* 预约看房页面的路由 */}
                 <Route path='/bookingPage' component={BookingPage}/>
+
+                {/* 成功结果页面的路由 */}
+                <Route path='/successPage' component={SuccessPage}/>
 
                 {/* 主页路由 */}
                 <Route path='/' component={App}/>

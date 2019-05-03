@@ -130,10 +130,37 @@ var User = new mongoose.Schema({
     orderList: {type: Array, default: []}
 })
 
+
+var Order = new mongoose.Schema({
+    // 房源_id(注意这里存的是string类型的)
+    house_id: {type: String},
+
+    // 买家账户
+    buyerAccount: {type: String},
+
+    // 预约看房时间
+    bookingDate: {type: Date},
+
+    // 预约订单生成时间
+    createdTime: {type: Date},
+
+    // 订单状态
+    status: {type: String, default: 'waitOwnerConfirm'},
+
+    // 房东评价
+    ownerComment: {type: String},
+
+    // 买家评价
+    ownerComment: {type: String},
+
+})
+
+
 // 整个优购房模型
 var YouGouFangModel = {
     HouseModel: mongoose.model('house', House),
-    UserModel: mongoose.model('user', User)
+    UserModel: mongoose.model('user', User),
+    OrderModel: mongoose.model('order', Order),
 }
 
 module.exports = YouGouFangModel;

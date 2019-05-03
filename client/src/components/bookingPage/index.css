@@ -1,0 +1,58 @@
+.bookingPage_header_wrapper {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 101;
+}
+
+.bookingPage_header_icon_wrapper {
+    margin-left: .05rem;
+    position: absolute;
+}
+
+.bookingPage_header_icon {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: .25rem;
+}
+
+.bookingPage_header_title {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: .18rem;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.bookingPage_content_wrapper {
+    margin-top: .35rem;
+}
+
+.bookingPage_title {
+    font-size: .18rem;
+    font-weight: bolder;
+}
+
+.bookingPage_position_title {
+    font-size: .15rem;
+}
+
+.bookingPage_position_address {
+    font-size: .14rem;
+    color: #888;
+}
+
+.bookingPage_houseCard_wrapper {
+    margin-top: .15rem;
+    background-color: #fff;
+    padding: .15rem;
+}
+
+.bookingPage_datePicker_Wrapper {
+    margin-top: .15rem;
+}
+
+.bookingPage_button {
+    margin-top: .15rem;
+}

@@ -1,17 +1,17 @@
 var YouGouFangModel = require('./mongodb');
-const UserModel = YouGouFangModel.UserModel;
-const HouseModel = YouGouFangModel.HouseModel;
 
 module.exports = {
+
     /**
-     *  注册新账户方法
+     *  添加文档
      *
-     * @param {*} data 用户信息对象
+     * @param {*} data  数据 
+     * @param {*} model 模型
      * @returns
      */
-    createNewAccount(data) {
+    createNew(data, model) {
         return new Promise((resolve, reject) => {
-            UserModel.create(data, (err, doc) => {
+            YouGouFangModel[model].create(data, (err, doc) => {
                 if(err) {
                     reject(err)
                 }
@@ -23,14 +23,15 @@ module.exports = {
     },
 
     /**
-     *  获取账号信息
+     *  查找特定的文档(只返回一个)
      *
      * @param {*} data
+     * @param {*} model
      * @returns
      */
-    getUserInfo(data) {
+    findOne(data, model) {
         return new Promise((resolve, reject) => {
-            UserModel.findOne(data, (error, doc) => {
+            YouGouFangModel[model].findOne(data, (error, doc) => {
                 if(error){
                     reject(error)
                 }else{
@@ -41,89 +42,34 @@ module.exports = {
     },
 
     /**
-     *  更新用户信息
+     *  查找符合条件的文档(返回一个数组)
+     *
+     * @param {*} data
+     * @returns
+     */
+    find(data, model) {
+        return new Promise((resolve, reject) => {
+            YouGouFangModel[model].find(data, (error, doc) => {
+                if(error){
+                    reject(error)
+                }else{
+                    resolve(doc)
+                }
+            })
+        })
+    },
+
+
+    /**
+     *  更新文档信息(只更新一个)
      *
      * @param {*} conditions
      * @param {*} update
      * @returns
      */
-    userUpdate(conditions, update) {
+    updateOne(conditions, update, model) {
         return new Promise((resolve, reject) => {
-            UserModel.updateOne(conditions, update, (error, doc) => {
-                if(error){
-                    reject(error)
-                }else{
-                    resolve(doc)
-                }
-            })
-        })
-    },
-
-    /**
-     *  发布新房源
-     *
-     * @param {*} data
-     * @returns
-     */
-    createNewHouse(data) {
-        return new Promise((resolve, reject) => {
-            HouseModel.create(data, (err, doc) => {
-                if(err) {
-                    reject(err)
-                }
-                else {
-                    resolve(doc)
-                }
-            })
-        })
-    },
-
-    /**
-     *  查找单个特定房源
-     *
-     * @param {*} data
-     * @returns
-     */
-    getHouseInfo(data) {
-        return new Promise((resolve, reject) => {
-            HouseModel.findOne(data, (error, doc) => {
-                if(error){
-                    reject(error)
-                }else{
-                    resolve(doc)
-                }
-            })
-        })
-    },
-
-    /**
-     *  搜索符合条件的房源
-     *
-     * @param {*} data
-     * @returns
-     */
-    searchHouse(data) {
-        return new Promise((resolve, reject) => {
-            HouseModel.find(data, (error, doc) => {
-                if(error){
-                    reject(error)
-                }else{
-                    resolve(doc)
-                }
-            })
-        })
-    },
-
-    /**
-     *  更新房源信息
-     *
-     * @param {*} conditions
-     * @param {*} update
-     * @returns
-     */
-    houseUpdate(conditions, update) {
-        return new Promise((resolve, reject) => {
-            HouseModel.updateOne(conditions, update, (error, doc) => {
+            YouGouFangModel[model].updateOne(conditions, update, (error, doc) => {
                 if(error){
                     reject(error)
                 }else{

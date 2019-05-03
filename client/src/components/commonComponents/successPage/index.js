@@ -1,20 +1,22 @@
 import React, {Component} from 'react'
 import './index.css'
+import {getUrlParams} from '../../../utils'
 
 // 记录inteval的id,方便Unmount的时候clear
 let timer;
 
 /**
- *  发布成功的结果页
+ *  成功的结果页
  *
- * @class PublishSuccess
+ * @class SuccessPage
  * @extends {Component}
  */
-class PublishSuccess extends Component {
+class SuccessPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            countDown: 5
+            countDown: 5,
+            type: getUrlParams().type
         }
         this.onCountDown = this.onCountDown.bind(this);
     }
@@ -49,15 +51,15 @@ class PublishSuccess extends Component {
             this.onCountDown();
         }
         return (
-            <div className="publishSuccess_wrapper">
-                <div><i className="iconfont icon-wancheng publishSuccess_icon"/></div>
-                <div className="publishSuccess_title">发布成功</div>
-                <div className="publishSuccess_jumpWrapper">
+            <div className="successPage_wrapper">
+                <div><i className="iconfont icon-wancheng successPage_icon"/></div>
+                <div className="successPage_title">{this.state.type === 'publish'? '发布' :'预约'}成功</div>
+                <div className="successPage_jumpWrapper">
                     {this.state.countDown}秒后返回主页
-                    <span className="publishSuccess_jumptoHouseList"
-                        onClick={()=>this.props.history.push('/houseList')}
+                    <span className="successPage_jumptoHouseList"
+                        onClick={()=>this.props.history.push(this.state.type === 'publish'?'/houseList':'/orderList')}
                     >
-                        去看我刚发布的
+                        去看我刚{this.state.type === 'publish'? '发布' :'预约'}的
                         <i className="iconfont icon-icon--"/>
                     </span>
                 </div>
@@ -66,4 +68,4 @@ class PublishSuccess extends Component {
     }
 }
 
-export default PublishSuccess
+export default SuccessPage

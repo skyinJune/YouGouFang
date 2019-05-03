@@ -132,8 +132,8 @@ class HousePage extends Component {
             this.props.history.push('/login');
         }
         else {
-            let pushPath = '/bookingPage?ownerAccount=' + 
-                this.state.houseInfo.ownerAccount + '&buyerAccount=' + this.props.logInfo.user;
+            let pushPath = '/bookingPage?house_id=' + 
+                this.state._id + '&buyerAccount=' + this.props.logInfo.user;
             this.props.history.push(pushPath);
         }
     }
