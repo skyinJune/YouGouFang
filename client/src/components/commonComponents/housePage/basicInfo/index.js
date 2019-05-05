@@ -2,6 +2,12 @@ import React, {Component} from 'react'
 import './index.css'
 import {List} from 'antd-mobile'
 
+/**
+ *  housePage基本信息部分
+ *
+ * @class BasicInfo
+ * @extends {Component}
+ */
 class BasicInfo extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +22,7 @@ class BasicInfo extends Component {
         let checkInTimeDate = new Date(this.props.houseInfo.checkInTime);
         let checkInTime = checkInTimeDate.getTime();
         let returnString = '';
+        // 如果现在的时间点比房源的入住时间晚，那么就显示随时入住，否则显示随时入住
         if(now - checkInTime >= 0) {
             returnString = '随时入住';
         }

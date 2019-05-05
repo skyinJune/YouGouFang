@@ -3,6 +3,12 @@ import './index.css'
 import {List} from 'antd-mobile'
 import 'whatwg-fetch'
 
+/**
+ *  housePage 卖家卡片
+ *
+ * @class UserCard
+ * @extends {Component}
+ */
 class UserCard extends Component {
     constructor(props) {
         super(props);

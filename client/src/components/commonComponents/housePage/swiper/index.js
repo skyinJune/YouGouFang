@@ -2,6 +2,12 @@ import React, {Component} from 'react'
 import './index.css'
 import Swiper from 'swiper/dist/js/swiper.js'
 
+/**
+ *  housPage Swiper卡片
+ *
+ * @class HomePageSwiper
+ * @extends {Component}
+ */
 class HomePageSwiper extends Component {
     constructor(props) {
         super(props);

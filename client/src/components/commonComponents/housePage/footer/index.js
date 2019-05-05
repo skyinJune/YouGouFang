@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import './index.css'
 
+/**
+ *  底部按钮
+ *
+ * @class Footer
+ * @extends {Component}
+ */
 class Footer extends Component {
     constructor(props) {
         super(props);

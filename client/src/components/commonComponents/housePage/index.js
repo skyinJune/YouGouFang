@@ -11,6 +11,12 @@ import {getUrlParams} from '../../../utils'
 import 'whatwg-fetch'
 import { connect } from 'react-redux'
 
+/**
+ *  房源详情页
+ *
+ * @class HousePage
+ * @extends {Component}
+ */
 class HousePage extends Component {
     constructor(props) {
         super(props);
@@ -157,6 +163,8 @@ class HousePage extends Component {
                 <Description houseInfo={this.state.houseInfo}/>
                 <MapCard position={this.state.houseInfo.position}/>
                 <UserCard ownerAccount={this.state.houseInfo.ownerAccount}/>
+
+                {/* 如果浏览的用户是这个房源的房主就不显示底下的按钮了 */}
                 {
                     this.props.logInfo.user === this.state.houseInfo.ownerAccount?null
                     :<Footer onBookingClicked={()=>this.onBookingClicked()} onChatClicked={()=>this.onChatClicked()}/>

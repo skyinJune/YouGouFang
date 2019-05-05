@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './index.css'
 import {List} from 'antd-mobile'
 
+// tags列表
 const TagsIconList = [
     {name: 'WIFI', icon: 'icon-WIFI'}, {name: '冰箱', icon: 'icon-bingxiang'}, {name: '洗衣机', icon: 'icon-xiyiji'},
     {name: '热水器', icon: 'icon-reshuiqi'}, {name: '燃气灶', icon: 'icon-huo'}, {name: '电视机', icon: 'icon-dianshi'},
@@ -9,6 +10,12 @@ const TagsIconList = [
     {name: '微波炉', icon: 'icon-weibolu'}, {name: '衣柜', icon: 'icon-yigui'}, {name: '电梯房', icon: 'icon-dianti'}
 ]
 
+/**
+ *  housPage描述+tags部分
+ *
+ * @class Description
+ * @extends {Component}
+ */
 class Description extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +25,13 @@ class Description extends Component {
         this.checkTags = this.checkTags.bind(this);
     }
 
+    /**
+     *  检查是房源的tagList中是否包含某个tag
+     *
+     * @param {*} name
+     * @returns
+     * @memberof Description
+     */
     checkTags(name) {
         if(this.props.houseInfo.tagsList.indexOf(name) >= 0) {
             return 'housePage_description_tagItem_include'

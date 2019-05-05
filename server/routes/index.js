@@ -16,10 +16,13 @@ router.post('/registerbyaccount', function(req, res, next) {
 router.post('/loginbyaccount', function(req, res, next) {
 	const UserInfo = req.body;
 	const searchAccount = {'account': UserInfo.account};
+
+	// md5加密用户输入的密码
 	const inputPassWord = YouGouFangMd5(UserInfo.passWord);
 	api.findOne(searchAccount, 'UserModel').then(result =>{
 		if(result) {
 			const passWord = result.passWord;
+			// 判断用户输入的加密结果和数据库存入的加密结果是否一致
 			passWord === inputPassWord ? res.json({...searchAccount, 'checkStatus': 'OK'})
 			: res.json({...searchAccount, 'checkStatus': 'Fail'})
 		}
@@ -42,14 +45,20 @@ router.post('/publishhouse', function(req, res, next) {
 	api.createNew(newHouse, 'HouseModel').then(result =>{
 		// 发布成功之后把房源_id添加到用户的houseList里面
 		var condition = {'account': result.ownerAccount};
-    	var houseList = [];
+
+		// 一定要先搞一个空的数组，把获取到的数组赋值过来，不然push不了
+		var houseList = [];
+		
+		// 获取用户数据
 		api.findOne(condition, 'UserModel').then(result=>{
+			// 赋值到空数组上
 			houseList = result.houseList;
 		}).then(()=>{
 			houseList.push(result._id);
 			var update = {
 				$set: { 'houseList': houseList}
 			};
+			// 更新
 			api.updateOne(condition, update, 'UserModel').then(result=>console.log(result));
 			res.json(result);}
 		)
@@ -60,10 +69,13 @@ router.post('/publishhouse', function(req, res, next) {
 // 获取房屋信息
 router.post('/getHouseInfo', function(req, res, next) {
 	const HouseInfo = req.body;
+	// 通过_id查找的时候必须用ObjectId，不能用字符串直接查
 	const _id = new mongoose.Types.ObjectId(HouseInfo._id);
 	const searchHouse = {_id: _id};
 	api.findOne(searchHouse, 'HouseModel').then(result => {
 		res.json(result);
+
+		// 如果请求体里带有browsed(表示是浏览)就要给浏览次数+1
 		if(HouseInfo.browsed) {
 			let browsedCount = result.browsedCount +1;
 			let update = {
@@ -85,11 +97,15 @@ router.post('/searchHouse', function(req, res, next) {
 // 收藏(取消收藏)房源
 router.post('/collectHouse', function(req, res, next) {
 	const collectInfo = req.body;
+
+	// 要收藏(取消收藏)的房源的_id
 	const _id = new mongoose.Types.ObjectId(collectInfo._id);
 	var condition = {'account': collectInfo.account};
 	let collectionList = [];
+	// 获取用户数据
 	api.findOne(condition, 'UserModel').then(result=>{
 		collectionList = result.collectionList;
+		// 判断是收藏还是取消收藏
 		if(collectInfo.isCollected) {
 			collectionList.push(_id)
 		}
@@ -100,8 +116,10 @@ router.post('/collectHouse', function(req, res, next) {
 		let update = {
 		$set: { 'collectionList': collectionList}
 		};
+		// 更新
 		api.updateOne(condition, update, 'UserModel').then(result=>console.log(result));
 	}).then(()=>(
+		// 房源的收藏数更改
 		api.findOne({_id: _id}, 'HouseModel').then(result=>{
 			let collectedCount = result.collectedCount;
 			if(collectInfo.isCollected) {
@@ -113,6 +131,7 @@ router.post('/collectHouse', function(req, res, next) {
 			let update = {
 				$set: { 'collectedCount': collectedCount}
 			}
+			// 更新
 			api.updateOne({_id: _id}, update, 'HouseModel').then(result=>res.json(result));
 		})
 	))
@@ -121,8 +140,35 @@ router.post('/collectHouse', function(req, res, next) {
 // 预约看房
 router.post('/bookingHouse', function(req, res, next) {
 	const newOrder = req.body;
+	// 创建新的的预约订单
 	api.createNew(newOrder, 'OrderModel').then(result =>{
 		res.json(result);
+
+		// 买家orderList更新
+		api.findOne({account: result.buyerAccount}, 'UserModel').then(buyerData=>{
+			let orderList = [];
+			orderList = buyerData.orderList;
+			orderList.push(result._id);
+			let buyerUpdate = {
+				$set: { 'orderList': orderList}
+			}
+			api.updateOne({account: result.buyerAccount}, buyerUpdate, 'UserModel');
+		})
+
+		// 卖家orderList更新
+		api.findOne({_id: new mongoose.Types.ObjectId(result.house_id)}, 'HouseModel').then(
+			houseInfo=>{
+				api.findOne({account: houseInfo.ownerAccount}, 'UserModel').then(ownerDate=>{
+					let orderList = [];
+					orderList = ownerDate.orderList;
+					orderList.push(result._id);
+					let ownerUpdate = {
+						$set: { 'orderList': orderList}
+					}
+					api.updateOne({account: houseInfo.ownerAccount}, ownerUpdate, 'UserModel');
+				})
+			}
+		)
 	})
 })
 
