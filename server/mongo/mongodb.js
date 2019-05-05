@@ -131,6 +131,7 @@ var User = new mongoose.Schema({
 })
 
 
+// 预约订单模型
 var Order = new mongoose.Schema({
     // 房源_id(注意这里存的是string类型的)
     house_id: {type: String},
@@ -148,10 +149,10 @@ var Order = new mongoose.Schema({
     status: {type: String, default: 'waitOwnerConfirm'},
 
     // 房东评价
-    ownerComment: {type: String},
+    ownerComment: {type: String, default: ''},
 
     // 买家评价
-    ownerComment: {type: String},
+    buyerComment: {type: String, default: ''},
 
 })
 

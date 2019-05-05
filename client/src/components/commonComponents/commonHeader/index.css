@@ -1,0 +1,26 @@
+.commonHeader_wrapper {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 101;
+}
+
+.commonHeader_header_icon_wrapper {
+    margin-left: .05rem;
+    position: absolute;
+}
+
+.commonHeader_header_icon {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: .25rem;
+}
+
+.commonHeader_header_title {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: .18rem;
+    font-weight: bolder;
+    text-align: center;
+}

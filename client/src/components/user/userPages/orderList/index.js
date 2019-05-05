@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
-import {Icon} from 'antd-mobile';
+import './index.css'
+import CommonHeader from '../../../commonComponents/commonHeader'
+import OrderCard from './orderCard'
 
 /**
- *  订单组件
+ *  订单列表
  *
  * @class OrderList
  * @extends {Component}
@@ -17,9 +19,10 @@ class OrderList extends Component {
     render() {
         return (
             <div>
-                {/* 点击返回 */}
-                <Icon type="left" size="lg" onClick={()=>this.props.history.goBack()}/>
-                OrderList
+                <CommonHeader history={this.props.history} title="我的订单"/>
+                <div className="orderList_content_wrapepr">
+                   <OrderCard/>
+                </div>
             </div>
         )
     }
