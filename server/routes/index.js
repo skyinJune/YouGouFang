@@ -148,7 +148,7 @@ router.post('/bookingHouse', function(req, res, next) {
 		api.findOne({account: result.buyerAccount}, 'UserModel').then(buyerData=>{
 			let orderList = [];
 			orderList = buyerData.orderList;
-			orderList.push(result._id);
+			orderList.push({order_id: result._id, type: 'buyer'});
 			let buyerUpdate = {
 				$set: { 'orderList': orderList}
 			}
@@ -161,7 +161,7 @@ router.post('/bookingHouse', function(req, res, next) {
 				api.findOne({account: houseInfo.ownerAccount}, 'UserModel').then(ownerDate=>{
 					let orderList = [];
 					orderList = ownerDate.orderList;
-					orderList.push(result._id);
+					orderList.push({order_id: result._id, type: 'owner'});
 					let ownerUpdate = {
 						$set: { 'orderList': orderList}
 					}
@@ -169,6 +169,16 @@ router.post('/bookingHouse', function(req, res, next) {
 				})
 			}
 		)
+	})
+})
+
+router.post('/getOrderInfo', function(req, res, next) {
+	const OrderInfo = req.body;
+	// 通过_id查找的时候必须用ObjectId，不能用字符串直接查
+	const _id = new mongoose.Types.ObjectId(OrderInfo._id);
+	const searchOrder = {_id: _id};
+	api.findOne(searchOrder, 'OrderModel').then(result => {
+		res.json(result);
 	})
 })
 

@@ -151,8 +151,14 @@ var Order = new mongoose.Schema({
     // 房东评价
     ownerComment: {type: String, default: ''},
 
+    // 房东星评
+    ownerCommentStar: {type: Number, default: -1},
+
     // 买家评价
     buyerComment: {type: String, default: ''},
+
+    // 买家星评
+    buyerCommentStar: {type: Number, default: -1},
 
 })
 
