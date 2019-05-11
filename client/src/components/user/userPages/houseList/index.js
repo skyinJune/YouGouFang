@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './index.css'
 import {List, WhiteSpace, Toast} from 'antd-mobile'
 import { connect } from 'react-redux'
+import {getTimeStr} from '../../../../utils'
 import 'whatwg-fetch'
 
 /**
@@ -95,32 +96,6 @@ class HouseList extends Component {
         })
     }
 
-    getPublishTime(publishTime) {
-        const now = new Date(Date.now());
-        publishTime = new Date(publishTime);
-        const secondDiff = (now.getTime() - publishTime.getTime())/1000;
-        let returnStr = '';
-        if(secondDiff >= 31536000) {
-            returnStr = Math.floor(secondDiff/31536000) + '年前'
-        }
-        if(secondDiff >= 2592000 && secondDiff < 31536000) {
-            returnStr = Math.floor(secondDiff/2592000) + '月前'
-        }
-        if(secondDiff >= 86400 && secondDiff < 2592000) {
-            returnStr = Math.floor(secondDiff/86400) + '天前'
-        }
-        if(secondDiff >= 3600 && secondDiff < 86400) {
-            returnStr = Math.floor(secondDiff/3600) + '小时前'
-        }
-        if(secondDiff >= 60 && secondDiff < 3600) {
-            returnStr = Math.floor(secondDiff/60) + '分钟前'
-        }
-        if(secondDiff < 60) {
-            returnStr = '刚刚'
-        }
-        return returnStr;
-    }
-
     render() {
         return (
             <div>
@@ -169,7 +144,7 @@ class HouseList extends Component {
                                             </div>
                                         </div>
                                         <div className="houselist_item_footer">
-                                            <div className="houselist_item_footer_publishTime">{this.getPublishTime(item.publishTime)}发布</div>
+                                            <div className="houselist_item_footer_publishTime">{getTimeStr(item.publishTime)}发布</div>
                                             <div className="houselist_item_footer_operationWrapper">
                                                 <div className="houselist_item_footer_operation" onClick={()=>console.log('item footer 降价 clicked')}>降价</div>
                                                 <div className="houselist_item_footer_operation" onClick={()=>console.log('item footer ellipsis clicked')}><i className="iconfont icon-ellipsis"/></div>

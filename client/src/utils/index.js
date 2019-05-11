@@ -40,8 +40,41 @@ function getUrlParams() {
     return paramObj
 }
 
+/**
+ *  获取时间差字符串
+ *
+ * @param {*} publishTime
+ * @returns
+ */
+function getTimeStr(publishTime) {
+    const now = new Date(Date.now());
+    publishTime = new Date(publishTime);
+    const secondDiff = (now.getTime() - publishTime.getTime())/1000;
+    let returnStr = '';
+    if(secondDiff >= 31536000) {
+        returnStr = Math.floor(secondDiff/31536000) + '年前'
+    }
+    if(secondDiff >= 2592000 && secondDiff < 31536000) {
+        returnStr = Math.floor(secondDiff/2592000) + '月前'
+    }
+    if(secondDiff >= 86400 && secondDiff < 2592000) {
+        returnStr = Math.floor(secondDiff/86400) + '天前'
+    }
+    if(secondDiff >= 3600 && secondDiff < 86400) {
+        returnStr = Math.floor(secondDiff/3600) + '小时前'
+    }
+    if(secondDiff >= 60 && secondDiff < 3600) {
+        returnStr = Math.floor(secondDiff/60) + '分钟前'
+    }
+    if(secondDiff < 60) {
+        returnStr = '刚刚'
+    }
+    return returnStr;
+}
+
 export {
     listAssign,
     throttle,
-    getUrlParams
+    getUrlParams,
+    getTimeStr
 }

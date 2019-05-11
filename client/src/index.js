@@ -15,6 +15,7 @@ import UserSetting from './components/user/userPages/userSetting'
 import HousePage from './components/commonComponents/housePage'
 import BookingPage from './components/bookingPage'
 import SuccessPage from './components/commonComponents/successPage'
+import CommentPage from './components/commentPage'
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -67,6 +68,9 @@ ReactDOM.render(
 
                 {/* 成功结果页面的路由 */}
                 <Route path='/successPage' component={SuccessPage}/>
+
+                {/* 评价页面的路由 */}
+                <Route path='/commentPage' component={CommentPage}/>
 
                 {/* 主页路由 */}
                 <Route path='/' component={App}/>

@@ -1,3 +1,7 @@
+.orderCard_wrapper {
+    margin-top: .15rem;
+}
+
 .orderCard_main_wrapper {
     overflow: hidden;
 }
@@ -27,4 +31,48 @@
     font-size: .18rem;
     font-weight: bolder;
     text-overflow: ellipsis;
+}
+
+.orderCard_bottom_wrapper {
+    overflow: hidden;
+}
+
+.orderCard_publishtime {
+    float: left;
+}
+
+.orderCard_operate_wrapper {
+    float: right;
+    overflow: hidden;
+}
+
+.orderCard_operate_cancel {
+    float: right;
+    margin-right: .05rem;
+    font-size: .15rem;
+    padding: 0 .05rem;
+    border: #888 .01rem solid;
+    border-radius: .05rem;
+    text-align: center;
+}
+
+.orderCard_operate_confirm {
+    float: right;
+    margin-right: .15rem;
+    font-size: .15rem;
+    padding: .03rem .08rem;
+    border-radius: .05rem;
+    text-align: center;
+    color: #fff;
+    background-color: #108ee9;
+}
+
+.orderCard_operate_delete {
+    float: right;
+    margin-right: .15rem;
+    font-size: .15rem;
+    padding: 0 .05rem;
+    border-radius: .05rem;
+    text-align: center;
+    border: #888 .01rem solid;
 }

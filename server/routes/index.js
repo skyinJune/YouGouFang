@@ -172,6 +172,7 @@ router.post('/bookingHouse', function(req, res, next) {
 	})
 })
 
+// 获取订单信息
 router.post('/getOrderInfo', function(req, res, next) {
 	const OrderInfo = req.body;
 	// 通过_id查找的时候必须用ObjectId，不能用字符串直接查
@@ -180,6 +181,24 @@ router.post('/getOrderInfo', function(req, res, next) {
 	api.findOne(searchOrder, 'OrderModel').then(result => {
 		res.json(result);
 	})
+})
+
+// 更改订单状态
+router.post('/changeOrderInfo', function(req, res, next) {
+	const orderInfo = req.body;
+	let orderUpdate = {
+		$set: { 'status': orderInfo.status}
+	}
+	api.updateOne({_id: new mongoose.Types.ObjectId(orderInfo._id)}, orderUpdate, 'OrderModel').then(result=>res.json(result));
+})
+
+// 更改订单列表
+router.post('/changeOrderList', function(req, res, next) {
+	const orderListInfo = req.body;
+	let orderListUpdate = {
+		$set: { 'orderList': orderListInfo.orderList}
+	}
+	api.updateOne({account: orderListInfo.account}, orderListUpdate, 'UserModel').then(result=>res.json(result));
 })
 
 module.exports = router;
