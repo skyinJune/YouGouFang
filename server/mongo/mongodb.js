@@ -115,7 +115,7 @@ var User = new mongoose.Schema({
     tagList: {type: Array, default: []},
 
     // 用户星级
-    starLevel: {type: Number, default: -1},
+    starLevel: {type: Number, default: 0},
 
     // 收藏房源列表
     collectionList: {type: Array, default: []},
@@ -139,6 +139,9 @@ var Order = new mongoose.Schema({
     // 买家账户
     buyerAccount: {type: String},
 
+    // 房东账户
+    ownerAccount: {type: String},
+
     // 预约看房时间
     bookingDate: {type: Date},
 
@@ -152,13 +155,13 @@ var Order = new mongoose.Schema({
     ownerComment: {type: String, default: ''},
 
     // 房东星评
-    ownerCommentStar: {type: Number, default: -1},
+    ownerCommentStar: {type: Number, default: 0},
 
     // 买家评价
     buyerComment: {type: String, default: ''},
 
     // 买家星评
-    buyerCommentStar: {type: Number, default: -1},
+    buyerCommentStar: {type: Number, default: 0},
 
 })
 

@@ -53,6 +53,7 @@ class BookingPage extends Component {
         let orderInfo = {
             house_id: this.state.house_id,
             buyerAccount: this.state.buyerAccount,
+            ownerAccount: this.state.houseInfo.ownerAccount,
             bookingDate: this.state.date,
             createdTime: new Date(Date.now()),
         }

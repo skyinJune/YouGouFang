@@ -148,7 +148,7 @@ router.post('/bookingHouse', function(req, res, next) {
 		api.findOne({account: result.buyerAccount}, 'UserModel').then(buyerData=>{
 			let orderList = [];
 			orderList = buyerData.orderList;
-			orderList.push({order_id: result._id, type: 'buyer'});
+			orderList.push({order_id: result._id.toString(), type: 'buyer', starComment: 0});
 			let buyerUpdate = {
 				$set: { 'orderList': orderList}
 			}
@@ -161,7 +161,7 @@ router.post('/bookingHouse', function(req, res, next) {
 				api.findOne({account: houseInfo.ownerAccount}, 'UserModel').then(ownerDate=>{
 					let orderList = [];
 					orderList = ownerDate.orderList;
-					orderList.push({order_id: result._id, type: 'owner'});
+					orderList.push({order_id: result._id.toString(), type: 'owner', starComment: 0});
 					let ownerUpdate = {
 						$set: { 'orderList': orderList}
 					}
@@ -199,6 +199,43 @@ router.post('/changeOrderList', function(req, res, next) {
 		$set: { 'orderList': orderListInfo.orderList}
 	}
 	api.updateOne({account: orderListInfo.account}, orderListUpdate, 'UserModel').then(result=>res.json(result));
+})
+
+// 提交订单评价
+router.post('/submitComment', function(req, res, next) {
+	const commentInfo = req.body;
+	api.findOne({_id: new mongoose.Types.ObjectId(commentInfo.order_id)}, 'OrderModel').then(order=> {
+			let updateType = commentInfo.type === 'buyer'? 'ownerAccount': 'buyerAccount';
+			api.findOne({account: order[updateType]}, 'UserModel').then(userData=>{
+				let orderList = userData.orderList;
+				orderList.forEach(item=>{
+					if(item.order_id === commentInfo.order_id) {
+						item.starComment = commentInfo.star;
+					}
+				});
+				let userUpdate = {
+					$set: { 'orderList': orderList}
+				}
+				api.updateOne({account: order[updateType]}, userUpdate, 'UserModel');
+			})
+
+			let orderUpdate = {};
+			if(commentInfo.type === 'buyer') {
+				orderUpdate = {
+					buyerComment: commentInfo.comment,
+					buyerCommentStar: commentInfo.star,
+					status: order.ownerComment? 'finish': 'waitOwnerComment'
+				}
+			}
+			else {
+				orderUpdate = {
+					ownerComment: commentInfo.comment,
+					ownerCommentStar: commentInfo.star,
+					status: order.buyerComment? 'finish': 'waitBuyerComment'
+				}
+			}
+			api.updateOne({_id: new mongoose.Types.ObjectId(commentInfo.order_id)}, orderUpdate, 'OrderModel')
+	}).then(res.json({'commentStatus': 'ok'}))
 })
 
 module.exports = router;

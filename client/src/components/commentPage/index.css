@@ -1,3 +1,33 @@
 .commentPage_main_wrapper {
     margin-top: .35rem;
+    padding-top: .02rem;
+}
+
+.commentPage_star_wrapper {
+    margin: 0.2rem 0 .2rem 0;
+}
+
+.commentPage_star_title {
+    color: #888;
+    font-size: .15rem;
+    text-align: center;
+}
+
+.commentPage_star {
+    margin: .15rem 0 .15rem 0;
+    overflow: hidden;
+}
+
+.commentPage_star_item_wrapper {
+    width: 20%;
+    float: left;
+    text-align: center;
+}
+
+.commentPage_star_item {
+    font-size: .25rem;
+}
+
+.commentPage_star_item_yellow {
+    color: gold;
 }
