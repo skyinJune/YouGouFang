@@ -65,7 +65,10 @@ class CommentPage extends Component {
                 'Content-Type': 'application/json'
                 },
                 body:data
-            }).then()
+            }).then(()=>{
+                Toast.success('评价成功!', 2);
+                this.props.history.goBack();
+            })
         }
     }
 

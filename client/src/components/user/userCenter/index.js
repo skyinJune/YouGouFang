@@ -6,7 +6,6 @@ import SecondInfo from './secondInfo'
 import List from './list'
 import {Toast} from 'antd-mobile'
 import 'whatwg-fetch'
-import {listAssign} from '../../../utils'
 
 /**
  *  用户中心页
@@ -73,25 +72,16 @@ class UserCenterIndex extends Component {
     }
 
     render() {
-
-        // 将请求到的数据分发给每个组件
-        let basicInfo = {account: '', avatar: '', introduction: '', userType: 0, isCertificationPassed: false},
-            secondInfo = {starLevel: -1, followList: [], fansList:[]},
-            listInfo = {collectionList: [], houseList: [], orderList: []};
-            listAssign(basicInfo, this.state.userData);
-            listAssign(secondInfo, this.state.userData);
-            listAssign(listInfo, this.state.userData);
-
         return (
             <div className="usercenter_index_wrapper">
                 {/* 用户基本信息组件 */}
-                <BasicInfo basicInfo={basicInfo}></BasicInfo>
+                <BasicInfo userInfo={this.state.userData}></BasicInfo>
 
                 {/* 用户第二信息 */}
-                <SecondInfo secondInfo={secondInfo}></SecondInfo>
+                <SecondInfo userInfo={this.state.userData}></SecondInfo>
 
                 {/* 用户的列表信息 */}
-                <List listInfo={listInfo}></List>
+                <List/>
             </div>
         )
     }

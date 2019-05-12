@@ -22,17 +22,18 @@ class SecondInfo extends Component {
             { value: 1, label: '关注数', key: 'followList'},
             { value: 2, label: '粉丝数', key: 'fansList'}
         ];
-        const secondInfo = this.props.secondInfo;
+        const userInfo = this.props.userInfo;
         return (
             <div className="second_info_wrapper">
                 {
+                    Object.keys(userInfo).length?
                     ItemsInfo.map((item)=>
                         <div className="second_info_midThree" key={item.key}>
                             <div className="second_info_itemNumber">
                                 {
-                                    (typeof secondInfo[item.key]) === 'number' ? 
-                                    secondInfo[item.key]
-                                    :secondInfo[item.key].length
+                                    (typeof userInfo[item.key]) === 'number' ? 
+                                    (userInfo[item.key]? userInfo[item.key]: '-')
+                                    :userInfo[item.key].length
                                 }
                             </div>
                             <div className="second_info_label">
@@ -40,6 +41,7 @@ class SecondInfo extends Component {
                             </div>
                         </div>
                     )
+                    :null
                 }
             </div>
         )

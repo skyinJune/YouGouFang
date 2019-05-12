@@ -21,6 +21,10 @@ class OrderCard extends Component {
         this.fetchOrderInfo(this.props.orderInfo);
     }
 
+    componentWillReceiveProps(props) {
+        this.fetchOrderInfo(props.orderInfo);
+    }
+
     fetchOrderInfo(orderInfo) {
 
         const order = {
@@ -99,12 +103,12 @@ class OrderCard extends Component {
                 returnStr = '看房完成，待评价'
             }
             else {
-                returnStr = '评价完成，待买家评价'
+                returnStr = '待买家评价'
             }
         }
         if(this.state.orderInfo.status === 'waitOwnerComment') {
             if(this.state.orderType === 'buyer') {
-                returnStr = '评价完成，待卖家评价'
+                returnStr = '待卖家评价'
             }
             else {
                 returnStr = '看房完成，待评价'

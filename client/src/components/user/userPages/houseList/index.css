@@ -41,13 +41,10 @@
 
 .houselist_item_content {
     padding-bottom: 23%;
-    background-color: #fff;
-    border-bottom: #f5f5f9 .01rem solid;
 }
 
 .houselist_item_footer {
     padding-bottom: 3%;
-    background-color: #fff;
 }
 
 .houselist_item_mainImg_wrapper {

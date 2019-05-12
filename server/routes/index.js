@@ -213,8 +213,19 @@ router.post('/submitComment', function(req, res, next) {
 						item.starComment = commentInfo.star;
 					}
 				});
+
+				let starLevel = 0;
+				let countIndex = 0;
+				orderList.forEach(item=>{
+					if(item.starComment) {
+						starLevel += item.starComment;
+						countIndex++;
+					}
+				})
+				starLevel = (starLevel/countIndex).toFixed(1);
+
 				let userUpdate = {
-					$set: { 'orderList': orderList}
+					$set: { 'orderList': orderList, 'starLevel': starLevel}
 				}
 				api.updateOne({account: order[updateType]}, userUpdate, 'UserModel');
 			})

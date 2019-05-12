@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import CommonHeader from '../../../commonComponents/commonHeader'
 import OrderCard from './orderCard'
-import {Toast, Modal} from 'antd-mobile'
+import {Modal, PullToRefresh} from 'antd-mobile'
 import { connect } from 'react-redux'
 
 /**
@@ -14,7 +14,9 @@ class OrderList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            orderList: []
+            orderList: [],
+            refreshing: false,
+            height: document.documentElement.clientHeight - 35,
         };
 
         this.getOrderList = this.getOrderList.bind(this);
@@ -31,9 +33,6 @@ class OrderList extends Component {
     }
 
     getOrderList() {
-        // 发送请求时的加载态
-        Toast.loading('加载订单列表数据...');
-
         const userInfo = {
             account: this.props.logInfo.user
         };
@@ -52,7 +51,8 @@ class OrderList extends Component {
         .then(data=>{
             let orderList = data.orderList;
             this.setState({orderList});
-            Toast.hide();
+        }).then(()=>{
+            this.setState({refreshing: false})
         })
     }
 
@@ -60,13 +60,15 @@ class OrderList extends Component {
         Modal.alert('删除订单','删除后订单将从列表中移除',
             [
                 { text: '返回', onPress: () => console.log('cancel'), style: 'default' },
-                { text: '确认取消', onPress: () => {
-                    let orderIndex = this.state.orderList.forEach((item, index)=>{
+                { text: '确认删除', onPress: () => {
+                    let orderList = this.state.orderList;
+                    let orderIndex = 0;
+                    orderList.forEach((item, index)=>{
                         if(item.order_id === _id) {
-                            return index
+                            orderIndex = index
                         }
                     });
-                    let orderList = this.state.orderList.splice(orderIndex, 1);
+                    orderList.splice(orderIndex, 1);
                     this.setState({orderList});
 
                     const orderListInfo = {
@@ -90,18 +92,33 @@ class OrderList extends Component {
     render() {
         return (
             <div>
-                <CommonHeader history={this.props.history} title="我的订单"/>
+                <CommonHeader history={this.props.history} title="我的订单" to="/userCenter"/>
                 <div style={{'marginTop': '.35rem'}}>
-                    {
-                        this.state.orderList.map(item=>(
-                            <OrderCard
-                                key={item.order_id}
-                                orderInfo={item}
-                                history={this.props.history}
-                                deleteOrder={_id=>this.deleteOrder(_id)}
-                            />
-                        ))
-                    }
+                    <PullToRefresh
+                        damping={60}
+                        indicator="下拉可以刷新"
+                        direction="down"
+                        refreshing={this.state.refreshing}
+                        onRefresh={() => {
+                            this.setState({ refreshing: true });
+                            this.getOrderList();
+                          }}
+                        style={{
+                            height: this.state.height,
+                            overflow: 'auto',
+                            }}
+                    >
+                        {
+                            this.state.orderList.map(item=>(
+                                <OrderCard
+                                    key={item.order_id}
+                                    orderInfo={item}
+                                    history={this.props.history}
+                                    deleteOrder={_id=>this.deleteOrder(_id)}
+                                />
+                            ))
+                        }
+                    </PullToRefresh>
                 </div>
             </div>
         )

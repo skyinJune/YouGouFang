@@ -102,7 +102,7 @@ class HouseList extends Component {
                 <div className="houselist_header_wrapper">
                     {/* 点击返回 */}
                     <div className="houselist_header_icon_wrapper"
-                        onClick={()=>this.props.history.goBack()}
+                        onClick={()=>this.props.history.push("/userCenter")}
                     >
                         <i className="iconfont icon-zuo houselist_header_icon"/>
                     </div>
@@ -124,10 +124,8 @@ class HouseList extends Component {
                         :this.state.houseList.map(item=>(
                                 <div key={item._id}>
                                 <List>
-                                    <List.Item>
-                                        <div className="houselist_item_content"
-                                        onClick={()=>console.log('item content clicked')}
-                                        >
+                                    <List.Item onClick={()=>this.props.history.push('/housePage?_id=' + item._id)} arrow="horizontal">
+                                        <div className="houselist_item_content">
                                             <div className="houselist_item_mainImg_wrapper">
                                                 <img className="houselist_item_mainImg" src={item.imageURLs[0]} alt=""/>
                                             </div>
@@ -143,6 +141,8 @@ class HouseList extends Component {
                                                 </div>
                                             </div>
                                         </div>
+                                    </List.Item>
+                                    <List.Item>
                                         <div className="houselist_item_footer">
                                             <div className="houselist_item_footer_publishTime">{getTimeStr(item.publishTime)}发布</div>
                                             <div className="houselist_item_footer_operationWrapper">

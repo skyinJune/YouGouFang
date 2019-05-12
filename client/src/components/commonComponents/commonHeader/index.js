@@ -14,7 +14,9 @@ class CommonHeader extends Component {
             <div className="commonHeader_wrapper">
                 {/* 点击返回 */}
                 <div className="commonHeader_header_icon_wrapper"
-                    onClick={()=>this.props.history.goBack()}
+                    onClick={()=>{
+                        this.props.to? this.props.history.push(this.props.to): this.props.history.goBack()
+                    }}
                 >
                     <i className="iconfont icon-zuo commonHeader_header_icon"/>
                 </div>
