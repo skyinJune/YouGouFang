@@ -109,6 +109,7 @@ class OrderList extends Component {
                             }}
                     >
                         {
+                            this.state.orderList.length?
                             this.state.orderList.map(item=>(
                                 <OrderCard
                                     key={item.order_id}
@@ -117,6 +118,19 @@ class OrderList extends Component {
                                     deleteOrder={_id=>this.deleteOrder(_id)}
                                 />
                             ))
+                            :<div 
+                                style={
+                                    {
+                                        width: '100%', 
+                                        height: '4rem', 
+                                        backgroundColor: '#fff',
+                                        paddingTop: '.25rem'
+                                    }
+                                }
+                            >
+                                <div style={{textAlign: 'center'}}><i className="iconfont icon-emizhifeiji" style={{fontSize: '1.5rem'}}/></div>
+                                <div style={{fontSize: '.25rem', marginTop: '.35rem', textAlign: 'center'}}>暂时没有订单，下拉刷新试试~</div>
+                            </div>
                         }
                     </PullToRefresh>
                 </div>

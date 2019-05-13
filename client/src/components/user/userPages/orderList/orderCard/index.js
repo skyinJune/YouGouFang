@@ -181,6 +181,14 @@ class OrderCard extends Component {
         )
     }
 
+    getCommentStars(num) {
+        let starList = [];
+        for(let i =0; i<num; i++) {
+            starList.push(<i className="iconfont icon-star orderCard_star_icon" key={i}/>)
+        }
+        return starList
+    }
+
     render() {
         return (
             <div className="orderCard_wrapper">
@@ -217,8 +225,32 @@ class OrderCard extends Component {
                             <Accordion>
                                 <Accordion.Panel header="查看评价">
                                     <List>
-                                        <List.Item>{this.state.orderType === 'buyer'? '房东评价': '房客评价'}</List.Item>
-                                        <List.Item>我的评价</List.Item>
+                                        <List.Item>
+                                            <div className="orderCard_comment_wrapper">
+                                                <div className="orderCard_comment_title">{this.state.orderType === 'buyer'? '房东评价': '房客评价'}</div>
+                                                <div className="orderCard_comment_star">
+                                                    {this.getCommentStars(this.state.orderType === 'buyer'? 
+                                                        this.state.orderInfo.ownerCommentStar :this.state.orderInfo.buyerCommentStar)}
+                                                </div>
+                                            </div>
+                                            <div className="orderCard_comment_text">
+                                                {this.state.orderType === 'buyer'? 
+                                                    this.state.orderInfo.ownerComment :this.state.orderInfo.buyerComment}
+                                            </div>
+                                        </List.Item>
+                                        <List.Item>
+                                            <div className="orderCard_comment_wrapper">
+                                                <div className="orderCard_comment_title">我的评价</div>
+                                                <div className="orderCard_comment_star">
+                                                    {this.getCommentStars(this.state.orderType === 'buyer'? 
+                                                    this.state.orderInfo.buyerCommentStar :this.state.orderInfo.ownerCommentStar)}
+                                                </div>
+                                            </div>
+                                            <div className="orderCard_comment_text">
+                                                {this.state.orderType === 'buyer'? 
+                                                this.state.orderInfo.buyerComment :this.state.orderInfo.ownerComment}
+                                            </div>
+                                        </List.Item>
                                     </List>
                                 </Accordion.Panel>
                             </Accordion>
@@ -228,9 +260,18 @@ class OrderCard extends Component {
                             <div className="orderCard_bottom_wrapper">
                                 <div className="orderCard_publishtime">{getTimeStr(this.state.orderInfo.createdTime)}发布</div>
                                 <div className="orderCard_operate_wrapper">
+                                    <div className="orderCard_operate_confirm"
+                                        onClick={()=>{
+                                            this.state.orderType === 'owner'? 
+                                            console.log('buyerAccount', this.state.orderInfo.buyerAccount)
+                                            :console.log('ownerAccount', this.state.orderInfo.ownerAccount)
+                                        }}
+                                    >
+                                        {this.state.orderType === 'owner'? '联系房客': '联系房东'}
+                                    </div>
                                     {
-                                        this.state.orderInfo.status === 'waitOwnerConfirm'
-                                        && this.state.orderType === 'buyer'?
+                                        (this.state.orderInfo.status === 'waitOwnerConfirm'&& this.state.orderType === 'buyer')
+                                        || this.state.orderInfo.status === 'confirmOK'?
                                         <div className="orderCard_operate_cancel" 
                                             onClick={()=>this.onCancleClicked()}>
                                             取消预约

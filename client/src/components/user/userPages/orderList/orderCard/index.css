@@ -76,3 +76,27 @@
     text-align: center;
     border: #888 .01rem solid;
 }
+
+.orderCard_comment_wrapper {
+    overflow: hidden;
+}
+
+.orderCard_comment_title {
+    float: left;
+}
+
+.orderCard_comment_star {
+    float: left;
+    margin-left: .15rem;
+}
+
+.orderCard_comment_text {
+    color: #888;
+    font-size: .14rem;
+}
+
+.orderCard_star_icon {
+    font-size: .16rem;
+    color: gold;
+    margin-left: .02rem;
+}
