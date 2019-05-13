@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './index.css'
-import {List, Modal} from 'antd-mobile'
+import {List, Modal, Accordion} from 'antd-mobile'
 import {getTimeStr} from '../../../../../utils'
 
 class OrderCard extends Component {
@@ -76,6 +76,14 @@ class OrderCard extends Component {
                 returnStr = '等待您确认'
             }
         }
+        if(this.state.orderInfo.status === 'ownerRefused') {
+            if(this.state.orderType === 'buyer') {
+                returnStr = '预约被卖家拒绝'
+            }
+            else {
+                returnStr = '预约已拒绝'
+            }
+        }
         if(this.state.orderInfo.status === 'confirmOK') {
             returnStr = '确认完成,待看房'
         }
@@ -146,6 +154,33 @@ class OrderCard extends Component {
         )
     }
 
+    onRefusedClicked() {
+        Modal.alert('拒绝预约','确认要拒绝此次预约嘛？',
+            [
+                { text: '返回', onPress: () => console.log('cancel'), style: 'default' },
+                { text: '确认', onPress: () => this.changeOrderStatus('ownerRefused'), },
+            ]
+        )
+    }
+
+    onConfirmClicked() {
+        Modal.alert('确认接受','确认前请再次核对预约看房时间',
+            [
+                { text: '返回', onPress: () => console.log('cancel'), style: 'default' },
+                { text: '确认', onPress: () => this.changeOrderStatus('confirmOK'), },
+            ]
+        )
+    }
+
+    onFinishClicked() {
+        Modal.alert('确认完成','确认已完成看房',
+            [
+                { text: '返回', onPress: () => console.log('cancel'), style: 'default' },
+                { text: '确认', onPress: () => this.changeOrderStatus('waitComment'), },
+            ]
+        )
+    }
+
     render() {
         return (
             <div className="orderCard_wrapper">
@@ -177,27 +212,50 @@ class OrderCard extends Component {
                                 </div>
                             </div>
                         </List.Item>
+                        {
+                            this.state.orderInfo.status === 'finish'?
+                            <Accordion>
+                                <Accordion.Panel header="查看评价">
+                                    <List>
+                                        <List.Item>{this.state.orderType === 'buyer'? '房东评价': '房客评价'}</List.Item>
+                                        <List.Item>我的评价</List.Item>
+                                    </List>
+                                </Accordion.Panel>
+                            </Accordion>
+                            :null
+                        }
                         <List.Item>
                             <div className="orderCard_bottom_wrapper">
                                 <div className="orderCard_publishtime">{getTimeStr(this.state.orderInfo.createdTime)}发布</div>
                                 <div className="orderCard_operate_wrapper">
                                     {
                                         this.state.orderInfo.status === 'waitOwnerConfirm'
-                                        || this.state.orderInfo.status === 'confirmOK'?
+                                        && this.state.orderType === 'buyer'?
                                         <div className="orderCard_operate_cancel" 
                                             onClick={()=>this.onCancleClicked()}>
                                             取消预约
                                         </div>
                                         :null
                                     }
+                        
                                     {
                                         this.state.orderInfo.status === 'waitOwnerConfirm'
                                         && this.state.orderType === 'owner'?
                                         <div className="orderCard_operate_confirm"
-                                            onClick={()=>this.changeOrderStatus('confirmOK')}
+                                            onClick={()=>this.onConfirmClicked()}
                                         >确认接受</div>
                                         :null
                                     }
+
+                                    {
+                                        this.state.orderInfo.status === 'waitOwnerConfirm'
+                                        && this.state.orderType === 'owner'?
+                                        <div className="orderCard_operate_cancel"
+                                            onClick={()=>this.onRefusedClicked()}
+                                        >拒绝</div>
+                                        :null
+                                    }
+                                    
                                     {
                                         (this.state.orderInfo.status === 'waitComment'
                                         || (this.state.orderInfo.status === 'waitBuyerComment'
@@ -213,13 +271,14 @@ class OrderCard extends Component {
                                         this.state.orderInfo.status === 'confirmOK'
                                         && this.state.orderType === 'owner'?
                                         <div className="orderCard_operate_confirm"
-                                            onClick={()=>this.changeOrderStatus('waitComment')}
+                                            onClick={()=>this.onFinishClicked()}
                                         >完成看房</div>
                                         :null
                                     }
                                     {
                                         this.state.orderInfo.status === 'finish'|| this.state.orderInfo.status === 'canceledByBuyer'
-                                        || this.state.orderInfo.status === 'canceledByOwner'?
+                                        || this.state.orderInfo.status === 'canceledByOwner'
+                                        || this.state.orderInfo.status === 'ownerRefused'?
                                         <div className="orderCard_operate_delete"
                                             onClick={()=>this.props.deleteOrder(this.state.orderInfo._id)}
                                         >删除订单</div>

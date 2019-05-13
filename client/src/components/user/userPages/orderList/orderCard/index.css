@@ -50,7 +50,7 @@
     float: right;
     margin-right: .05rem;
     font-size: .15rem;
-    padding: 0 .05rem;
+    padding: .03rem .08rem;
     border: #888 .01rem solid;
     border-radius: .05rem;
     text-align: center;
@@ -71,7 +71,7 @@
     float: right;
     margin-right: .15rem;
     font-size: .15rem;
-    padding: 0 .05rem;
+    padding: .03rem .08rem;
     border-radius: .05rem;
     text-align: center;
     border: #888 .01rem solid;
