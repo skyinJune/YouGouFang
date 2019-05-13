@@ -8,6 +8,19 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+let httpServer= require('http').Server(app);
+let io = require('socket.io')(httpServer);
+
+httpServer.listen(4000);
+
+io.on('connection',  (socket)=>{
+    console.log('client connect server, ok!');
+
+    socket.on('client message', (data)=>{
+        console.log(data);
+      });
+});
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
