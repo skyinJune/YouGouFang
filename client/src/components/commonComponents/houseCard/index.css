@@ -1,6 +1,9 @@
 .house_card_wrapper {
+    margin-bottom: .15rem;
+}
+
+.house_card_main {
     overflow: hidden;
-    padding: .15rem 0;
 }
 
 .house_card_mainImg_wrapper {
@@ -62,4 +65,18 @@
     font-size: .14rem;
     color: #888;
     margin-left: .15rem;
+}
+
+.house_card_footer_wrapper {
+    overflow: hidden;
+    font-size: .14rem;
+    color: #888;
+}
+
+.house_card_footer_publishTime {
+    float: left;
+}
+
+.house_card_footer_right {
+    float: right;
 }

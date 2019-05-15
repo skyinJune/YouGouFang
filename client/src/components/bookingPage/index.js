@@ -110,12 +110,7 @@ class BookingPage extends Component {
                     </div>
 
                     
-                    <div className="bookingPage_houseCard_wrapper">
-                        <div className="bookingPage_title">
-                            房源信息
-                        </div>
-                        <HouseCard houseInfo={this.state.houseInfo}/>
-                    </div>
+                    <HouseCard houseInfo={this.state.houseInfo} history={this.props.history}/>
 
                     <div className="bookingPage_datePicker_Wrapper">
                         <DatePicker

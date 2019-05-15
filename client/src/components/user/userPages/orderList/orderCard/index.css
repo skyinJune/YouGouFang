@@ -25,6 +25,7 @@
 .orderCard_info_wrapper {
     float: left;
     margin-left: .15rem;
+    font-size: .14rem;
 }
 
 .orderCard_info_title {

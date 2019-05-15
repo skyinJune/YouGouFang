@@ -203,7 +203,7 @@ class OrderCard extends Component {
                                 <div className="orderCard_info_wrapper">
                                     <div className="orderCard_info_title">{this.state.houseInfo.title}</div>
                                     <div className="orderCard_info_address">
-                                        <i className="iconfont icon-dingwei"/>
+                                        <i className="iconfont icon-dingwei" style={{fontSize: '.14rem'}}/>
                                         {this.state.houseInfo.position.address}
                                     </div>
                                     <div className="orderCard_info_time">

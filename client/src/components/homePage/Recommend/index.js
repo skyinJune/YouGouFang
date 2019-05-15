@@ -66,6 +66,7 @@ class Recommend extends Component {
             body:data
           }).then(response => response.json())
           .then(data => {
+            data.sort((a, b)=>(new Date(b.publishTime).getTime() - new Date(a.publishTime).getTime()));
             this.setState({houseList: data, isLoading: false});
           });
     }
@@ -107,32 +108,28 @@ class Recommend extends Component {
                             ))
                         }
                     </List.Item>
-                    {
-                            this.state.isLoading? 
-                            <div className="recommend_loading_wrapper">
-                                <div className="recommend_loading_img_wrapper">
-                                    <img className="recommend_loading_img" 
-                                        src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/homePage_recommend_loading/loading.gif"
-                                        alt=""
-                                    />
-                                </div>
-                            </div>
-                            :(
-                                this.state.houseList.length?
-                                this.state.houseList.map(item=>(
-                                    <List.Item key={item._id}
-                                        onClick={()=>this.props.history.push('/housePage?_id=' + item._id)}
-                                    >
-                                        <HouseCard houseInfo={item}/>
-                                    </List.Item>
-                                ))
-                                :<div className="recommend_empty_wrapper">
-                                    <div className="recommend_empty_icon_wrapper"><i className="iconfont icon-emizhifeiji recommend_empty_icon"/></div>
-                                    <div className="recommend_empty_words">555没有找到你想要的房源哦，去看看其他房源吧~</div>
-                                </div>
-                            )
-                    }
                 </List>
+                {
+                        this.state.isLoading? 
+                        <div className="recommend_loading_wrapper">
+                            <div className="recommend_loading_img_wrapper">
+                                <img className="recommend_loading_img" 
+                                    src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/homePage_recommend_loading/loading.gif"
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                        :(
+                            this.state.houseList.length?
+                            this.state.houseList.map(item=>(
+                                <HouseCard houseInfo={item} key={item._id} history={this.props.history}/>
+                            ))
+                            :<div className="recommend_empty_wrapper">
+                                <div className="recommend_empty_icon_wrapper"><i className="iconfont icon-emizhifeiji recommend_empty_icon"/></div>
+                                <div className="recommend_empty_words">555没有找到你想要的房源哦，去看看其他房源吧~</div>
+                            </div>
+                        )
+                }
             </div>
         )
     }

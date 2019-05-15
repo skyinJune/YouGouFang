@@ -17,6 +17,7 @@ class CommunitySelect extends Component {
         this.state = {
             currentCity: '',
             searchResult: [],
+            isLoading: true,
             isLocalCity: true
         }
         this.onLocalSearch = this.onLocalSearch.bind(this);
@@ -29,9 +30,6 @@ class CommunitySelect extends Component {
     componentDidMount() {
         // 定位到当前城市
         this.getCurrentCity();
-        if(!this.props.citySelected.state) {
-            this.initLocalSearch();
-        }
     }
 
     /**
@@ -44,7 +42,14 @@ class CommunitySelect extends Component {
         let getCity = (result)=>{
             // 把后面的'市'去掉
             var cityName = result.name.substring(0,result.name.length-1);
-            this.setState({currentCity: cityName});
+            this.setState({currentCity: cityName}, ()=>{
+                if(this.props.citySelected.state === this.state.currentCity) {
+                    this.initLocalSearch()
+                }
+                else {
+                    this.setState({isLocalCity: false, isLoading: false})
+                }
+            });
         }
         var myCity = new BMap.LocalCity();
         myCity.get(getCity);
@@ -118,7 +123,7 @@ class CommunitySelect extends Component {
                     point: results.getPoi(i).point
                 })
         }
-        this.setState({searchResult: s});
+        this.setState({searchResult: s, isLoading: false, isLocalCity: true});
     }
 
     /**
@@ -171,6 +176,16 @@ class CommunitySelect extends Component {
                     <List>
                         <div id="allmap"></div>
                         {
+                            this.state.isLoading?
+                            <div className="recommend_loading_wrapper">
+                                <div className="recommend_loading_img_wrapper">
+                                    <img className="recommend_loading_img" 
+                                        src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/homePage_recommend_loading/loading.gif"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            :this.state.isLocalCity?
                             this.state.searchResult.map((item,index)=> (
                                 <List.Item
                                     key={item.address+index}
@@ -180,6 +195,10 @@ class CommunitySelect extends Component {
                                     <List.Item.Brief>{item.address}</List.Item.Brief>
                                 </List.Item>
                             ))
+                            :<div className="houselist_empty_wrapper">
+                                <div className="houselist_empty_icon_wrapper"><i className="iconfont icon-emizhifeiji houselist_empty_icon"/></div>
+                                <div className="houselist_empty_words">已切换至{this.props.citySelected.state}市,请输入小区名称并搜索~</div>
+                            </div>
                         }
                     </List>
                 </div>

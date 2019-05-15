@@ -12,10 +12,15 @@ class HomePageSwiper extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            imageURLs: []
         }
     }
 
-    componentDidMount() {
+    componentWillReceiveProps(props) {
+        this.setState({imageURLs: props.imageURLs})
+    }
+
+    componentDidUpdate() {
         // 初始化swiper
         this.HousePage_Swiper = new Swiper ('.swiper-container', {
             loop: false,  //循环
@@ -23,6 +28,7 @@ class HomePageSwiper extends Component {
             pagination: {
                 el: '.swiper-pagination',
                 type: 'fraction',
+                autoplay: true
               },
         })
     }
@@ -39,8 +45,8 @@ class HomePageSwiper extends Component {
                 <div className="swiper-container">
                     <div className="swiper-wrapper">
                     {
-                        this.props.imageURLs?
-                        this.props.imageURLs.map(item=>(
+                        this.state.imageURLs?
+                        this.state.imageURLs.map(item=>(
                             <div className="swiper-slide housePage_swiper_slide"
                                 key={item}
                             >

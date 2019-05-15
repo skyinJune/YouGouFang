@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import io from 'socket.io-client'
-import {Button, InputItem} from 'antd-mobile'
+import {Button, InputItem, List} from 'antd-mobile'
+const socket = io('ws://127.0.0.1:4000');
 
 /**
  *  消息页的组件
@@ -12,29 +13,39 @@ class MessagePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messageVal: ''
+            messageVal: '',
+            receiveMessage: []
         }
+        this.sendMessage = this.sendMessage.bind(this);
     }
 
     componentDidMount() {
-        let socket = io('ws://127.0.0.1:4000');
-
-        socket.emit('client message', {msg:'hi, server'});
-
-        socket.on('connection',  ()=>{
-            console.log('client connect server');
+        socket.on('receive message', (data) => {
+            this.setState({receiveMessage: [...this.state.receiveMessage, data.msg]})
         });
+    }
 
-        socket.on('disconnect', ()=>{
-            console.log('client disconnect');
-        });
+    sendMessage() {
+        socket.emit('client message', {msg: this.state.messageVal});
+        this.setState({messageVal: ''});
     }
 
     render() {
         return (
             <div>
-                <InputItem onChange={val=>this.setState({messageVal: val})}/>
-                <Button type="primary" onClick={()=>console.log(this.state.messageVal)}>发送</Button>
+                <InputItem value={this.state.messageVal} onChange={val=>this.setState({messageVal: val})}/>
+                <Button type="primary" onClick={()=>this.sendMessage()}>发送</Button>
+                <List>
+                    {
+                        this.state.receiveMessage.map((item, index)=>(
+                            <List.Item
+                                key={item + index}
+                            >
+                                {item}
+                            </List.Item>
+                        ))
+                    }
+                </List>
             </div>
         )
     }

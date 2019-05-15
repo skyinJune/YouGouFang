@@ -165,12 +165,34 @@ var Order = new mongoose.Schema({
 
 })
 
+var Chat = new mongoose.Schema({
+    // 消息的唯一标识(区别收发双方)
+    chatUid: {type: String},
+
+    // 发送方
+    from: {type: String},
+
+    // 接收方
+    to: {type: String},
+
+    // 是否已读(只针对接收方)
+    read: {type: Boolean, default: false},
+
+    // 消息内容
+    content: {type: String},
+
+    // 创建时间
+    createdTime: {type: Date, default: new Date(Date.now())}
+
+})
+
 
 // 整个优购房模型
 var YouGouFangModel = {
     HouseModel: mongoose.model('house', House),
     UserModel: mongoose.model('user', User),
     OrderModel: mongoose.model('order', Order),
+    ChatModel: mongoose.model('chat', Chat),
 }
 
 module.exports = YouGouFangModel;

@@ -46,7 +46,7 @@
 .bookingPage_houseCard_wrapper {
     margin-top: .15rem;
     background-color: #fff;
-    padding: .15rem;
+    padding: .15rem 0 0 0;
 }
 
 .bookingPage_datePicker_Wrapper {

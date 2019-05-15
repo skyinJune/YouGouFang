@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './index.css'
-import {List, WhiteSpace, Toast} from 'antd-mobile'
+import {List, WhiteSpace} from 'antd-mobile'
 import { connect } from 'react-redux'
 import {getTimeStr} from '../../../../utils'
 import 'whatwg-fetch'
@@ -15,7 +15,8 @@ class HouseList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            houseList: []
+            houseList: [],
+            isLoading: true
         };
         this.fetchUserInfo = this.fetchUserInfo.bind(this);
         this.fetchHouseList = this.fetchHouseList.bind(this);
@@ -36,9 +37,6 @@ class HouseList extends Component {
      * @memberof UserCenterIndex
      */
     fetchUserInfo() {
-
-        // 发送请求时的加载态
-        Toast.loading('加载房源列表数据...');
 
         const userInfo = {
             account: this.props.logInfo.user
@@ -61,7 +59,7 @@ class HouseList extends Component {
                 this.fetchHouseList(houseList);
             }
             else {
-                Toast.hide();
+                this.setState({isLoading: false})
             }
             
         })
@@ -88,9 +86,7 @@ class HouseList extends Component {
                     tempList.sort((a, b)=>(
                         new Date(b.publishTime).getTime() - new Date(a.publishTime).getTime()
                         ));
-                    this.setState({houseList: tempList}, ()=>{
-                        Toast.hide();
-                    });
+                    this.setState({houseList: tempList, isLoading: false});
                 }
             })
         })
@@ -116,12 +112,21 @@ class HouseList extends Component {
                 </div>
                 <div className="houselist_list_wrapper">
                     {
-                        this.state.houseList.length === 0? 
+                        this.state.isLoading? 
+                        <div className="recommend_loading_wrapper">
+                            <div className="recommend_loading_img_wrapper">
+                                <img className="recommend_loading_img" 
+                                    src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/homePage_recommend_loading/loading.gif"
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                        :this.state.houseList.length === 0? 
                             <div className="houselist_empty_wrapper">
                                 <div className="houselist_empty_icon_wrapper"><i className="iconfont icon-emizhifeiji houselist_empty_icon"/></div>
                                 <div className="houselist_empty_words">你还没有发布房源哦，快去发布吧~</div>
                             </div>
-                        :this.state.houseList.map(item=>(
+                        :(this.state.houseList.map(item=>(
                                 <div key={item._id}>
                                 <List>
                                     <List.Item onClick={()=>this.props.history.push('/housePage?_id=' + item._id)} arrow="horizontal">
@@ -154,7 +159,7 @@ class HouseList extends Component {
                                 </List>
                                 <WhiteSpace/>
                                 </div>
-                        ))
+                        )))
                         
                     }
                 </div>

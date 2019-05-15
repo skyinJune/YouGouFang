@@ -15,6 +15,7 @@ class OrderList extends Component {
         super(props);
         this.state = {
             orderList: [],
+            isLoading: true,
             refreshing: false,
             height: document.documentElement.clientHeight - 35,
         };
@@ -33,6 +34,7 @@ class OrderList extends Component {
     }
 
     getOrderList() {
+        this.setState({isLoading: true});
         const userInfo = {
             account: this.props.logInfo.user
         };
@@ -49,10 +51,8 @@ class OrderList extends Component {
             body:data
         }).then(response => response.json())
         .then(data=>{
-            let orderList = data.orderList;
-            this.setState({orderList});
-        }).then(()=>{
-            this.setState({refreshing: false})
+            let orderList = data.orderList.reverse();
+            this.setState({orderList, isLoading: false, refreshing: false});
         })
     }
 
@@ -109,7 +109,16 @@ class OrderList extends Component {
                             }}
                     >
                         {
-                            this.state.orderList.length?
+                            this.state.isLoading? 
+                            <div className="recommend_loading_wrapper">
+                                <div className="recommend_loading_img_wrapper">
+                                    <img className="recommend_loading_img" 
+                                        src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/homePage_recommend_loading/loading.gif"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            :this.state.orderList.length?
                             this.state.orderList.map(item=>(
                                 <OrderCard
                                     key={item.order_id}
@@ -118,18 +127,9 @@ class OrderList extends Component {
                                     deleteOrder={_id=>this.deleteOrder(_id)}
                                 />
                             ))
-                            :<div 
-                                style={
-                                    {
-                                        width: '100%', 
-                                        height: '4rem', 
-                                        backgroundColor: '#fff',
-                                        paddingTop: '.25rem'
-                                    }
-                                }
-                            >
-                                <div style={{textAlign: 'center'}}><i className="iconfont icon-emizhifeiji" style={{fontSize: '1.5rem'}}/></div>
-                                <div style={{fontSize: '.25rem', marginTop: '.35rem', textAlign: 'center'}}>暂时没有订单，下拉刷新试试~</div>
+                            :<div className="houselist_empty_wrapper">
+                                <div className="houselist_empty_icon_wrapper"><i className="iconfont icon-emizhifeiji houselist_empty_icon"/></div>
+                                <div className="houselist_empty_words">暂时没有订单，下拉刷新试试~</div>
                             </div>
                         }
                     </PullToRefresh>
