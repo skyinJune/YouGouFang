@@ -40,7 +40,11 @@ class Header extends Component {
         return (
             <div className="home_header_wrapper">
                 <div className="home_header_logo_wrapper">
-                    <img className="home_header_logo" src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/home_logo.png" alt=""/>
+                    <img className="home_header_logo" 
+                        // src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/home_logo.png" alt="" 
+                        // 辣鸡楠要换logo
+                        src="https://yougoufang.oss-cn-hongkong.aliyuncs.com/%E6%98%93%E6%B7%98%E6%88%BFLogo.png" alt=""
+                    />
                 </div>
                 <div className="home_header_search_wrapper"
                     onClick={()=>console.log('on search click')}
